@@ -4,12 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-
+ 
+/**
+ * @author BigBa
+ *
+ */
 public class LeaderBobTalonSRX extends BobTalonSRX{
 	// a list of talons to follow the leader
-	private List<BobTalonSRX> followers;
+	private final List<BobTalonSRX> followers;
 	
 	// the constructor
+	/**
+	 * @param leaderDeviceNumber
+	 * @param followerDeviceNumbers
+	 */
 	public LeaderBobTalonSRX(int leaderDeviceNumber, int[] followerDeviceNumbers) {
 		// the superconstructor
 		super(leaderDeviceNumber);
@@ -27,11 +35,22 @@ public class LeaderBobTalonSRX extends BobTalonSRX{
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.ctre.phoenix.motorcontrol.can.BaseMotorController#setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode)
+	 */
 	@Override
 	public void setNeutralMode(NeutralMode neutralMode) {
-		this.setNeutralMode(neutralMode);
+		super.setNeutralMode(neutralMode);
 		for (BobTalonSRX bobTalonSRX : followers) {
 			bobTalonSRX.setNeutralMode(neutralMode);
+		}
+	}
+	
+	@Override
+	public void setInverted(boolean invert) {
+		super.setInverted(invert);
+		for (BobTalonSRX bobTalonSRX : followers) {
+			bobTalonSRX.setInverted(invert);
 		}
 	}
 

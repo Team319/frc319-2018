@@ -16,6 +16,7 @@ public class BobDrive extends Command {
 	BobDriveHelper helper;
 	
     public BobDrive() {
+    	requires(Robot.drivetrain);
     	helper = new BobDriveHelper();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
-import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.robot.commands.BobDrive;
@@ -24,10 +23,10 @@ public class Drivetrain extends Subsystem {
     public Drivetrain() {
     	
     	this.leftLead.setInverted(false);
-    	this.leftLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
+    	//this.leftLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
     	this.rightLead.setInverted(true);
-    	this.rightLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
-    
+    	//this.rightLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
+    	/*
     	this.leftLead.enableCurrentLimit(true);
     	this.leftLead.configContinuousCurrentLimit(30);
     	this.rightLead.enableCurrentLimit(true);
@@ -38,7 +37,7 @@ public class Drivetrain extends Subsystem {
     	
     	this.leftLead.setNeutralMode(NeutralMode.Brake);
     	this.rightLead.setNeutralMode(NeutralMode.Brake);
-    	
+    	*/
     }
     
     public void initDefaultCommand() {

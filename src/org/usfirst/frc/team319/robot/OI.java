@@ -16,8 +16,7 @@ import org.usfirst.frc.team319.models.BobController;
 public class OI {
 	public BobController driverController;
 	
-	public OI() {
-	
+	public OI() {	
 		this.driverController = new BobController(0);
 	}
 }
