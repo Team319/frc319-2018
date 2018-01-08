@@ -2,6 +2,7 @@ package org.usfirst.frc.team319.robot.subsystems;
 
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
+import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.BobDrive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -52,6 +53,14 @@ public class Drivetrain extends Subsystem {
     
     public void drive(ControlMode controlMode, DriveSignal driveSignal) {
     	this.drive(controlMode, driveSignal.getLeft(), driveSignal.getRight());
+    }
+    
+    public boolean quickTurnController() {
+    if (Robot.oi.driverController.getLeftStickY() < 0.2 && Robot.oi.driverController.getLeftStickX() > -0.2) {
+		return true;	
+	} else {
+		return false;
+		}
     }
 }
 

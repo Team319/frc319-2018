@@ -28,9 +28,10 @@ public class BobDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	boolean quickTurn = Robot.drivetrain.quickTurnController();
     	double moveValue = Robot.oi.driverController.getLeftStickY();
     	double rotateValue = Robot.oi.driverController.getRightStickX();
-    	DriveSignal driveSignal = helper.cheesyDrive(moveValue, rotateValue, false, false);
+    	DriveSignal driveSignal = helper.cheesyDrive(moveValue, rotateValue, quickTurn, false);
     	Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
     
     }
