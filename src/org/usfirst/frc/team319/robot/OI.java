@@ -8,6 +8,7 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.models.BobController;
+import org.usfirst.frc.team319.robot.commands.CubeCollectorTest;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -18,5 +19,7 @@ public class OI {
 	
 	public OI() {	
 		this.driverController = new BobController(0);
+		
+		driverController.rightTriggerButton.whileHeld(new CubeCollectorTest());
 	}
 }

@@ -56,7 +56,7 @@ public class Drivetrain extends Subsystem {
     }
     
     public boolean quickTurnController() {
-    if (Robot.oi.driverController.getLeftStickY() < 0.2 && Robot.oi.driverController.getLeftStickX() > -0.2) {
+    if (Robot.oi.driverController.getLeftStickY() < 0.2 && Robot.oi.driverController.getLeftStickY() > -0.2) {
 		return true;	
 	} else {
 		return false;
