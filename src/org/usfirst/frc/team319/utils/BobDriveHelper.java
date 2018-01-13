@@ -7,29 +7,30 @@ import org.usfirst.frc.team319.models.DriveSignal;
  * of the robot's path rather than its rate of heading change. This helps make the robot more controllable at high
  * speeds. Also handles the robot's quick turn functionality - "quick turn" overrides constant-curvature turning for
  * turn-in-place maneuvers.
+
  */
 public class BobDriveHelper {
 
-    private static final double kThrottleDeadband = 0.02;
-    private static final double kWheelDeadband = 0.02;
+    private static final double kThrottleDeadband = 0.08;//.02
+    private static final double kWheelDeadband = 0.04;//0.02
 
     // These factor determine how fast the wheel traverses the "non linear" sine curve.
-    private static final double kHighWheelNonLinearity = 0.65;
-    private static final double kLowWheelNonLinearity = 0.5;
+    private static final double kHighWheelNonLinearity = 0.65;//.65
+    private static final double kLowWheelNonLinearity = 0.5;//.5
 
-    private static final double kHighNegInertiaScalar = 4.0;
+    private static final double kHighNegInertiaScalar = 4.0;//4.0
 
-    private static final double kLowNegInertiaThreshold = 0.65;
-    private static final double kLowNegInertiaTurnScalar = 3.5;
-    private static final double kLowNegInertiaCloseScalar = 4.0;
-    private static final double kLowNegInertiaFarScalar = 5.0;
+    private static final double kLowNegInertiaThreshold = 0.65;//.65
+    private static final double kLowNegInertiaTurnScalar = 3.5;//3.5
+    private static final double kLowNegInertiaCloseScalar = 4.0;//4.0
+    private static final double kLowNegInertiaFarScalar = 5.0;//5.0
 
-    private static final double kHighSensitivity = 0.95;
-    private static final double kLowSensitiity = 1.3;
+    private static final double kHighSensitivity = 0.95;//0.95
+    private static final double kLowSensitiity = 1.3;//1.3
 
-    private static final double kQuickStopDeadband = 0.2;
-    private static final double kQuickStopWeight = 0.1;
-    private static final double kQuickStopScalar = 5.0;
+    private static final double kQuickStopDeadband = 0.2;//.2
+    private static final double kQuickStopWeight = 0.1;//.1
+    private static final double kQuickStopScalar = 1.0;//5.0
 
     private double mOldWheel = 0.0;
     private double mQuickStopAccumlator = 0.0;

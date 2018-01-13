@@ -8,6 +8,9 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.models.BobController;
+import org.usfirst.frc.team319.robot.commands.AutoDriveForwardThreeFeet;
+import org.usfirst.frc.team319.robot.commands.CubeCollectorSpit;
+import org.usfirst.frc.team319.robot.commands.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.CubeCollectorTest;
 
 /**
@@ -21,5 +24,9 @@ public class OI {
 		this.driverController = new BobController(0);
 		
 		driverController.rightTriggerButton.whileHeld(new CubeCollectorTest());
+		driverController.leftTriggerButton.whileHeld(new CubeCollectorSpit());
+		driverController.aButton.whenPressed(new CubeCollectorTest());
+		driverController.bButton.whenPressed(new CubeCollectorStop());
+		driverController.leftBumper.whenPressed(new AutoDriveForwardThreeFeet());
 	}
 }

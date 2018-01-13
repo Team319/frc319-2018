@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CubeCollectorTest extends Command {
+public class ClimberTest extends Command {
 
-    public CubeCollectorTest() {
+    public ClimberTest() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.cubeCollector);
+        requires(Robot.climber);
     }
 
     // Called just before this Command runs the first time
@@ -22,9 +22,10 @@ public class CubeCollectorTest extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     	ControlMode controlMode = ControlMode.PercentOutput;
-    	double speed = 0.5; //1.0
-    	Robot.cubeCollector.setCubeCollector(controlMode, speed);
+    	double signal = 0.5;
+    	Robot.climber.climberTest(controlMode, signal);
     }
 
     // Make this return true when this Command no longer needs to run execute()

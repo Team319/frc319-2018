@@ -10,7 +10,6 @@ public class BobTalonSRX extends TalonSRX {
 	
 	public BobTalonSRX(int deviceNumber) {
 		super(deviceNumber);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public ErrorCode configPIDF(int slotIdx, double P, double I, double D, double F){

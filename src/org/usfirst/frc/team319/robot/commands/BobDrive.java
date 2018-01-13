@@ -31,7 +31,7 @@ public class BobDrive extends Command {
     	boolean quickTurn = Robot.drivetrain.quickTurnController();
     	double moveValue = Robot.oi.driverController.getLeftStickY();
     	double rotateValue = Robot.oi.driverController.getRightStickX();
-    	DriveSignal driveSignal = helper.cheesyDrive(moveValue, rotateValue, quickTurn, false);
+    	DriveSignal driveSignal = helper.cheesyDrive(0.6 * moveValue, 0.6 * rotateValue, quickTurn, false);
     	Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
     
     }

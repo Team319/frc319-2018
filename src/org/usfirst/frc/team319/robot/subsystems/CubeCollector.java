@@ -29,9 +29,9 @@ public class CubeCollector extends Subsystem {
     }
     
     //test method for prototyping cube collector
-    public void cubeCollectorTest(ControlMode controlMode, double voltage) {
-    	this.collectorLeftMotor.set(controlMode, voltage);
-    	this.collectorRightMotor.set(controlMode, voltage);
+    public void setCubeCollector(ControlMode controlMode, double speed) {
+    	collectorLeftMotor.set(controlMode, speed);
+    	collectorRightMotor.set(controlMode, speed);
     }
 }
 

@@ -13,8 +13,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team319.robot.subsystems.Climber;
 import org.usfirst.frc.team319.robot.subsystems.CubeCollector;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team319.robot.subsystems.Elevator;
+import org.usfirst.frc.team319.robot.subsystems.Wrist;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +30,9 @@ public class Robot extends TimedRobot {
 	
 	public static final CubeCollector cubeCollector = new CubeCollector();
 	public static final Drivetrain drivetrain = new Drivetrain();
+	public static final Elevator elevator = new Elevator();
+	public static final Wrist wrist = new Wrist();
+	public static final Climber climber = new Climber();
 	public static OI oi;
 
 	Command m_autonomousCommand;

@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CubeCollectorTest extends Command {
+public class CubeCollectorSpit extends Command {
 
-    public CubeCollectorTest() {
+    public CubeCollectorSpit() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.cubeCollector);
     }
@@ -23,7 +23,7 @@ public class CubeCollectorTest extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	ControlMode controlMode = ControlMode.PercentOutput;
-    	double speed = 0.5; //1.0
+    	double speed = -1.0;
     	Robot.cubeCollector.setCubeCollector(controlMode, speed);
     }
 
