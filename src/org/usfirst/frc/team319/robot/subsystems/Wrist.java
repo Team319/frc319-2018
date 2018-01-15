@@ -1,7 +1,7 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
-import org.usfirst.frc.team319.robot.commands.WristTest;
+import org.usfirst.frc.team319.robot.commands.WristStop;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Wrist extends Subsystem {
 
-   public final BobTalonSRX wristMotor = new BobTalonSRX(1);
+   public final BobTalonSRX wristMotor = new BobTalonSRX(14);
    
    public Wrist() {
 	   
@@ -22,11 +22,12 @@ public class Wrist extends Subsystem {
    
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new WristTest());
+        setDefaultCommand(new WristStop());
     }
     
     public void wristMove(ControlMode controlMode, double signal) {
     	wristMotor.set(controlMode, signal);
+    
     }
 }
 

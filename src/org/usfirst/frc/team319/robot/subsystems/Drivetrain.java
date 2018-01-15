@@ -9,6 +9,7 @@ import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -21,18 +22,18 @@ public class Drivetrain extends Subsystem {
 	public static final int HIGH_GEAR_PROFILE = 1;
 	private int[] leftFollowers = {2, 3, 4};
 	private int[] rightFollowers = {7, 8, 9};
-    public final LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, leftFollowers);
-    public final LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(6, rightFollowers);
+    public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, leftFollowers);
+    public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(6, rightFollowers);
     
     
     public Drivetrain() {
     	
     	this.leftLead.setInverted(false);
-    	this.leftLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, HIGH_GEAR_PROFILE);
-    	this.leftLead.setSensorPhase(true);
+    	this.leftLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
+    	this.leftLead.setSensorPhase(false);
     	
     	this.rightLead.setInverted(true);
-    	this.rightLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, HIGH_GEAR_PROFILE);
+    	this.rightLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
     	this.rightLead.setSensorPhase(false);
     	
     	
@@ -44,11 +45,11 @@ public class Drivetrain extends Subsystem {
     	this.leftLead.configOpenloopRamp(0.25);
     	this.rightLead.configOpenloopRamp(0.25);
     	
-    	this.leftLead.setNeutralMode(NeutralMode.Brake);
-    	this.rightLead.setNeutralMode(NeutralMode.Brake);
+    	this.leftLead.setNeutralMode(NeutralMode.Coast);
+    	this.rightLead.setNeutralMode(NeutralMode.Coast);
     	
     	this.configPIDF(HIGH_GEAR_PROFILE, 0.45, 0.0, 0.45, 0.238);
-
+		
     }
     
     public void initDefaultCommand() {
@@ -68,6 +69,7 @@ public class Drivetrain extends Subsystem {
     }
     
     public void drive(ControlMode controlMode, DriveSignal driveSignal) {
+    	//System.out.println(driveSignal.toString());
     	this.drive(controlMode, driveSignal.getLeft(), driveSignal.getRight());
     }
     
@@ -78,5 +80,27 @@ public class Drivetrain extends Subsystem {
 		return false;
 		}
     }
+    
+    public double getLeftDriveLeadDistance() {
+    	return this.leftLead.getSelectedSensorPosition(LOW_GEAR_PROFILE);
+    }
+    
+    public double getRightDriveLeadDistance() {
+    	return this.rightLead.getSelectedSensorPosition(LOW_GEAR_PROFILE);
+    }
+    
+    public double getLeftDriveLeadVelocity() {
+    	return this.leftLead.getSelectedSensorVelocity(LOW_GEAR_PROFILE);
+    }
+    
+    public double getRightDriveLeadVelocity() {
+    	return this.rightLead.getSelectedSensorVelocity(LOW_GEAR_PROFILE);
+    }
+    
+    public void setDrivetrainPositionToZero() {
+    	this.leftLead.setSelectedSensorPosition(0, LOW_GEAR_PROFILE);
+    	this.rightLead.setSelectedSensorPosition(0, LOW_GEAR_PROFILE);
+    }
+    	
 }
 

@@ -27,6 +27,6 @@ public class OI {
 		driverController.leftTriggerButton.whileHeld(new CubeCollectorSpit());
 		driverController.aButton.whenPressed(new CubeCollectorTest());
 		driverController.bButton.whenPressed(new CubeCollectorStop());
-		driverController.leftBumper.whenPressed(new AutoDriveForwardThreeFeet());
+		//driverController.leftBumper.whenPressed(new AutoDriveForwardThreeFeet());
 	}
 }

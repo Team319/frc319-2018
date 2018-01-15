@@ -30,10 +30,9 @@ public class BobDrive extends Command {
     protected void execute() {
     	boolean quickTurn = Robot.drivetrain.quickTurnController();
     	double moveValue = Robot.oi.driverController.getLeftStickY();
-    	double rotateValue = Robot.oi.driverController.getRightStickX();
+    	double rotateValue = Robot.oi.driverController.getRightStickX() * 0.5;
     	DriveSignal driveSignal = helper.cheesyDrive(0.6 * moveValue, 0.6 * rotateValue, quickTurn, false);
     	Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
-    
     }
 
     // Make this return true when this Command no longer needs to run execute()

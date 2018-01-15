@@ -68,4 +68,9 @@ public class BobTalonSRX extends TalonSRX {
 		// TODO Auto-generated method stub
 		return super.config_kI(slotIdx, value, DEFAULT_TIMEOUT_MS);
 	}
+	
+	public ErrorCode setSelectedSensorPosition(int sensorPos, int pidIdx) {
+		// TODO Auto-generated method stub
+		return super.setSelectedSensorPosition(sensorPos, pidIdx, DEFAULT_TIMEOUT_MS);
+	}
 }

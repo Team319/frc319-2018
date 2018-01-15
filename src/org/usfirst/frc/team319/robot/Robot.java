@@ -7,12 +7,15 @@
 
 package org.usfirst.frc.team319.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Ultrasonic;
 
+import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.subsystems.Climber;
 import org.usfirst.frc.team319.robot.subsystems.CubeCollector;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
@@ -28,11 +31,12 @@ import org.usfirst.frc.team319.robot.subsystems.Wrist;
  */
 public class Robot extends TimedRobot {
 	
+	
 	public static final CubeCollector cubeCollector = new CubeCollector();
 	public static final Drivetrain drivetrain = new Drivetrain();
-	public static final Elevator elevator = new Elevator();
-	public static final Wrist wrist = new Wrist();
-	public static final Climber climber = new Climber();
+	//public static final Elevator elevator = new Elevator();
+	//public static final Wrist wrist = new Wrist();
+	//public static final Climber climber = new Climber();
 	public static OI oi;
 
 	Command m_autonomousCommand;
@@ -44,12 +48,16 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		
+		 
 		oi = new OI();
+		this.drivetrain.setDrivetrainPositionToZero();
 		//drivetrain = new Drivetrain();
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
+	 
 
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
@@ -79,7 +87,18 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
+		
+		String gameData;
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+				if(gameData.charAt(0) == 'L') {
+					System.out.println("L");
+					//m_autonomousCommand = new FollowTrajectory("ThreeFeet");
+				}else {
+					System.out.println("R");
+					//m_autonomousCommand = new FollowTrajectory("OneFoot");
+				}
+	
+		//m_autonomousCommand = m_chooser.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -119,6 +138,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Left Drive Position", this.drivetrain.getLeftDriveLeadDistance());
+		SmartDashboard.putNumber("Right Lead Position", this.drivetrain.getRightDriveLeadDistance());
+		SmartDashboard.putNumber("Left Drive Velocity", this.drivetrain.getLeftDriveLeadVelocity());
+		SmartDashboard.putNumber("Right Drive Velocity", this.drivetrain.getRightDriveLeadVelocity());
+		SmartDashboard.putNumber("UltrasonicSensor", this.cubeCollector.ultrasonicSensorValue());
 	}
 
 	/**

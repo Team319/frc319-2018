@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class WristTest extends Command {
+public class ElevatorStop extends Command {
 
-    public WristTest() {
+    public ElevatorStop() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.wrist);
+        //requires(Robot.elevator);
     }
 
     // Called just before this Command runs the first time
@@ -24,8 +24,8 @@ public class WristTest extends Command {
     protected void execute() {
     	
     	ControlMode controlMode = ControlMode.PercentOutput;
-    	double signal = 0.2;
-    	Robot.wrist.wristMove(controlMode, signal);
+    	double signal = 0.0;
+    	//Robot.elevator.elevatorTest(controlMode, signal);
     }
 
     // Make this return true when this Command no longer needs to run execute()

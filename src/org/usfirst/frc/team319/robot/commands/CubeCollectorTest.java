@@ -23,13 +23,13 @@ public class CubeCollectorTest extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	ControlMode controlMode = ControlMode.PercentOutput;
-    	double speed = 0.5; //1.0
+    	double speed = 1.0; //1.0
     	Robot.cubeCollector.setCubeCollector(controlMode, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.cubeCollector.isCubeCollected();
     }
 
     // Called once after isFinished returns true
