@@ -1,8 +1,6 @@
 package org.usfirst.frc.team319.robot.commands;
 
-import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.utils.BobDriveHelper;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -11,15 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class BobDrive extends Command {
+public class CubeCollectorStraightenCube extends Command {
 
-	BobDriveHelper helper;
-	
-    public BobDrive() {
-    	requires(Robot.drivetrain);
-    	helper = new BobDriveHelper();
+    public CubeCollectorStraightenCube() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.cubeCollector);
     }
 
     // Called just before this Command runs the first time
@@ -28,16 +22,22 @@ public class BobDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	boolean quickTurn = Robot.drivetrain.quickTurnController();
-    	double moveValue = Robot.oi.driverController.getLeftStickY();
-    	double rotateValue = Robot.oi.driverController.getRightStickX();
-    	DriveSignal driveSignal = helper.cheesyDrive(0.6 * moveValue, 0.4 * rotateValue, quickTurn, false);
-    	Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
-    }
+    	ControlMode controlMode = ControlMode.PercentOutput;
+    	double left = 0.5; //1.0
+    	double right = -0.2;
+    	Robot.cubeCollector.makeCubeStraightCube(controlMode, left, right);
+    	//Commented out so I can try out an auto-straightener(7-in. arms)
+    	
+    	/*if Robot.cubeCollector.leftUltrasonic()>Robot.cubeCollector.rightUltrasonic(){
+    		//(If the left side of the cube is farther away than the right side)
+    		double left = 0.5;//Pull in the left side
+    		double right = -0.5;*/
+    	}
+   
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.cubeCollector.isCubeCollected();
     }
 
     // Called once after isFinished returns true
