@@ -1,6 +1,7 @@
-package org.usfirst.frc.team319.robot.commands;
+package org.usfirst.frc.team319.robot.commands.cubecollector;
 
 import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.robot.subsystems.CubeCollector;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -9,11 +10,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ClimberStop extends Command {
+public class CubeCollectorCollectAtSpeed extends Command {
 
-    public ClimberStop() {
+    public CubeCollectorCollectAtSpeed() {
         // Use requires() here to declare subsystem dependencies
-        //requires(Robot.climber);
+        requires(Robot.cubeCollector);
     }
 
     // Called just before this Command runs the first time
@@ -22,10 +23,12 @@ public class ClimberStop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	ControlMode controlMode = ControlMode.PercentOutput;
-    	double signal = 0.0;
-    	//Robot.climber.climberTest(controlMode, signal);
+    	// use this to set RPM of collector motors
+    	double rpm = 210; 
+    	// uses math from CTRE to convert RPM to speed units
+    	double speed = rpm * 4096 / 600;
+    	ControlMode controlMode = ControlMode.Velocity;
+    	Robot.cubeCollector.setCubeCollector(controlMode, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

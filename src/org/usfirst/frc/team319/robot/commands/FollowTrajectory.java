@@ -32,12 +32,12 @@ import org.usfirst.frc.team319.models.SrxTrajectory;
 
 public class FollowTrajectory extends Command {
 
-	private String trajectoryToFollow;
+	private String trajectoryName = "";
 	private int kMinPointsInTalon = 5;
 	
 	private boolean isFinished = false;
 
-	private SrxTrajectory traj;
+	private SrxTrajectory trajectoryToFollow = null;
 	private SrxTrajectoryImporter importer = new SrxTrajectoryImporter("/home/lvuser/Autos");
 
 	private MotionProfileStatus rightStatus = new MotionProfileStatus();
@@ -64,7 +64,12 @@ public class FollowTrajectory extends Command {
 	// constructor
 	public FollowTrajectory(String trajectoryName) {
 		requires(Robot.drivetrain);
-		this.trajectoryToFollow = trajectoryName;
+		this.trajectoryName = trajectoryName;
+	}
+	
+	public FollowTrajectory(SrxTrajectory trajectoryToFollow) {
+		requires(Robot.drivetrain);
+		this.trajectoryToFollow = trajectoryToFollow;
 	}
 
 	// Called just before this Command runs the first time
@@ -80,21 +85,24 @@ public class FollowTrajectory extends Command {
 
 		SrxNotifier.startPeriodic(.005);
 		
-		try 
-		{
-			this.traj = importer.importSrxTrajectory(trajectoryToFollow);
-		} 
-		catch (IOException | ParseException e) {
-			System.out.println("Failed to import trajectory.");
-			e.printStackTrace();
-			isFinished = true;
-			return;
+		if(trajectoryToFollow == null) {
+			
+			try 
+			{
+				this.trajectoryToFollow = importer.importSrxTrajectory(trajectoryName);
+			} 
+			catch (IOException | ParseException e) {
+				System.out.println("Failed to import trajectory.");
+				e.printStackTrace();
+				isFinished = true;
+				return;
+			}
 		}
 		
 		int pidfSlot = Robot.drivetrain.HIGH_GEAR_PROFILE;
 		
-		fillTalonBuffer(Robot.drivetrain.rightLead, this.traj.rightProfile, pidfSlot);
-		fillTalonBuffer(Robot.drivetrain.leftLead, this.traj.leftProfile, pidfSlot);
+		fillTalonBuffer(Robot.drivetrain.rightLead, this.trajectoryToFollow.rightProfile, pidfSlot);
+		fillTalonBuffer(Robot.drivetrain.leftLead, this.trajectoryToFollow.leftProfile, pidfSlot);
 
 	}
 

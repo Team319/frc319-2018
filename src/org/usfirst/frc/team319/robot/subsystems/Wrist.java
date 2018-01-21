@@ -1,7 +1,7 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
-import org.usfirst.frc.team319.robot.commands.WristStop;
+import org.usfirst.frc.team319.robot.commands.wrist.WristStop;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 

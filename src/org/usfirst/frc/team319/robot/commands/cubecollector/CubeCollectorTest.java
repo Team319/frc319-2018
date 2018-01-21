@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands;
+package org.usfirst.frc.team319.robot.commands.cubecollector;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ElevatorStop extends Command {
+public class CubeCollectorTest extends Command {
 
-    public ElevatorStop() {
+    public CubeCollectorTest() {
         // Use requires() here to declare subsystem dependencies
-        //requires(Robot.elevator);
+        requires(Robot.cubeCollector);
     }
 
     // Called just before this Command runs the first time
@@ -22,15 +22,14 @@ public class ElevatorStop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
     	ControlMode controlMode = ControlMode.PercentOutput;
-    	double signal = 0.0;
-    	//Robot.elevator.elevatorTest(controlMode, signal);
+    	double speed = 1.0; //1.0
+    	Robot.cubeCollector.setCubeCollector(controlMode, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.cubeCollector.isCubeCollected();
     }
 
     // Called once after isFinished returns true

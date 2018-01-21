@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands;
+package org.usfirst.frc.team319.robot.commands.wrist;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CubeCollectorSpit extends Command {
+public class WristStop extends Command {
 
-    public CubeCollectorSpit() {
+    public WristStop() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.cubeCollector);
+        //requires(Robot.wrist);
     }
 
     // Called just before this Command runs the first time
@@ -22,9 +22,10 @@ public class CubeCollectorSpit extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     	ControlMode controlMode = ControlMode.PercentOutput;
-    	double speed = -1.0;
-    	Robot.cubeCollector.setCubeCollector(controlMode, speed);
+    	double signal = 0.0;
+    	//Robot.wrist.wristMove(controlMode, signal);
     }
 
     // Make this return true when this Command no longer needs to run execute()

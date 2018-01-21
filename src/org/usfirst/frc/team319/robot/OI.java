@@ -8,11 +8,13 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.models.BobController;
-import org.usfirst.frc.team319.robot.commands.AutoDriveForwardThreeFeet;
-import org.usfirst.frc.team319.robot.commands.CubeCollectorSpit;
-import org.usfirst.frc.team319.robot.commands.CubeCollectorStop;
-import org.usfirst.frc.team319.robot.commands.CubeCollectorStraighten;
-import org.usfirst.frc.team319.robot.commands.CubeCollectorTest;
+//import org.usfirst.frc.team319.robot.commands.AutoDriveForwardThreeFeet;
+import org.usfirst.frc.team319.robot.commands.AutoTuneVelocity;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorCollectAtSpeed;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStraighten;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorTest;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 
 /**
@@ -26,18 +28,17 @@ public class OI {
 	public OI() {	
 		this.driverController = new BobController(0);
 		
-		driverController.rightTriggerButton.whileHeld(new CubeCollectorTest());
+		driverController.rightTriggerButton.whileHeld(new CubeCollectorCollectAtSpeed());
 		driverController.leftTriggerButton.whileHeld(new CubeCollectorSpit());
-		driverController.aButton.whenPressed(new CubeCollectorTest());
 		driverController.bButton.whenPressed(new CubeCollectorStop());
 		driverController.xButton.whenPressed(new CubeCollectorStraighten());
-		//driverController.leftBumper.whenPressed(new AutoDriveForwardThreeFeet());
-		
 		
 		this.operatorController  = new BobController(1);
 		
-		operatorController.aButton.whenPressed(new FollowTrajectory("CenterToRightSwitch"));
-		operatorController.bButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt2"));
-		operatorController.xButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt3"));
+		//operatorController.aButton.whenPressed(new FollowTrajectory("CenterToRightSwitch"));
+		//operatorController.bButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt2"));
+		//operatorController.xButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt3"));
+		operatorController.rightTriggerButton.whenPressed(new AutoTuneVelocity(Robot.cubeCollector.collectorLeftMotor, Robot.cubeCollector.COLLECTOR_PROFILE, 1000, 50));
+	
 	}
 }

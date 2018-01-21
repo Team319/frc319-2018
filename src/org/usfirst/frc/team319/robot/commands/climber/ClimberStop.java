@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands;
+package org.usfirst.frc.team319.robot.commands.climber;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class WristStop extends Command {
+public class ClimberStop extends Command {
 
-    public WristStop() {
+    public ClimberStop() {
         // Use requires() here to declare subsystem dependencies
-        //requires(Robot.wrist);
+        //requires(Robot.climber);
     }
 
     // Called just before this Command runs the first time
@@ -25,7 +25,7 @@ public class WristStop extends Command {
     	
     	ControlMode controlMode = ControlMode.PercentOutput;
     	double signal = 0.0;
-    	//Robot.wrist.wristMove(controlMode, signal);
+    	//Robot.climber.climberTest(controlMode, signal);
     }
 
     // Make this return true when this Command no longer needs to run execute()

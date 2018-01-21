@@ -3,7 +3,8 @@ package org.usfirst.frc.team319.robot.subsystems;
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.CubeCollectorStop;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorVelocityPIDTest;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.*;
@@ -23,39 +24,45 @@ public class CubeCollector extends Subsystem {
 	public final BobTalonSRX collectorRightMotor = new BobTalonSRX(10);
 	Ultrasonic collectorDistanceSensor = new Ultrasonic(0,1);
 	StringBuilder _sb = new StringBuilder();
-	
 	int _loops = 0;
-	//Extra sensors on the sides.
 	//Ultrasonic collectorSensorRight = new Ultrasonic(2, 3);
 	//Ultrasonic collectorSensorLeft = new Ultrasonic(3, 4);
 	
 	
 	public CubeCollector() {
 		
-		this.collectorLeftMotor.setInverted(false);
+		this.collectorLeftMotor.setInverted(true);
 		this.collectorRightMotor.setInverted(true);
 		collectorDistanceSensor.setAutomaticMode(true);
 		//collectorSensorLeft.setAutomaticMode(true);
 		//collectorSensorRight.setAutomaticMode(true);
 		
+		this.collectorLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, COLLECTOR_PROFILE);
+		this.collectorRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, COLLECTOR_PROFILE);
+		this.collectorLeftMotor.setSensorPhase(true);
+		this.collectorRightMotor.setSensorPhase(true);
+		
 		this.collectorLeftMotor.setNeutralMode(NeutralMode.Coast);
 		this.collectorLeftMotor.setNeutralMode(NeutralMode.Coast);
-
+		
+		this.collectorLeftMotor.configPIDF(COLLECTOR_PROFILE, 0.0, 0.0, 0.0, 0.374); // p: 0.008, f: 0.374
+		this.collectorRightMotor.configPIDF(COLLECTOR_PROFILE, 0.005, 0.0, 0.0, 0.303);
 	}
 
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new CubeCollectorStop());
+    	setDefaultCommand(new CubeCollectorVelocityPIDTest());
+       // setDefaultCommand(new CubeCollectorStop());
     }
     
-    //test method for prototyping cube collector
+    // set leftmotor speed to negative to combat issues with it running full 
+    // speed and not PIDing to the set speed
     public void setCubeCollector(ControlMode controlMode, double speed) {
-    	collectorLeftMotor.set(controlMode, speed);
+    	collectorLeftMotor.set(controlMode, -speed);
     	collectorRightMotor.set(controlMode, speed);
     }
     
-    public void makeCubeStraightCube(ControlMode controlMode, double left, double right) {
+    public void setCubeCollectorIndependently(ControlMode controlMode, double left, double right) {
     	collectorLeftMotor.set(controlMode, left);
     	collectorRightMotor.set(controlMode, right);
     }
@@ -63,6 +70,14 @@ public class CubeCollector extends Subsystem {
     public double centerUltrasonic() {
     	return this.collectorDistanceSensor.getRangeInches();
     }
+    
+    public double leftCollectorVelocity() {
+    	return this.collectorLeftMotor.getSelectedSensorVelocity(COLLECTOR_PROFILE);
+    }
+    
+    public double rightCollectorVelocity() {
+    	return this.collectorRightMotor.getSelectedSensorVelocity(COLLECTOR_PROFILE)
+;    }
     
    /*public double leftUltrasonic() {
     	return this.collectorSensorLeft.getRangeInches();
@@ -84,14 +99,15 @@ public class CubeCollector extends Subsystem {
     
     public void velocityPIDTest() {
     	
+    	BobTalonSRX _talon = this.collectorLeftMotor;
     	double leftYstick = Robot.oi.driverController.getRawAxis(1);
-    	double motorOutput = this.collectorLeftMotor.getMotorOutputPercent();
+    	double motorOutput = _talon.getMotorOutputPercent();
     	
 	/* prepare line to print */
 	_sb.append("\tout:");
 	_sb.append(motorOutput);
 	_sb.append("\tspd:");
-	_sb.append(collectorLeftMotor.getSelectedSensorVelocity(this.COLLECTOR_PROFILE));
+	_sb.append(_talon.getSelectedSensorVelocity(this.COLLECTOR_PROFILE));
 
 	if (Robot.oi.driverController.getRawButton(1)) {
 		/* Speed mode */
@@ -99,18 +115,18 @@ public class CubeCollector extends Subsystem {
 		 * 4096 Units/Rev * 500 RPM / 600 100ms/min in either direction:
 		 * velocity setpoint is in units/100ms
 		 */
-		double targetVelocity_UnitsPer100ms = leftYstick * 500.0 * 4096 / 600;
+		double targetVelocity_UnitsPer100ms = -1 * 210.0 * 4096 / 600;
 		/* 500 RPM in either direction */
-		collectorLeftMotor.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
+		_talon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
 
 		/* append more signals to print when in speed mode. */
 		_sb.append("\terr:");
-		_sb.append(collectorLeftMotor.getClosedLoopError(this.COLLECTOR_PROFILE));
+		_sb.append(_talon.getClosedLoopError(this.COLLECTOR_PROFILE));
 		_sb.append("\ttrg:");
 		_sb.append(targetVelocity_UnitsPer100ms);
 	} else {
 		/* Percent voltage mode */
-		collectorLeftMotor.set(ControlMode.PercentOutput, leftYstick);
+		_talon.set(ControlMode.PercentOutput, leftYstick);
 	}
 
 	if (++_loops >= 10) {

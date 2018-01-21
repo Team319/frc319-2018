@@ -143,6 +143,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Left Drive Velocity", this.drivetrain.getLeftDriveLeadVelocity());
 		SmartDashboard.putNumber("Right Drive Velocity", this.drivetrain.getRightDriveLeadVelocity());
 		SmartDashboard.putNumber("UltrasonicSensor", this.cubeCollector.centerUltrasonic());
+		SmartDashboard.putNumber("Left Collector Velocity", this.cubeCollector.leftCollectorVelocity());
+		SmartDashboard.putNumber("Right Collector Velocity", this.cubeCollector.rightCollectorVelocity());
 	}
 
 	/**

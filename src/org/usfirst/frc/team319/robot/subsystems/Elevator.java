@@ -1,7 +1,7 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
-import org.usfirst.frc.team319.robot.commands.ElevatorStop;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorStop;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -21,7 +21,6 @@ public class Elevator extends Subsystem {
 	}
     
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
         setDefaultCommand(new ElevatorStop());
     }
     

@@ -1,17 +1,15 @@
-package org.usfirst.frc.team319.robot.commands;
+package org.usfirst.frc.team319.robot.commands.cubecollector;
 
 import org.usfirst.frc.team319.robot.Robot;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CubeCollectorStraightenCube extends Command {
+public class CubeCollectorVelocityPIDTest extends Command {
 
-    public CubeCollectorStraightenCube() {
+    public CubeCollectorVelocityPIDTest() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.cubeCollector);
     }
@@ -22,22 +20,12 @@ public class CubeCollectorStraightenCube extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	ControlMode controlMode = ControlMode.PercentOutput;
-    	double left = 0.5; //1.0
-    	double right = -0.2;
-    	Robot.cubeCollector.makeCubeStraightCube(controlMode, left, right);
-    	//Commented out so I can try out an auto-straightener(7-in. arms)
-    	
-    	/*if Robot.cubeCollector.leftUltrasonic()>Robot.cubeCollector.rightUltrasonic(){
-    		//(If the left side of the cube is farther away than the right side)
-    		double left = 0.5;//Pull in the left side
-    		double right = -0.5;*/
-    	}
-   
+    	Robot.cubeCollector.velocityPIDTest();
+    }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.cubeCollector.isCubeCollected();
+        return false;
     }
 
     // Called once after isFinished returns true
