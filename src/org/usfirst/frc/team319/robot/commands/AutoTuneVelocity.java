@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
@@ -23,7 +24,7 @@ public class AutoTuneVelocity extends CommandGroup {
 	private int requiredSamples;
 	private double target;
 
-    public AutoTuneVelocity(BobTalonSRX talon, int srxParameterSlot, double desiredVelocity, int numSamplesRequired) {
+    public AutoTuneVelocity(Subsystem requiredSubsystem, BobTalonSRX talon, int srxParameterSlot, double desiredVelocity, int numSamplesRequired) {
     	
     	
     	this._talon = talon;
@@ -44,29 +45,29 @@ public class AutoTuneVelocity extends CommandGroup {
     	
     	System.out.println("Starting motor.");
     	
-    	addSequential(new AutoTuneVelocitySpinUp(_talon, ControlMode.PercentOutput, 1.0));
+    	addSequential(new AutoTuneVelocitySpinUp(requiredSubsystem, _talon, ControlMode.PercentOutput, 1.0));
     	
     	addSequential(new WaitCommand("spin_up_wait_command", 2000));
     	
     	System.out.println("Calculating feed forward gain (F).");
     	
-    	addSequential(new AutoTuneVelocityCalculateF(_talon, parameterSlot, requiredSamples));
+    	addSequential(new AutoTuneVelocityCalculateF(requiredSubsystem, _talon, parameterSlot, requiredSamples));
     	
     	System.out.println("Finished calculating F gain.  Switching to speed mode.");
     	
-    	addSequential(new AutoTuneVelocitySpinDown(_talon));
+    	addSequential(new AutoTuneVelocitySpinDown(requiredSubsystem, _talon));
     	
     	System.out.println("Calculating proportional gain (P).");
     	
-    	addSequential(new AutoTuneVelocitySpinUp(_talon, ControlMode.Velocity, target));
+    	addSequential(new AutoTuneVelocitySpinUp(requiredSubsystem, _talon, ControlMode.Velocity, target));
     	
     	addSequential(new WaitCommand("spin_up_wait_command", 2000));
     	
-    	addSequential(new AutoTuneVelocityCalculateP(_talon,parameterSlot, target, requiredSamples));
+    	addSequential(new AutoTuneVelocityCalculateP(requiredSubsystem, _talon,parameterSlot, target, requiredSamples));
     	
     	System.out.println("Finished calculating P gain.  Switching to percent output mode.");
     	
-    	addSequential(new AutoTuneVelocitySpinDown(_talon));
+    	addSequential(new AutoTuneVelocitySpinDown(requiredSubsystem, _talon));
     	
     	System.out.println("Talon F gain set to: " + _talon.configGetParameter(ParamEnum.eProfileParamSlot_F, parameterSlot));   
     	

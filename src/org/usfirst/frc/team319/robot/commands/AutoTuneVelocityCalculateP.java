@@ -7,6 +7,7 @@ import org.usfirst.frc.team319.utils.HelperFunctions;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
@@ -22,11 +23,12 @@ public class AutoTuneVelocityCalculateP extends Command {
 	private BobCircularBuffer cBuff;
 
 
-    public AutoTuneVelocityCalculateP(BobTalonSRX talon, int srxParameterSlot, double desiredVelocity, int numSamplesRequired) {
+    public AutoTuneVelocityCalculateP(Subsystem requiredSubsystem, BobTalonSRX talon, int srxParameterSlot, double desiredVelocity, int numSamplesRequired) {
     	this._talon = talon;
     	this.samplesRequired = numSamplesRequired;
     	this.cBuff = new BobCircularBuffer(samplesRequired);
     	this.paramterSlot = srxParameterSlot;
+    	requires(requiredSubsystem);
     }
 
     // Called just before this Command runs the first time

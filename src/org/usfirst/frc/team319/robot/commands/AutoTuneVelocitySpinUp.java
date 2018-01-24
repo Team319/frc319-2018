@@ -5,6 +5,7 @@ import org.usfirst.frc.team319.models.BobTalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
@@ -15,10 +16,11 @@ public class AutoTuneVelocitySpinUp extends Command {
 	private ControlMode controlMode;
 	private double setpoint;
 	
-    public AutoTuneVelocitySpinUp(BobTalonSRX talon, ControlMode controlMode, double setpoint) {
+    public AutoTuneVelocitySpinUp(Subsystem requiredSubsystem, BobTalonSRX talon, ControlMode controlMode, double setpoint) {
     	_talon = talon;
     	this.controlMode = controlMode;
     	this.setpoint = setpoint;
+    	requires(requiredSubsystem);
     }
 
     // Called just before this Command runs the first time
