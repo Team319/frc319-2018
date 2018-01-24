@@ -41,13 +41,13 @@ public class AutoTuneVelocity extends CommandGroup {
     	
     	System.out.println("Starting motor in 5 seconds.  STAND CLEAR.");
     	
-    	addSequential(new WaitCommand("safety_wait_command", 5000));
+    	addSequential(new WaitCommand("safety_wait_command", 5.0));
     	
     	System.out.println("Starting motor.");
     	
     	addSequential(new AutoTuneVelocitySpinUp(requiredSubsystem, _talon, ControlMode.PercentOutput, 1.0));
     	
-    	addSequential(new WaitCommand("spin_up_wait_command", 2000));
+    	addSequential(new WaitCommand("spin_up_wait_command", 2.0));
     	
     	System.out.println("Calculating feed forward gain (F).");
     	
@@ -61,7 +61,7 @@ public class AutoTuneVelocity extends CommandGroup {
     	
     	addSequential(new AutoTuneVelocitySpinUp(requiredSubsystem, _talon, ControlMode.Velocity, target));
     	
-    	addSequential(new WaitCommand("spin_up_wait_command", 2000));
+    	addSequential(new WaitCommand("spin_up_wait_command", 2.0));
     	
     	addSequential(new AutoTuneVelocityCalculateP(requiredSubsystem, _talon,parameterSlot, target, requiredSamples));
     	
