@@ -76,6 +76,15 @@ public class BobTalonSRX extends TalonSRX {
 	public ErrorCode setSelectedSensorPosition(int sensorPos, int pidIdx) {
 		return super.setSelectedSensorPosition(sensorPos, pidIdx, DEFAULT_TIMEOUT_MS);
 	}
+	
+	public ErrorCode configMotionAcceleration(int sensorUnitsPer100msPerSec) {
+		return super.configMotionAcceleration(sensorUnitsPer100msPerSec, DEFAULT_TIMEOUT_MS);
+	}
+	
+	public ErrorCode configMotionCruiseVelocity(int sensorUnitsPer100ms) {
+		return super.configMotionCruiseVelocity(sensorUnitsPer100ms, DEFAULT_TIMEOUT_MS);
+	}
+	
 	public double configGetParameter(ParamEnum param, int ordinal) {
 		return super.configGetParameter(param, ordinal, DEFAULT_TIMEOUT_MS);
 	}

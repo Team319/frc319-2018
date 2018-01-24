@@ -38,7 +38,7 @@ public class OI {
 		//operatorController.aButton.whenPressed(new FollowTrajectory("CenterToRightSwitch"));
 		//operatorController.bButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt2"));
 		//operatorController.xButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt3"));
-		operatorController.rightTriggerButton.whenPressed(new AutoTuneVelocity(Robot.cubeCollector.collectorLeftMotor, Robot.cubeCollector.COLLECTOR_PROFILE, 1000, 50));
+		//operatorController.rightTriggerButton.whenPressed(new AutoTuneVelocity(Robot.cubeCollector.collectorLeftMotor, Robot.cubeCollector.COLLECTOR_PROFILE, 1000, 50));
 	
 	}
 }
