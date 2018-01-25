@@ -28,7 +28,7 @@ public class OI {
 	public OI() {	
 		this.driverController = new BobController(0);
 		
-		driverController.rightTriggerButton.whileHeld(new CubeCollectorCollectAtSpeed());
+		driverController.rightTriggerButton.whileHeld(new CubeCollectorTest());
 		driverController.leftTriggerButton.whileHeld(new CubeCollectorSpit());
 		driverController.bButton.whenPressed(new CubeCollectorStop());
 		driverController.xButton.whenPressed(new CubeCollectorStraighten());
@@ -38,7 +38,7 @@ public class OI {
 		//operatorController.aButton.whenPressed(new FollowTrajectory("CenterToRightSwitch"));
 		//operatorController.bButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt2"));
 		//operatorController.xButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt3"));
-		//operatorController.rightTriggerButton.whenPressed(new AutoTuneVelocity(Robot.cubeCollector.collectorLeftMotor, Robot.cubeCollector.COLLECTOR_PROFILE, 1000, 50));
+		//operatorController.rightTriggerButton.whenPressed(new AutoTuneVelocity(Robot.cubeCollector, Robot.cubeCollector.collectorLeftMotor, Robot.cubeCollector.COLLECTOR_PROFILE, 210, 50));
 	
 	}
 }

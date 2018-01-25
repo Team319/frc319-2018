@@ -10,7 +10,7 @@ public class CubeCollectorStraighten extends CommandGroup {
     public CubeCollectorStraighten() {
         
     	System.out.println("test");
-    	addSequential(new CubeCollectorStraightenCube(), 0.2);
+    	addSequential(new CubeCollectorStraightenCube(), 0.25);
     	addSequential(new CubeCollectorTest(), 0.5);
     }
 }

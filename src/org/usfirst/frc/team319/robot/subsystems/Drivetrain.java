@@ -9,6 +9,7 @@ import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -54,7 +55,7 @@ public class Drivetrain extends Subsystem {
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new BobDrive());
+        setDefaultCommand(new BobDrive());
     }
     
     public void configPIDF(int profile, double p, double i, double d, double f) {
@@ -100,6 +101,22 @@ public class Drivetrain extends Subsystem {
     public void setDrivetrainPositionToZero() {
     	this.leftLead.setSelectedSensorPosition(0, LOW_GEAR_PROFILE);
     	this.rightLead.setSelectedSensorPosition(0, LOW_GEAR_PROFILE);
+    }
+    
+    public double getLeftLeadVoltage() {
+    	return this.leftLead.getMotorOutputVoltage();
+    }
+    
+    public double getRightLeadVoltage() {
+    	return this.rightLead.getMotorOutputVoltage();
+    }
+    
+    public TalonSRX getLeftLeadTalon() {
+    	return this.getLeftLeadTalon();
+    }
+    
+    public TalonSRX getRightLeadTalon() {
+    	return this.rightLead;
     }
     	
 }

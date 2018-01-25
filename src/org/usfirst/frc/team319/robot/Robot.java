@@ -16,11 +16,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
+import org.usfirst.frc.team319.robot.commands.autonomous.CenterToSwitchAuto;
+import org.usfirst.frc.team319.robot.commands.autonomous.DefaultAuto;
+import org.usfirst.frc.team319.robot.commands.autonomous.LeftAuto;
+import org.usfirst.frc.team319.robot.commands.autonomous.LeftAutoTest;
+import org.usfirst.frc.team319.robot.commands.autonomous.RightAuto;
 import org.usfirst.frc.team319.robot.subsystems.Climber;
 import org.usfirst.frc.team319.robot.subsystems.CubeCollector;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team319.robot.subsystems.Elevator;
 import org.usfirst.frc.team319.robot.subsystems.Wrist;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,6 +37,8 @@ import org.usfirst.frc.team319.robot.subsystems.Wrist;
  */
 public class Robot extends TimedRobot {
 	
+	Command autonomousCommand;
+	SendableChooser autoChooser;
 	
 	public static final CubeCollector cubeCollector = new CubeCollector();
 	public static final Drivetrain drivetrain = new Drivetrain();
@@ -38,9 +46,9 @@ public class Robot extends TimedRobot {
 	//public static final Wrist wrist = new Wrist();
 	//public static final Climber climber = new Climber();
 	public static OI oi;
+	
 
-	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	//SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -52,11 +60,19 @@ public class Robot extends TimedRobot {
 		 
 		oi = new OI();
 		this.drivetrain.setDrivetrainPositionToZero();
+		
+		 
+	       autoChooser = new SendableChooser();
+			autoChooser.addDefault("Default", new DefaultAuto());
+			autoChooser.addObject("Center", new CenterToSwitchAuto());
+			autoChooser.addObject("Left", new LeftAutoTest());
+			autoChooser.addObject("Right", new RightAuto());
+			//autoChooser.addObject("Test", new FollowTrajectory("OneFoot"));
+	
+			SmartDashboard.putData("Autonomous Command Chooser", autoChooser);
 		//drivetrain = new Drivetrain();
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
-	}
 	 
 
 	/**
@@ -64,6 +80,7 @@ public class Robot extends TimedRobot {
 	 * You can use it to reset any subsystem information you want to clear when
 	 * the robot is disabled.
 	 */
+	}
 	@Override
 	public void disabledInit() {
 
@@ -87,17 +104,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
-		String gameData;
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-				if(gameData.charAt(0) == 'L') {
-					System.out.println("L");
-					//m_autonomousCommand = new FollowTrajectory("ThreeFeet");
-				}else {
-					System.out.println("R");
-					//m_autonomousCommand = new FollowTrajectory("OneFoot");
-				}
-	
 		//m_autonomousCommand = m_chooser.getSelected();
 
 		/*
@@ -106,10 +112,13 @@ public class Robot extends TimedRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
+		//SmartDashboard.putData("Auto mode", m_chooser);
+	
+		autonomousCommand = (Command) autoChooser.getSelected();
 
 		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
+		if (autonomousCommand != null) {
+			autonomousCommand.start();
 		}
 	}
 
@@ -127,8 +136,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
+		if (autonomousCommand != null) {
+			autonomousCommand.cancel();
 		}
 	}
 
