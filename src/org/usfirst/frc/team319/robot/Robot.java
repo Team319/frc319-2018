@@ -15,12 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
+import org.usfirst.frc.team319.models.GameState;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
+import org.usfirst.frc.team319.robot.commands.autonomous.CenterAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous.CenterToSwitchAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous.DefaultAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous.LeftAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous.LeftAutoTest;
-import org.usfirst.frc.team319.robot.commands.autonomous.RightAuto;
 import org.usfirst.frc.team319.robot.subsystems.Climber;
 import org.usfirst.frc.team319.robot.subsystems.CubeCollector;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
@@ -38,7 +39,9 @@ import org.usfirst.frc.team319.robot.subsystems.Wrist;
 public class Robot extends TimedRobot {
 	
 	Command autonomousCommand;
-	SendableChooser autoChooser;
+	SendableChooser<String> autoChooser;
+	
+	public GameState gameState;
 	
 	public static final CubeCollector cubeCollector = new CubeCollector();
 	public static final Drivetrain drivetrain = new Drivetrain();
@@ -62,14 +65,16 @@ public class Robot extends TimedRobot {
 		this.drivetrain.setDrivetrainPositionToZero();
 		
 		 
-	       autoChooser = new SendableChooser();
-			autoChooser.addDefault("Default", new DefaultAuto());
-			autoChooser.addObject("Center", new CenterToSwitchAuto());
-			autoChooser.addObject("Left", new LeftAutoTest());
-			autoChooser.addObject("Right", new RightAuto());
+	        autoChooser = new SendableChooser<String>();
+	        autoChooser.addDefault("Center Auto", "CenterAuto");
+	        autoChooser.addObject("Left Auto", "LeftAuto");
+			//autoChooser.addDefault("Default", new DefaultAuto());
+			//autoChooser.addObject("Center", new CenterToSwitchAuto());
+			//autoChooser.addObject("Left", new LeftAutoTest());
+			//autoChooser.addObject("Right", new RightAuto());
 			//autoChooser.addObject("Test", new FollowTrajectory("OneFoot"));
 	
-			SmartDashboard.putData("Autonomous Command Chooser", autoChooser);
+			SmartDashboard.putData("Autonomous Chooser", autoChooser);
 		//drivetrain = new Drivetrain();
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -88,6 +93,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		this.gameState = new GameState(DriverStation.getInstance().getGameSpecificMessage());
 		Scheduler.getInstance().run();
 	}
 
@@ -113,8 +119,17 @@ public class Robot extends TimedRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 		//SmartDashboard.putData("Auto mode", m_chooser);
-	
-		autonomousCommand = (Command) autoChooser.getSelected();
+		String selectedAuto = (String)autoChooser.getSelected();
+		switch (selectedAuto) {
+		case "CenterAuto":
+			autonomousCommand = new CenterAuto(gameState);
+			break;
+		case "LeftAuto":
+			autonomousCommand = new LeftAuto(gameState);
+		default:
+			autonomousCommand = new FollowTrajectory("CrossTheLine");
+			break;
+		}
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {

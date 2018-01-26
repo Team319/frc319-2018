@@ -16,13 +16,16 @@ public class LeftAutoTest extends CommandGroup {
     	
     	String gameData;
     	gameData = DriverStation.getInstance().getGameSpecificMessage();
-    	
+    
 				if(gameData.charAt(0) == 'L') {
 					System.out.println("L");
-					addParallel(new FollowTrajectory("OneFoot"));
+					addSequential(new FollowTrajectory("OneFoot"));
 				}else {
 					System.out.println("R");
-					addParallel(new FollowTrajectory("CrossTheLine"));
+					addSequential(new FollowTrajectory("CrossTheLine"));
 				}   	
+				
+    	
+    	  
     }
 }

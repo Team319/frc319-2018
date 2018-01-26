@@ -9,14 +9,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class LeftAuto extends CommandGroup {
+public class CenterAuto extends CommandGroup {
 
-    public LeftAuto(GameState gameState) {
+    public CenterAuto(GameState gameState) {
     	
     	if(gameState.mySwitchSide == Side.LEFT) {
-			addSequential(new FollowTrajectory("OneFoot"));
+			addSequential(new DoubleSwitchLeft());
 		}else {
-			addSequential(new FollowTrajectory("CrossTheLine"));
+			addSequential(new DoubleSwitchRight());
 		}
     }
 }

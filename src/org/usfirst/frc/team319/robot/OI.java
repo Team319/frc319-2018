@@ -8,6 +8,7 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.models.BobController;
+import org.usfirst.frc.team319.robot.commands.AutoTuneCollectorLeft;
 //import org.usfirst.frc.team319.robot.commands.AutoDriveForwardThreeFeet;
 import org.usfirst.frc.team319.robot.commands.AutoTuneVelocity;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorCollectAtSpeed;
@@ -15,6 +16,9 @@ import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStraighten;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorTest;
+
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 
 /**
@@ -38,7 +42,7 @@ public class OI {
 		//operatorController.aButton.whenPressed(new FollowTrajectory("CenterToRightSwitch"));
 		//operatorController.bButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt2"));
 		//operatorController.xButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt3"));
-		//operatorController.rightTriggerButton.whenPressed(new AutoTuneVelocity(Robot.cubeCollector, Robot.cubeCollector.collectorLeftMotor, Robot.cubeCollector.COLLECTOR_PROFILE, 210, 50));
+		operatorController.rightTriggerButton.whenPressed(new AutoTuneCollectorLeft());
 	
 	}
 }

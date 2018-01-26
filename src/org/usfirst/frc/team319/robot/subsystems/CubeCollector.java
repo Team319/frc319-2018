@@ -36,10 +36,10 @@ public class CubeCollector extends Subsystem {
 		this.collectorRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, COLLECTOR_PROFILE);
 		
 		
-		this.collectorLeftMotor.setSensorPhase(true);
+		this.collectorLeftMotor.setSensorPhase(false);
 		this.collectorRightMotor.setSensorPhase(true);
 		
-		this.collectorLeftMotor.setInverted(true);
+		this.collectorLeftMotor.setInverted(false);
 		this.collectorRightMotor.setInverted(true);
 		
 		collectorDistanceSensor.setAutomaticMode(true);
@@ -50,7 +50,7 @@ public class CubeCollector extends Subsystem {
 		this.collectorLeftMotor.setNeutralMode(NeutralMode.Coast);
 		this.collectorLeftMotor.setNeutralMode(NeutralMode.Coast);
 		
-		this.collectorLeftMotor.configPIDF(COLLECTOR_PROFILE, 0.008, 0.0, 0.0, 0.374); // p: 0.008, f: 0.374
+		this.collectorLeftMotor.configPIDF(COLLECTOR_PROFILE, 0.105, 0.0, 0.0, 0.345); // p: 0.008, f: 0.374
 		this.collectorRightMotor.configPIDF(COLLECTOR_PROFILE, 0.005, 0.0, 0.0, 0.303);
 	
 	}
@@ -78,6 +78,7 @@ public class CubeCollector extends Subsystem {
     }
     
     public double leftCollectorVelocity() {
+    	this.collectorLeftMotor.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_100Ms, 0);
     	return this.collectorLeftMotor.getSelectedSensorVelocity(COLLECTOR_PROFILE);
     }
     

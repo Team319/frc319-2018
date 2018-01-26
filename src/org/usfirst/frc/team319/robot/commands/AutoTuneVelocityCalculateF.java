@@ -28,18 +28,20 @@ public class AutoTuneVelocityCalculateF extends Command {
     	this.samplesRequired = numSamplesRequired;
     	this.cBuff = new BobCircularBuffer(samplesRequired);
     	this.paramterSlot = srxParameterSlot;
+    	this._sb = new StringBuilder();
     	requires(requiredSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("Calculating feed forward gain (F).");
     	System.out.println("Gathering Data...");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double outputSignal = _talon.getMotorOutputVoltage() / _talon.getBusVoltage();
-    	double speed = _talon.getSelectedSensorVelocity(0);
+    	double speed = _talon.getSelectedSensorVelocity(paramterSlot);
     	
     	cBuff.addLast(speed);
     	samplesGathered++;
@@ -48,8 +50,11 @@ public class AutoTuneVelocityCalculateF extends Command {
     	_sb.append(outputSignal);
     	_sb.append("\tSpeed: ");
     	_sb.append(speed);
+    	_sb.append("\n");
     	
-    	System.out.println(_sb.toString());
+    	if(samplesGathered % 10 == 0) {
+    		System.out.println(_sb.toString());
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -62,6 +67,7 @@ public class AutoTuneVelocityCalculateF extends Command {
     	double kF = 1023 / HelperFunctions.mean(cBuff.toArray());
     	_talon.config_kF(paramterSlot, kF);
     	System.out.println("Calculated F gain = " + kF);
+    	System.out.println("Finished calculating F gain.  Switching to speed mode.");
     }
 
     // Called when another command which requires one or more of the same
