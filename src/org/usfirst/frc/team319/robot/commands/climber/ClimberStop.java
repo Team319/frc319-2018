@@ -13,7 +13,7 @@ public class ClimberStop extends Command {
 
     public ClimberStop() {
         // Use requires() here to declare subsystem dependencies
-        //requires(Robot.climber);
+        requires(Robot.climber);
     }
 
     // Called just before this Command runs the first time

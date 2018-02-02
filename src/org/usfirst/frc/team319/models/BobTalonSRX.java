@@ -2,6 +2,8 @@ package org.usfirst.frc.team319.models;
 
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.ParamEnum;
 
@@ -11,6 +13,8 @@ public class BobTalonSRX extends TalonSRX {
 	
 	public BobTalonSRX(int deviceNumber) {
 		super(deviceNumber);
+		this.configNominalOutputForward(0.0);
+		this.configNominalOutputReverse(0.0);
 	}
 	
 	public ErrorCode configPIDF(int slotIdx, double P, double I, double D, double F){
@@ -42,9 +46,19 @@ public class BobTalonSRX extends TalonSRX {
 	public ErrorCode configNominalOutputReverse(double percentOut) {
 		return super.configNominalOutputReverse(percentOut, DEFAULT_TIMEOUT_MS);
 	}
+	
+	public ErrorCode configPeakOutputForward(double percentOut) {
+		return super.configPeakOutputForward(percentOut, DEFAULT_TIMEOUT_MS);
+	}
+	
+	public ErrorCode configPeakOutputReverse(double percentOut) {
+		return super.configPeakOutputReverse(percentOut, DEFAULT_TIMEOUT_MS);
+	}
+	
 	public ErrorCode setGains(SRXGains gains) {
 		return this.configPIDF(gains.parameterSlot, gains.P, gains.I, gains.D, gains.F);
 	}
+	
 	public ErrorCode configSelectedFeedbackSensor(FeedbackDevice feedbackDevice, int pidIdx) {
 		return super.configSelectedFeedbackSensor(feedbackDevice, pidIdx, DEFAULT_TIMEOUT_MS);
 	}
@@ -83,6 +97,10 @@ public class BobTalonSRX extends TalonSRX {
 	
 	public ErrorCode configMotionCruiseVelocity(int sensorUnitsPer100ms) {
 		return super.configMotionCruiseVelocity(sensorUnitsPer100ms, DEFAULT_TIMEOUT_MS);
+	}
+	
+	public ErrorCode setStatusFramePeriod(StatusFrameEnhanced status13BasePidf0, int periodMs) {
+		return super.setStatusFramePeriod(status13BasePidf0, periodMs, DEFAULT_TIMEOUT_MS);
 	}
 	
 	public double configGetParameter(ParamEnum param, int ordinal) {

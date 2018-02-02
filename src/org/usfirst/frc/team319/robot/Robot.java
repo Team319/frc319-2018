@@ -26,7 +26,10 @@ import org.usfirst.frc.team319.robot.subsystems.Climber;
 import org.usfirst.frc.team319.robot.subsystems.CubeCollector;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team319.robot.subsystems.Elevator;
+import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team319.robot.subsystems.Wrist;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 
 /**
@@ -45,9 +48,10 @@ public class Robot extends TimedRobot {
 	
 	public static final CubeCollector cubeCollector = new CubeCollector();
 	public static final Drivetrain drivetrain = new Drivetrain();
+	//public static final Pneumatics pneumatics = new Pneumatics();
 	//public static final Elevator elevator = new Elevator();
 	//public static final Wrist wrist = new Wrist();
-	//public static final Climber climber = new Climber();
+	public static final Climber climber = new Climber();
 	public static OI oi;
 	
 
@@ -62,19 +66,18 @@ public class Robot extends TimedRobot {
 		
 		 
 		oi = new OI();
-		this.drivetrain.setDrivetrainPositionToZero();
-		
-		 
-	        autoChooser = new SendableChooser<String>();
-	        autoChooser.addDefault("Center Auto", "CenterAuto");
-	        autoChooser.addObject("Left Auto", "LeftAuto");
-			//autoChooser.addDefault("Default", new DefaultAuto());
-			//autoChooser.addObject("Center", new CenterToSwitchAuto());
-			//autoChooser.addObject("Left", new LeftAutoTest());
-			//autoChooser.addObject("Right", new RightAuto());
-			//autoChooser.addObject("Test", new FollowTrajectory("OneFoot"));
-	
-			SmartDashboard.putData("Autonomous Chooser", autoChooser);
+		this.drivetrain.setDrivetrainPositionToZero();		
+	 
+        autoChooser = new SendableChooser<String>();
+        autoChooser.addDefault("Center Auto", "CenterAuto");
+        autoChooser.addObject("Left Auto", "LeftAuto");
+		//autoChooser.addDefault("Default", new DefaultAuto());
+		//autoChooser.addObject("Center", new CenterToSwitchAuto());
+		//autoChooser.addObject("Left", new LeftAutoTest());
+		//autoChooser.addObject("Right", new RightAuto());
+		//autoChooser.addObject("Test", new FollowTrajectory("OneFoot"));
+
+		SmartDashboard.putData("Autonomous Chooser", autoChooser);
 		//drivetrain = new Drivetrain();
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -168,8 +171,11 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Drive Velocity", this.drivetrain.getRightDriveLeadVelocity());
 		SmartDashboard.putNumber("UltrasonicSensor", this.cubeCollector.centerUltrasonic());
 		SmartDashboard.putNumber("Left Collector Velocity", this.cubeCollector.leftCollectorVelocity());
+		SmartDashboard.putNumber("Left Collector Position", this.cubeCollector.leftCollectorPosition());
 		SmartDashboard.putNumber("Right Collector Velocity", this.cubeCollector.rightCollectorVelocity());
 		SmartDashboard.putNumber("Right Collector Position", this.cubeCollector.rightCollectorPosition());
+		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.getLeftStickY());
+		
 	}
 
 	/**

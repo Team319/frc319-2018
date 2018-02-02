@@ -11,6 +11,6 @@ public class DoubleSwitchRight extends CommandGroup {
 
     public DoubleSwitchRight() {
     	
-        addSequential(new FollowTrajectory("CemterToRightSwitch"));
+        addSequential(new FollowTrajectory("CenterToRightSwitch"));
     }
 }

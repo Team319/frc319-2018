@@ -1,10 +1,15 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
+import java.util.concurrent.TimeUnit;
+
 import org.usfirst.frc.team319.models.BobTalonSRX;
+import org.usfirst.frc.team319.models.Instrum;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorMotionMagicTest;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorVelocityPIDTest;
+import org.usfirst.frc.team319.robot.commands.cubecollector.SetCubeCollectorLeftMotor;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.*;
@@ -20,11 +25,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class CubeCollector extends Subsystem {
 	
 	public final static int COLLECTOR_PROFILE = 0;
-	public final BobTalonSRX collectorLeftMotor = new BobTalonSRX(0);
+	public final BobTalonSRX collectorLeftMotor = new BobTalonSRX(11);
 	public final BobTalonSRX collectorRightMotor = new BobTalonSRX(10);
 	Ultrasonic collectorDistanceSensor = new Ultrasonic(0,1);
 	StringBuilder _sb = new StringBuilder();
-	int _loops = 0;
+	int loops = 0;
+	private static int _loops = 0;
+	private static int _timesInMotionMagic = 0;
+
 	//Ultrasonic collectorSensorRight = new Ultrasonic(2, 3);
 	//Ultrasonic collectorSensorLeft = new Ultrasonic(3, 4);
 	
@@ -32,26 +40,50 @@ public class CubeCollector extends Subsystem {
 	public CubeCollector() {
 		
 
-		this.collectorLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, COLLECTOR_PROFILE);
-		this.collectorRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, COLLECTOR_PROFILE);
+		this.collectorLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, COLLECTOR_PROFILE, 10);
+		this.collectorRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, COLLECTOR_PROFILE, 10);
 		
 		
-		this.collectorLeftMotor.setSensorPhase(false);
+		this.collectorLeftMotor.setSensorPhase(true);
 		this.collectorRightMotor.setSensorPhase(true);
 		
 		this.collectorLeftMotor.setInverted(false);
 		this.collectorRightMotor.setInverted(true);
 		
-		collectorDistanceSensor.setAutomaticMode(true);
-		//collectorSensorLeft.setAutomaticMode(true);
-		//collectorSensorRight.setAutomaticMode(true);
+		////////////////////////////motion magic//////////////////////////////////
 		
+		this.collectorLeftMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
+		this.collectorLeftMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
+		
+		this.collectorLeftMotor.configPeakOutputForward(1);
+		this.collectorLeftMotor.configPeakOutputReverse(-1);
+		
+		this.collectorLeftMotor.setSelectedSensorPosition(0, COLLECTOR_PROFILE);
+				
+		this.collectorLeftMotor.configMotionAcceleration(500);
+		this.collectorLeftMotor.configMotionCruiseVelocity(2000);
+		
+		this.collectorRightMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
+		this.collectorRightMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
+		
+		this.collectorRightMotor.configPeakOutputForward(1);
+		this.collectorRightMotor.configPeakOutputReverse(-1);
+		
+		this.collectorRightMotor.setSelectedSensorPosition(0, COLLECTOR_PROFILE);
+				
+		this.collectorRightMotor.configMotionAcceleration(500);
+		this.collectorRightMotor.configMotionCruiseVelocity(2000);
+		//////////////////////////////////////////////////////////////////////////
+		
+		this.collectorDistanceSensor.setAutomaticMode(true);
+		//this.collectorSensorLeft.setAutomaticMode(true);
+		//this.collectorSensorRight.setAutomaticMode(true);
 		
 		this.collectorLeftMotor.setNeutralMode(NeutralMode.Coast);
-		this.collectorLeftMotor.setNeutralMode(NeutralMode.Coast);
+		this.collectorRightMotor.setNeutralMode(NeutralMode.Coast);
 		
 		this.collectorLeftMotor.configPIDF(COLLECTOR_PROFILE, 0.105, 0.0, 0.0, 0.345); // p: 0.008, f: 0.374
-		this.collectorRightMotor.configPIDF(COLLECTOR_PROFILE, 0.005, 0.0, 0.0, 0.303);
+		this.collectorRightMotor.configPIDF(COLLECTOR_PROFILE, 0.0734, 0.0, 0.0, 0.299);
 	
 	}
 
@@ -59,18 +91,24 @@ public class CubeCollector extends Subsystem {
     public void initDefaultCommand() {
     	//setDefaultCommand(new CubeCollectorVelocityPIDTest());
     	setDefaultCommand(new CubeCollectorStop());
+    	//setDefaultCommand(new SetCubeCollectorLeftMotor());
+    	//setDefaultCommand(new CubeCollectorMotionMagicTest());
     }
     
     // set leftmotor speed to negative to combat issues with it running full 
     // speed and not PIDing to the set speed
     public void setCubeCollector(ControlMode controlMode, double speed) {
-    	collectorLeftMotor.set(controlMode, -speed);
+    	collectorLeftMotor.set(controlMode, speed);
     	collectorRightMotor.set(controlMode, speed);
     }
     
     public void setCubeCollectorIndependently(ControlMode controlMode, double left, double right) {
     	collectorLeftMotor.set(controlMode, left);
     	collectorRightMotor.set(controlMode, right);
+    }
+    
+    public void setCubeCollectorLeftMotor(ControlMode controlMode, double speed) {
+    	collectorLeftMotor.set(controlMode, speed);
     }
    
     public double centerUltrasonic() {
@@ -87,18 +125,26 @@ public class CubeCollector extends Subsystem {
     }
     
     public double rightCollectorPosition() {
-    	return this.collectorRightMotor.getSelectedSensorVelocity(COLLECTOR_PROFILE);
+    	return this.collectorRightMotor.getSelectedSensorPosition(COLLECTOR_PROFILE);
     }
     
-    public void cubeCollectorMotionMagicTest(ControlMode controlMode, double degrees) {
-    	double revs = degrees/360.0;
-    	this.collectorRightMotor.set(controlMode, revs);
+    public double leftCollectorPosition() {
+    	return this.collectorLeftMotor.getSelectedSensorPosition(COLLECTOR_PROFILE);
+    }
+    
+    public void cubeCollectorMotionMagicTest() {
+    	System.out.println("method called " + this.collectorLeftMotor.getControlMode());
+    	//double revs = degrees/360.0;
+    	//this.collectorLeftMotor.set(ControlMode.MotionMagic, 180);
+    	this.collectorLeftMotor.set(ControlMode.MotionMagic, 180);
+    	System.out.println("method called " + this.collectorLeftMotor.getControlMode());
+    	System.out.println("method called " + this.collectorLeftMotor.getClosedLoopTarget(COLLECTOR_PROFILE));
     }
     
    /*public double leftUltrasonic() {
     	return this.collectorSensorLeft.getRangeInches();
     }
-    
+    CubeCollectorTest.java
     public double rightUltrasonic() {
     	return this.collectorSensorRight.getRangeInches();
     }*/
@@ -116,12 +162,12 @@ public class CubeCollector extends Subsystem {
     public void velocityPIDTest() {
     	
     	BobTalonSRX _talon = this.collectorLeftMotor;
-    	double leftYstick = Robot.oi.driverController.getRawAxis(1);
+    	double leftYstick = Robot.oi.operatorController.getRawAxis(1);
     	double motorOutput = _talon.getMotorOutputPercent();
     	// _talon.configPeakOutputForward(COLLECTOR_PROFILE, 1);
         // _talon.configPeakOutputReverse(COLLECTOR_PROFILE, 1);
-        // _talon.configNominalOutputForward(0.0);
-        // _talon.configNominalOutputReverse(0.0);
+         _talon.configNominalOutputForward(0.0, 10);//Added 10 was 0.0
+         _talon.configNominalOutputReverse(0.0, 10);//same as above
 	/* prepare line to print */
 	_sb.append("\tout:");
 	_sb.append(motorOutput);
@@ -151,12 +197,49 @@ public class CubeCollector extends Subsystem {
 		System.out.println("y-axis" +Robot.oi.driverController.getLeftStickY());
 	}
 
-	if (++_loops >= 10) {
-		_loops = 0;
+	if (++loops >= 10) {
+		loops = 0;
 		System.out.println(_sb.toString());
 	}
 	_sb.setLength(0);
 }
+ 
+    public void motionMagicTest() {
+    	
+    	BobTalonSRX _talon = this.collectorRightMotor;
+    	
+		/* get gamepad axis - forward stick is positive */
+		double leftYstick = Robot.oi.operatorController.getLeftStickY();
+		/* calculate the percent motor output */
+		double motorOutput = _talon.getMotorOutputPercent();
+		/* prepare line to print */
+		_sb.append("\tOut%:");
+		_sb.append(motorOutput);
+		_sb.append("\tVel:");
+		_sb.append(_talon.getSelectedSensorVelocity(this.COLLECTOR_PROFILE));
+
+		if (Robot.oi.operatorController.getRawButton(1)) {
+			/* Motion Magic - 4096 ticks/rev * 10 Rotations in either direction */
+			double targetPos = -1 * leftYstick * 4096 * 10.0;
+			_talon.set(ControlMode.MotionMagic, targetPos);
+
+			/* append more signals to print when in speed mode. */
+			_sb.append("\terr:");
+			_sb.append(_talon.getClosedLoopError(this.COLLECTOR_PROFILE));
+			_sb.append("\ttrg:");
+			_sb.append(targetPos);
+		} else {
+			/* Percent voltage mode */
+			_talon.set(ControlMode.PercentOutput, leftYstick);
+		}
+		/* instrumentation */
+		Instrum.Process(_talon, _sb);
+		try {
+			TimeUnit.MILLISECONDS.sleep(10);
+		} catch (Exception e) {
+		}
+	}
+         
     
 }
 

@@ -21,19 +21,24 @@ public class Drivetrain extends Subsystem {
 
 	public static final int LOW_GEAR_PROFILE = 0;
 	public static final int HIGH_GEAR_PROFILE = 1;
-	private int[] leftFollowers = {2, 3, 4};
-	private int[] rightFollowers = {7, 8, 9};
-    public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, leftFollowers);
-    public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(6, rightFollowers);
-    
+	private int[] leftFollower = {9};
+	private int[] rightFollower = {0};
+	
+    public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(8, leftFollower);
+    public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(1, rightFollower);
+    //775 drivetrain code
+	//private int[] leftFollowers = {2, 3, 4};
+	//private int[] rightFollowers = {7, 8, 9};
+    //public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, leftFollowers);
+    //public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(6, rightFollowers);
     
     public Drivetrain() {
     	
-    	this.leftLead.setInverted(false);
+    	this.leftLead.setInverted(true);//false
     	this.leftLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
     	this.leftLead.setSensorPhase(false);
     	
-    	this.rightLead.setInverted(true);
+    	this.rightLead.setInverted(false);//true
     	this.rightLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
     	this.rightLead.setSensorPhase(false);
     	
@@ -55,7 +60,7 @@ public class Drivetrain extends Subsystem {
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new BobDrive());
+       // setDefaultCommand(new BobDrive());
     }
     
     public void configPIDF(int profile, double p, double i, double d, double f) {

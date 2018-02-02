@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Elevator extends Subsystem {
 
-	private int[] elevatorFollowers = {12, 13};
-    public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(11, elevatorFollowers);
+	private int[] elevatorFollowers = {6, 7};
+    public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(5, elevatorFollowers); //Was talon 5
     
     public Elevator() {
 		

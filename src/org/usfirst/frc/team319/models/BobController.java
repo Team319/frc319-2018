@@ -51,7 +51,7 @@ public class BobController extends Joystick {
 	}
 
 	public double getRightStickX() {
-		return this.getRawAxis(4);
+		return this.getRawAxis(4); //4
 	}
 
 	public double getRightStickY() {

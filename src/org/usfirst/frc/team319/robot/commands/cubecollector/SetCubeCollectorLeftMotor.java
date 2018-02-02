@@ -9,27 +9,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CubeCollectorSpit extends Command {
+public class SetCubeCollectorLeftMotor extends Command {
 
-    public CubeCollectorSpit() {
+    public SetCubeCollectorLeftMotor() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.cubeCollector);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	// does not work, the left motor spins in the wrong direction at the right speed
-    	// or spins in the right direction at the wrong speed, we don't know why.
-    	//double rpm = -210; 
-        //double speed = rpm * 4096 / 600;
-    	double speed = -2000.0;
-    	Robot.cubeCollector.setCubeCollector(ControlMode.Velocity, speed);
+    	double speed = Robot.oi.operatorController.getLeftStickY();
+    	Robot.cubeCollector.setCubeCollectorLeftMotor(ControlMode.PercentOutput, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -39,7 +33,6 @@ public class CubeCollectorSpit extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	
     }
 
     // Called when another command which requires one or more of the same
