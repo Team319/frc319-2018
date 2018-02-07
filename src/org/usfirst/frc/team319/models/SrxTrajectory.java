@@ -7,6 +7,11 @@ public class SrxTrajectory {
 	public SrxMotionProfile leftProfile;
 	public SrxMotionProfile rightProfile;
 
+	public SrxTrajectory() {
+		this.leftProfile = new SrxMotionProfile();
+		this.rightProfile = new SrxMotionProfile();
+	}
+	
 	public SrxTrajectory(SrxMotionProfile left, SrxMotionProfile right) {
 		this.leftProfile = left;
 		this.rightProfile = right;
