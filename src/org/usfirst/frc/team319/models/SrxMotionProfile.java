@@ -13,10 +13,7 @@ public class SrxMotionProfile {
 	// Position (rotations) Velocity (RPM) Duration (ms)
 	public double[][] points;
 
-	public SrxMotionProfile() {
-
-	}
-
+	public SrxMotionProfile() {}
 
 	public SrxMotionProfile(int numPoints, double[][] points) {
 		this.numPoints = numPoints;
