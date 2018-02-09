@@ -1,6 +1,8 @@
-package org.usfirst.frc.team319.robot.commands.climber;
+package org.usfirst.frc.team319.robot.commands.drivetrain;
 
+import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.utils.BobDriveHelper;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -9,11 +11,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ClimberGoOnStick extends Command {
+public class DrivetrainVelocityPIDTest extends Command {
 
-    public ClimberGoOnStick() {
+	BobDriveHelper helper;
+	
+    public DrivetrainVelocityPIDTest() {
+    	requires(Robot.drivetrain);
+    	helper = new BobDriveHelper();
         // Use requires() here to declare subsystem dependencies
-       // requires(Robot.climber);
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
@@ -22,8 +28,7 @@ public class ClimberGoOnStick extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double signal = Robot.oi.operatorController.leftStick.getY();
-    	//Robot.climber.climberTest(ControlMode.PercentOutput, signal);
+    	Robot.drivetrain.velocityPIDTest();
     }
 
     // Make this return true when this Command no longer needs to run execute()

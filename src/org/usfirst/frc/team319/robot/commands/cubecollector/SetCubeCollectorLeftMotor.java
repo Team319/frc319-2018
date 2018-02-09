@@ -22,7 +22,7 @@ public class SetCubeCollectorLeftMotor extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = Robot.oi.operatorController.getLeftStickY();
+    	double speed = Robot.oi.operatorController.leftStick.getY();
     	Robot.cubeCollector.setCubeCollectorLeftMotor(ControlMode.PercentOutput, speed);
     }
 

@@ -110,7 +110,7 @@ public class Logger {
 	        	//sb.append(String.format("%f,", Robot.drivetrain.getTalonVoltage(Robot.drivetrain.getLeft2Talon())));
 	        	//sb.append(String.format("%f,", Robot.drivetrain.getTalonVoltage(Robot.drivetrain.getLeft3Talon())));
 	        	
-	        	sb.append(String.format("%f,", Robot.oi.driverController.getLeftStickY()));
+	        	sb.append(String.format("%f,", Robot.oi.driverController.leftStick.getY()));
 	        	sb.append(String.format("%f,", Robot.drivetrain.getLeftDriveLeadVelocity()));
 	        	
 
@@ -125,7 +125,7 @@ public class Logger {
 	        	//sb.append(String.format("%f,", Robot.drivetrain.getRight6Voltage()));
 	        	//sb.append(String.format("%f,", Robot.drivetrain.getRight7Voltage()));
 	        	
-	        	sb.append(String.format("%f,", Robot.oi.driverController.getRightStickX()));
+	        	sb.append(String.format("%f,", Robot.oi.driverController.rightStick.getX()));
 	        	sb.append(String.format("%f,", Robot.drivetrain.getRightDriveLeadVelocity()));
 	        	
 	        	

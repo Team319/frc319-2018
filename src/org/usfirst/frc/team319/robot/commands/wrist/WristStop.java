@@ -13,7 +13,7 @@ public class WristStop extends Command {
 
     public WristStop() {
         // Use requires() here to declare subsystem dependencies
-        //requires(Robot.wrist);
+        requires(Robot.wrist);
     }
 
     // Called just before this Command runs the first time
@@ -25,7 +25,7 @@ public class WristStop extends Command {
     	
     	ControlMode controlMode = ControlMode.PercentOutput;
     	double signal = 0.0;
-    	//Robot.wrist.wristMove(controlMode, signal);
+    	Robot.wrist.wristMove(controlMode, signal);
     }
 
     // Make this return true when this Command no longer needs to run execute()

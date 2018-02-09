@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands.climber;
+package org.usfirst.frc.team319.robot.commands.elevator;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -9,21 +9,22 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ClimberGoOnStick extends Command {
+public class JoystickElevator extends Command {
 
-    public ClimberGoOnStick() {
+    public JoystickElevator() {
         // Use requires() here to declare subsystem dependencies
-       // requires(Robot.climber);
+        requires(Robot.elevator);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double signal = Robot.oi.operatorController.leftStick.getY();
-    	//Robot.climber.climberTest(ControlMode.PercentOutput, signal);
+    	Robot.elevator.setElevator(ControlMode.PercentOutput, signal);
     }
 
     // Make this return true when this Command no longer needs to run execute()

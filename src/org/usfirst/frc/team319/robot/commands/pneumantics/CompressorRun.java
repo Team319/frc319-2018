@@ -11,12 +11,12 @@ public class CompressorRun extends Command {
 
     public CompressorRun() {
         // Use requires() here to declare subsystem dependencies
-       // requires(Robot.pneumatics);
+    	requires(Robot.pneumatics);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    //	Robot.pneumatics.compressorRun();
+    	Robot.pneumatics.compressorRun();
     }
 
     // Called repeatedly when this Command is scheduled to run

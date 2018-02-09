@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -25,7 +26,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class CubeCollector extends Subsystem {
 	
 	public final static int COLLECTOR_PROFILE = 0;
-	public final BobTalonSRX collectorLeftMotor = new BobTalonSRX(11);
+	public final BobTalonSRX collectorLeftMotor = new BobTalonSRX(2); // 11
 	public final BobTalonSRX collectorRightMotor = new BobTalonSRX(10);
 	Ultrasonic collectorDistanceSensor = new Ultrasonic(0,1);
 	StringBuilder _sb = new StringBuilder();
@@ -162,12 +163,9 @@ public class CubeCollector extends Subsystem {
     public void velocityPIDTest() {
     	
     	BobTalonSRX _talon = this.collectorLeftMotor;
-    	double leftYstick = Robot.oi.operatorController.getRawAxis(1);
+    	double leftYstick = Robot.oi.operatorController.leftStick.getY();
     	double motorOutput = _talon.getMotorOutputPercent();
-    	// _talon.configPeakOutputForward(COLLECTOR_PROFILE, 1);
-        // _talon.configPeakOutputReverse(COLLECTOR_PROFILE, 1);
-         _talon.configNominalOutputForward(0.0, 10);//Added 10 was 0.0
-         _talon.configNominalOutputReverse(0.0, 10);//same as above
+    	
 	/* prepare line to print */
 	_sb.append("\tout:");
 	_sb.append(motorOutput);
@@ -194,7 +192,7 @@ public class CubeCollector extends Subsystem {
 	} else {
 		/* Percent voltage mode */
 		_talon.set(ControlMode.PercentOutput, leftYstick);
-		System.out.println("y-axis" +Robot.oi.driverController.getLeftStickY());
+		System.out.println("y-axis" +Robot.oi.driverController.leftStick.getY());
 	}
 
 	if (++loops >= 10) {
@@ -209,7 +207,7 @@ public class CubeCollector extends Subsystem {
     	BobTalonSRX _talon = this.collectorRightMotor;
     	
 		/* get gamepad axis - forward stick is positive */
-		double leftYstick = Robot.oi.operatorController.getLeftStickY();
+		double leftYstick = Robot.oi.operatorController.leftStick.getY();
 		/* calculate the percent motor output */
 		double motorOutput = _talon.getMotorOutputPercent();
 		/* prepare line to print */
@@ -239,7 +237,15 @@ public class CubeCollector extends Subsystem {
 		} catch (Exception e) {
 		}
 	}
-         
+        
+    @Override
+    public void periodic() {
+		SmartDashboard.putNumber("UltrasonicSensor", this.centerUltrasonic());
+		SmartDashboard.putNumber("Left Collector Velocity", this.leftCollectorVelocity());
+		SmartDashboard.putNumber("Left Collector Position", this.leftCollectorPosition());
+		SmartDashboard.putNumber("Right Collector Velocity", this.rightCollectorVelocity());
+		SmartDashboard.putNumber("Right Collector Position", this.rightCollectorPosition());
+    }
     
 }
 

@@ -1,34 +1,32 @@
-package org.usfirst.frc.team319.robot.commands.climber;
+package org.usfirst.frc.team319.robot.commands.pneumantics;
 
 import org.usfirst.frc.team319.robot.Robot;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ClimberGoOnStick extends Command {
+public class WinchBrakeShiftUp extends Command {
 
-    public ClimberGoOnStick() {
+    public WinchBrakeShiftUp() {
         // Use requires() here to declare subsystem dependencies
-       // requires(Robot.climber);
+    	requires(Robot.pneumatics);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.pneumatics.winchBreakShiftUp();
+    	System.out.println("Winch Brake Engaged");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double signal = Robot.oi.operatorController.leftStick.getY();
-    	//Robot.climber.climberTest(ControlMode.PercentOutput, signal);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

@@ -1,9 +1,11 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
+import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.BobDrive;
+import org.usfirst.frc.team319.robot.commands.drivetrain.BobDrive;
+import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainVelocityPIDTest;
 
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -13,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -21,11 +24,13 @@ public class Drivetrain extends Subsystem {
 
 	public static final int LOW_GEAR_PROFILE = 0;
 	public static final int HIGH_GEAR_PROFILE = 1;
-	private int[] leftFollower = {9};
-	private int[] rightFollower = {0};
+	private int[] leftFollower = {0}; //9
+	private int[] rightFollower = {9}; // 0
+	StringBuilder _sb = new StringBuilder();
+	private static int _loops = 0;
 	
-    public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(8, leftFollower);
-    public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(1, rightFollower);
+    public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, leftFollower); // 8
+    public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(8, rightFollower); // 1
     //775 drivetrain code
 	//private int[] leftFollowers = {2, 3, 4};
 	//private int[] rightFollowers = {7, 8, 9};
@@ -34,14 +39,19 @@ public class Drivetrain extends Subsystem {
     
     public Drivetrain() {
     	
-    	this.leftLead.setInverted(true);//false
+    	this.leftLead.setInverted(false);//false
     	this.leftLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
-    	this.leftLead.setSensorPhase(false);
+    	this.leftLead.setSensorPhase(true);
     	
-    	this.rightLead.setInverted(false);//true
+    	this.rightLead.setInverted(true);//true
     	this.rightLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
     	this.rightLead.setSensorPhase(false);
     	
+    	this.leftLead.configPeakOutputForward(1);
+		this.leftLead.configPeakOutputReverse(-1);
+		
+		this.rightLead.configPeakOutputForward(1);
+		this.rightLead.configPeakOutputReverse(-1);
     	
     	this.leftLead.enableCurrentLimit(true);
     	this.leftLead.configContinuousCurrentLimit(30);
@@ -54,13 +64,15 @@ public class Drivetrain extends Subsystem {
     	this.leftLead.setNeutralMode(NeutralMode.Coast);
     	this.rightLead.setNeutralMode(NeutralMode.Coast);
     	
-    	this.configPIDF(HIGH_GEAR_PROFILE, 0.45, 0.0, 0.45, 0.238);
+    	this.configPIDF(HIGH_GEAR_PROFILE, 0.0, 0.0, 0.0, 0.146);
+    	//this.configPIDF(HIGH_GEAR_PROFILE, 0.45, 0.0, 0.45, 0.238); gearbob values
 		
     }
     
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-       // setDefaultCommand(new BobDrive());
+        // et the default command for a subsystem here.
+    	//setDefaultCommand(new BobDrive());
+    	//setDefaultCommand(new DrivetrainVelocityPIDTest());
     }
     
     public void configPIDF(int profile, double p, double i, double d, double f) {
@@ -80,7 +92,7 @@ public class Drivetrain extends Subsystem {
     }
     
     public boolean quickTurnController() {
-    if (Robot.oi.driverController.getLeftStickY() < 0.2 && Robot.oi.driverController.getLeftStickY() > -0.2) {
+    if (Robot.oi.driverController.leftStick.getY() < 0.2 && Robot.oi.driverController.leftStick.getY() > -0.2) {
 		return true;	
 	} else {
 		return false;
@@ -123,6 +135,56 @@ public class Drivetrain extends Subsystem {
     public TalonSRX getRightLeadTalon() {
     	return this.rightLead;
     }
+    
+    @Override
+    public void periodic() {
+		SmartDashboard.putNumber("Left Drive Position", getLeftDriveLeadDistance());
+		SmartDashboard.putNumber("Right Lead Position", getRightDriveLeadDistance());
+		SmartDashboard.putNumber("Left Drive Velocity", getLeftDriveLeadVelocity());
+		SmartDashboard.putNumber("Right Drive Velocity", getRightDriveLeadVelocity());
+    }
     	
+public void velocityPIDTest() {
+    	
+    	BobTalonSRX _talon = this.leftLead;
+    	double leftYstick = Robot.oi.operatorController.leftStick.getY();
+    	double motorOutput = _talon.getMotorOutputPercent();
+    	
+	/* prepare line to print */
+	_sb.append("\tout:");
+	_sb.append(motorOutput);
+	_sb.append("\tspd:");
+	_sb.append(_talon.getSelectedSensorVelocity(this.HIGH_GEAR_PROFILE));
+	//_sb.append("LowLevelspeed:");
+	//_sb.append(_talon.getSensorCollection());
+
+	if (Robot.oi.operatorController.getRawButton(1)) {
+		/* Speed mode */
+		/* Convert 500 RPM to units / 100ms.
+		 * 4096 Units/Rev * 500 RPM / 600 100ms/min in either direction:
+		 * velocity setpoint is in units/100ms
+		 */
+		double targetVelocity_UnitsPer100ms = Robot.oi.operatorController.leftStick.getY() * 4700;
+		/* 500 RPM in either direction */
+		_talon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
+
+		/* append more signals to print when in speed mode. */
+		_sb.append("\terr:");
+		_sb.append(_talon.getClosedLoopError(this.HIGH_GEAR_PROFILE));
+		_sb.append("\ttrg:");
+		_sb.append(targetVelocity_UnitsPer100ms);
+	} else {
+		/* Percent voltage mode */
+		_talon.set(ControlMode.PercentOutput, leftYstick);
+		System.out.println("y-axis" +Robot.oi.operatorController.leftStick.getY());
+	}
+
+	if (++_loops >= 10) {
+		_loops = 0;
+		System.out.println(_sb.toString());
+	}
+	_sb.setLength(0);
+}
+ 
 }
 

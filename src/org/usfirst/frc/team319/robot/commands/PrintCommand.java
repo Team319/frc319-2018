@@ -1,43 +1,33 @@
 package org.usfirst.frc.team319.robot.commands;
 
-import org.usfirst.frc.team319.models.DriveSignal;
-import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.utils.BobDriveHelper;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class BobDrive extends Command {
+public class PrintCommand extends Command {
 
-	BobDriveHelper helper;
+	private String _stringToPrint;
 	
-    public BobDrive() {
-    	requires(Robot.drivetrain);
-    	helper = new BobDriveHelper();
+    public PrintCommand(String stringToPrint) {
+    	_stringToPrint = stringToPrint;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println(_stringToPrint);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	boolean quickTurn = Robot.drivetrain.quickTurnController();
-    	double moveValue = Robot.oi.driverController.getLeftStickY();
-    	double rotateValue = Robot.oi.driverController.getRightStickX();
-    	DriveSignal driveSignal = helper.cheesyDrive(0.6 * moveValue, 0.4 * rotateValue, quickTurn, false);
-    	Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

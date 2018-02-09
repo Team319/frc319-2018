@@ -13,7 +13,7 @@ public class ElevatorStop extends Command {
 
     public ElevatorStop() {
         // Use requires() here to declare subsystem dependencies
-        //requires(Robot.elevator);
+        requires(Robot.elevator);
     }
 
     // Called just before this Command runs the first time
@@ -25,7 +25,7 @@ public class ElevatorStop extends Command {
     	
     	ControlMode controlMode = ControlMode.PercentOutput;
     	double signal = 0.0;
-    	//Robot.elevator.elevatorTest(controlMode, signal);
+    	Robot.elevator.setElevator(controlMode, signal);
     }
 
     // Make this return true when this Command no longer needs to run execute()

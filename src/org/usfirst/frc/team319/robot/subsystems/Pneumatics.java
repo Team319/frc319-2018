@@ -12,31 +12,55 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Pneumatics extends Subsystem {
 
-	public boolean isHighGear;
+	public boolean isDrivetrainHighGear;
+	public boolean isElevatorHighGear;
+	public boolean isWinchBrakeHighGear;
 	
 	Compressor compressor = new Compressor(0);
-	DoubleSolenoid shifterSolenoid = new DoubleSolenoid(2, 3);
+	DoubleSolenoid drivetrainShifter = new DoubleSolenoid(2, 3);
+	DoubleSolenoid elevatorShifter = new DoubleSolenoid(4, 5);
+	DoubleSolenoid winchBrakeShifter = new DoubleSolenoid(6, 7);
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-       // setDefaultCommand(new CompressorRun());
+        setDefaultCommand(new CompressorRun());
     }
     
     public void compressorRun() {
     	compressor.setClosedLoopControl(true);
     }
     
-    public void shiftUp() {
-    	this.shifterSolenoid.set(DoubleSolenoid.Value.kForward);
-    	this.isHighGear = true;
+    public void drivetrainShiftUp() {
+    	this.drivetrainShifter.set(DoubleSolenoid.Value.kForward);
+    	this.isDrivetrainHighGear = true;
     }
     
-    public void shiftDown() {
-    	this.shifterSolenoid.set(DoubleSolenoid.Value.kReverse);
-    	this.isHighGear = false;
+    public void drivetrainShiftDown() {
+    	this.drivetrainShifter.set(DoubleSolenoid.Value.kReverse);
+    	this.isDrivetrainHighGear = false;
+    }
+    
+    public void elevatorShiftUp() {
+    	this.elevatorShifter.set(DoubleSolenoid.Value.kForward);
+    	this.isElevatorHighGear = true;
+    }
+    
+    public void elevatorShiftDown() {
+    	this.elevatorShifter.set(DoubleSolenoid.Value.kReverse);
+    	this.isElevatorHighGear = false;
+    }
+    
+    public void winchBreakShiftUp() {
+    	this.winchBrakeShifter.set(DoubleSolenoid.Value.kForward);
+    	this.isWinchBrakeHighGear = true;
+    }
+    
+    public void winchBreakShiftDown() {
+    	this.winchBrakeShifter.set(DoubleSolenoid.Value.kReverse);
+    	this.isWinchBrakeHighGear = false;
     }
 }
 

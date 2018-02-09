@@ -48,10 +48,10 @@ public class Robot extends TimedRobot {
 	
 	public static final CubeCollector cubeCollector = new CubeCollector();
 	public static final Drivetrain drivetrain = new Drivetrain();
-	//public static final Pneumatics pneumatics = new Pneumatics();
-	//public static final Elevator elevator = new Elevator();
-	//public static final Wrist wrist = new Wrist();
-	public static final Climber climber = new Climber();
+	public static final Pneumatics pneumatics = new Pneumatics();
+	public static final Elevator elevator = new Elevator();
+	public static final Wrist wrist = new Wrist();
+	//public static final Climber climber = new Climber();
 	public static OI oi;
 	
 
@@ -165,16 +165,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Left Drive Position", this.drivetrain.getLeftDriveLeadDistance());
-		SmartDashboard.putNumber("Right Lead Position", this.drivetrain.getRightDriveLeadDistance());
-		SmartDashboard.putNumber("Left Drive Velocity", this.drivetrain.getLeftDriveLeadVelocity());
-		SmartDashboard.putNumber("Right Drive Velocity", this.drivetrain.getRightDriveLeadVelocity());
-		SmartDashboard.putNumber("UltrasonicSensor", this.cubeCollector.centerUltrasonic());
-		SmartDashboard.putNumber("Left Collector Velocity", this.cubeCollector.leftCollectorVelocity());
-		SmartDashboard.putNumber("Left Collector Position", this.cubeCollector.leftCollectorPosition());
-		SmartDashboard.putNumber("Right Collector Velocity", this.cubeCollector.rightCollectorVelocity());
-		SmartDashboard.putNumber("Right Collector Position", this.cubeCollector.rightCollectorPosition());
-		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.getLeftStickY());
+		
+		
+		SmartDashboard.putNumber("Dpad value: ", this.oi.driverController.getPOV());
+		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.leftStick.getY());
+		SmartDashboard.putNumber("Driver Left Stick Y", this.oi.driverController.leftStick.getY());
 		
 	}
 
