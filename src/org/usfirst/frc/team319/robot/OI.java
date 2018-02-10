@@ -9,6 +9,7 @@ package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.models.BobController;
+import org.usfirst.frc.team319.paths.FiveFeetAndTurn;
 import org.usfirst.frc.team319.robot.commands.AutoTuneCollectorLeft;
 import org.usfirst.frc.team319.robot.commands.AutoTuneCollectorRight;
 import org.usfirst.frc.team319.robot.commands.AutoTuneDrivetrainLeft;
@@ -29,6 +30,7 @@ import org.usfirst.frc.team319.robot.commands.wrist.WristGoToCollectCube;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
+import org.usfirst.frc.team319.robot.commands.autonomous.AutoDriveForwardThreeFeet;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -51,10 +53,12 @@ public class OI {
 		
 		this.operatorController  = new BobXboxController(1);
 		
-		this.operatorController.rightTriggerButton.whenPressed(new CubeCollectorGoToPosition());
+		this.operatorController.rightTriggerButton.whenPressed(new AutoTuneDrivetrainLeft());
 		this.operatorController.leftTriggerButton.whenPressed(new CubeCollectorGoToZero());
-		operatorController.aButton.whenPressed(new WristGoHome());
-		operatorController.bButton.whenPressed(new WristGoToCollectCube());
+		//this.operatorController.aButton.whenPressed(new WristGoHome());
+		//this.operatorController.bButton.whenPressed(new WristGoToCollectCube());
+		this.operatorController.leftBumper.whenPressed(new AutoDriveForwardThreeFeet());
+		//this.operatorController.rightBumper.whenPressed(new FollowTrajectory(FiveFeetAndTurn));
 		//operatorController.xButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt3"));
 		//operatorController.rightTriggerButton.whenPressed(new AutoTuneWrist());
 		

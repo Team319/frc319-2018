@@ -26,6 +26,7 @@ import com.ctre.phoenix.motion.TrajectoryPoint.TrajectoryDuration;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.SrxMotionProfile;
 import org.usfirst.frc.team319.models.SrxTrajectory;
 
@@ -35,7 +36,7 @@ public class FollowTrajectory extends Command {
 	private String trajectoryName = "";
 	private int kMinPointsInTalon = 5;
 	
-	private boolean isFinished = false;
+
 
 	private SrxTrajectory trajectoryToFollow = null;
 	private SrxTrajectoryImporter importer = new SrxTrajectoryImporter("/home/lvuser/Autos");
@@ -43,6 +44,8 @@ public class FollowTrajectory extends Command {
 	private MotionProfileStatus rightStatus = new MotionProfileStatus();
 	private MotionProfileStatus leftStatus = new MotionProfileStatus();
 
+	private boolean isFinished = false;
+	
 	/**
 	 * this is only either Disable, Enable, or Hold. Since we'd never want one
 	 * side to be enabled while the other is disabled, we'll use the same status
@@ -50,16 +53,49 @@ public class FollowTrajectory extends Command {
 	 */
 	private SetValueMotionProfile setValue = SetValueMotionProfile.Disable;
 
-	// periodically tells the SRXs to do the thing
-	private class PeriodicRunnable implements java.lang.Runnable {
+	private class BufferLoader implements java.lang.Runnable {
+		private int lastPointSent = 0;
+		private BobTalonSRX talon;
+		private SrxMotionProfile prof;
+		private int pidfSlot;
+		
+		public BufferLoader(BobTalonSRX talon, SrxMotionProfile prof, int pidfSlot) {
+			this.talon = talon;
+			this.prof = prof;
+			this.pidfSlot = pidfSlot;
+		}
+
 		public void run() {
-			Robot.drivetrain.leftLead.processMotionProfileBuffer();
-			Robot.drivetrain.rightLead.processMotionProfileBuffer();
+			talon.processMotionProfileBuffer();
+			TrajectoryPoint point = new TrajectoryPoint();
+
+			if (!talon.isMotionProfileTopLevelBufferFull() && lastPointSent < prof.numPoints) {
+				/* for each point, fill our structure and pass it to API */
+				point.position = prof.points[lastPointSent][0];
+				point.velocity = prof.points[lastPointSent][1];
+				point.timeDur = TrajectoryDuration.Trajectory_Duration_10ms;
+				point.profileSlotSelect0 = pidfSlot; 
+				point.profileSlotSelect1 = pidfSlot;
+				point.zeroPos = false;
+				if (lastPointSent == 0) {
+					point.zeroPos = true; /* set this to true on the first point */
+
+				}
+				point.isLastPoint = false;
+				if ((lastPointSent + 1) == prof.numPoints) {
+					point.isLastPoint = true; /*
+												 * set this to true on the last point
+												 */
+					}
+				talon.pushMotionProfileTrajectory(point);
+				lastPointSent++;
+			}
 		}
 	}
-
+	
 	// Runs the runnable
-	private Notifier SrxNotifier = new Notifier(new PeriodicRunnable());
+	private Notifier loadLeftBuffer;
+	private Notifier loadRightBuffer;
 
 	// constructor
 	public FollowTrajectory(String trajectoryName) {
@@ -71,6 +107,7 @@ public class FollowTrajectory extends Command {
 		requires(Robot.drivetrain);
 		this.trajectoryToFollow = trajectoryToFollow;
 	}
+	
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
@@ -83,7 +120,7 @@ public class FollowTrajectory extends Command {
 		Robot.drivetrain.leftLead.set(ControlMode.MotionProfile, setValue.value);
 		Robot.drivetrain.rightLead.set(ControlMode.MotionProfile, setValue.value);
 
-		SrxNotifier.startPeriodic(.005);
+		//SrxNotifier.startPeriodic(.005);
 		
 		if(trajectoryToFollow == null) {
 			
@@ -99,10 +136,15 @@ public class FollowTrajectory extends Command {
 			}
 		}
 		
-		int pidfSlot = Robot.drivetrain.HIGH_GEAR_PROFILE;
+		int pidfSlot = Robot.drivetrain.LOW_GEAR_PROFILE;
 		
-		fillTalonBuffer(Robot.drivetrain.rightLead, this.trajectoryToFollow.rightProfile, pidfSlot);
-		fillTalonBuffer(Robot.drivetrain.leftLead, this.trajectoryToFollow.leftProfile, pidfSlot);
+		loadLeftBuffer = new Notifier(new BufferLoader(Robot.drivetrain.leftLead, this.trajectoryToFollow.leftProfile, pidfSlot));
+		loadRightBuffer = new Notifier(new BufferLoader(Robot.drivetrain.rightLead, this.trajectoryToFollow.rightProfile, pidfSlot));
+
+		loadLeftBuffer.startPeriodic(.005);
+		loadRightBuffer.startPeriodic(.005);
+		//fillTalonBuffer(Robot.drivetrain.rightLead, this.trajectoryToFollow.rightProfile, pidfSlot);
+		//fillTalonBuffer(Robot.drivetrain.leftLead, this.trajectoryToFollow.leftProfile, pidfSlot);
 
 	}
 
@@ -147,7 +189,8 @@ public class FollowTrajectory extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		SrxNotifier.stop();
+		loadLeftBuffer.stop();
+		loadRightBuffer.stop();
 		resetTalon(Robot.drivetrain.rightLead, ControlMode.PercentOutput, 0);
 		resetTalon(Robot.drivetrain.leftLead, ControlMode.PercentOutput, 0);
 	}
@@ -155,7 +198,8 @@ public class FollowTrajectory extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		SrxNotifier.stop();
+		loadLeftBuffer.stop();
+		loadRightBuffer.stop();
 		resetTalon(Robot.drivetrain.rightLead, ControlMode.PercentOutput, 0);
 		resetTalon(Robot.drivetrain.leftLead, ControlMode.PercentOutput, 0);
 	}	
@@ -173,30 +217,5 @@ public class FollowTrajectory extends Command {
 		talon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
 		talon.set(controlMode, setValue);
 	}
-
-	// Send all the profile points to the talon object
-	public void fillTalonBuffer(TalonSRX talon, SrxMotionProfile prof, int pidfSlot) {
-		System.out.println("filling talon buffer");
-		TrajectoryPoint point = new TrajectoryPoint();
-
-		for (int i = 0; i < prof.numPoints; ++i) {
-			/* for each point, fill our structure and pass it to API */
-			point.position = prof.points[i][0];
-			point.velocity = prof.points[i][1];
-			point.timeDur = TrajectoryDuration.Trajectory_Duration_10ms;
-			point.profileSlotSelect0 = pidfSlot; 
-			point.profileSlotSelect1 = pidfSlot;
-			point.zeroPos = false;
-			if (i == 0)
-				point.zeroPos = true; /* set this to true on the first point */
-
-			point.isLastPoint = false;
-			if ((i + 1) == prof.numPoints)
-				point.isLastPoint = true; /*
-											 * set this to true on the last point
-											 */
-
-			talon.pushMotionProfileTrajectory(point);
-		}
-	}
+	
 }

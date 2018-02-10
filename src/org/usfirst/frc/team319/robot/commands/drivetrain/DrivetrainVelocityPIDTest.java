@@ -17,7 +17,7 @@ public class DrivetrainVelocityPIDTest extends Command {
 	
     public DrivetrainVelocityPIDTest() {
     	requires(Robot.drivetrain);
-    	helper = new BobDriveHelper();
+    	//helper = new BobDriveHelper();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

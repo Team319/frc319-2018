@@ -1,5 +1,8 @@
 package org.usfirst.frc.team319.robot.commands.autonomous;
 
+import org.usfirst.frc.team319.paths.CrossTheLine;
+import org.usfirst.frc.team319.paths.FiveFeetAndTurn;
+import org.usfirst.frc.team319.paths.ThreeFeet;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -11,8 +14,10 @@ public class AutoDriveForwardThreeFeet extends CommandGroup {
 
     public AutoDriveForwardThreeFeet() {
     	
-    	addSequential(new FollowTrajectory("ThreeFeet"));
-        // Add Commands here:
+    	//addSequential(new FollowTrajectory("ThreeFeet"));
+    	addSequential(new FollowTrajectory(new ThreeFeet()));
+        //addSequential(new FollowTrajectory(new FiveFeetAndTurn()));
+    	// Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.

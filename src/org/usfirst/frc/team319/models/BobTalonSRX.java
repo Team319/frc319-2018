@@ -15,6 +15,8 @@ public class BobTalonSRX extends TalonSRX {
 		super(deviceNumber);
 		this.configNominalOutputForward(0.0);
 		this.configNominalOutputReverse(0.0);
+    	this.configMotionProfileTrajectoryPeriod(0);
+
 	}
 	
 	public ErrorCode configPIDF(int slotIdx, double P, double I, double D, double F){
@@ -101,6 +103,10 @@ public class BobTalonSRX extends TalonSRX {
 	
 	public ErrorCode setStatusFramePeriod(StatusFrameEnhanced status13BasePidf0, int periodMs) {
 		return super.setStatusFramePeriod(status13BasePidf0, periodMs, DEFAULT_TIMEOUT_MS);
+	}
+	
+	public ErrorCode configMotionProfileTrajectoryPeriod(int baseTrajDurationMs) {
+		return super.configMotionProfileTrajectoryPeriod(baseTrajDurationMs, DEFAULT_TIMEOUT_MS);
 	}
 	
 	public double configGetParameter(ParamEnum param, int ordinal) {

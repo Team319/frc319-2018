@@ -24,13 +24,13 @@ public class Drivetrain extends Subsystem {
 
 	public static final int LOW_GEAR_PROFILE = 0;
 	public static final int HIGH_GEAR_PROFILE = 1;
-	private int[] leftFollower = {0}; //9
-	private int[] rightFollower = {9}; // 0
+	private int[] leftFollowers = {0}; //9
+	private int[] rightFollowers = {9}; // 0
 	StringBuilder _sb = new StringBuilder();
 	private static int _loops = 0;
 	
-    public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, leftFollower); // 8
-    public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(8, rightFollower); // 1
+    public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, leftFollowers); // 8
+    public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(8, rightFollowers); // 1
     //775 drivetrain code
 	//private int[] leftFollowers = {2, 3, 4};
 	//private int[] rightFollowers = {7, 8, 9};
@@ -39,11 +39,11 @@ public class Drivetrain extends Subsystem {
     
     public Drivetrain() {
     	
-    	this.leftLead.setInverted(false);//false
+    	this.leftLead.setInverted(true);//false
     	this.leftLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
     	this.leftLead.setSensorPhase(true);
     	
-    	this.rightLead.setInverted(true);//true
+    	this.rightLead.setInverted(false);//true
     	this.rightLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
     	this.rightLead.setSensorPhase(false);
     	
@@ -65,13 +65,14 @@ public class Drivetrain extends Subsystem {
     	this.rightLead.setNeutralMode(NeutralMode.Coast);
     	
     	this.configPIDF(HIGH_GEAR_PROFILE, 0.0, 0.0, 0.0, 0.146);
-    	//this.configPIDF(HIGH_GEAR_PROFILE, 0.45, 0.0, 0.45, 0.238); gearbob values
+    	this.configPIDF(LOW_GEAR_PROFILE, 0.155, 0.0, 0.0, 0.664); //0.332
+    	//this.configPIDF(HIGH_GEAR_PROFILE, 0.45, 0.0, 0.45, 0.238); //gearbob values
 		
     }
     
     public void initDefaultCommand() {
         // et the default command for a subsystem here.
-    	//setDefaultCommand(new BobDrive());
+    	setDefaultCommand(new BobDrive());
     	//setDefaultCommand(new DrivetrainVelocityPIDTest());
     }
     
@@ -182,9 +183,10 @@ public void velocityPIDTest() {
 	if (++_loops >= 10) {
 		_loops = 0;
 		System.out.println(_sb.toString());
-	}
+		}
 	_sb.setLength(0);
-}
+	}
  
+
 }
 

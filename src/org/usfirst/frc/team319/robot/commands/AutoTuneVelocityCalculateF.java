@@ -26,6 +26,7 @@ public class AutoTuneVelocityCalculateF extends Command {
     public AutoTuneVelocityCalculateF(Subsystem requiredSubsystem, BobTalonSRX talon, int srxParameterSlot, int numSamplesRequired) {
     	this._talon = talon;
     	this.samplesRequired = numSamplesRequired;
+    	this.samplesGathered = 0;
     	this.cBuff = new BobCircularBuffer(samplesRequired);
     	this.paramterSlot = srxParameterSlot;
     	this._sb = new StringBuilder();
