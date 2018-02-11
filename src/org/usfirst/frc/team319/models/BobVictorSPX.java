@@ -5,13 +5,14 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.ParamEnum;
 
-public class BobTalonSRX extends TalonSRX {
+public class BobVictorSPX extends VictorSPX {
 	
 	private static final int DEFAULT_TIMEOUT_MS = 0;
 	
-	public BobTalonSRX(int deviceNumber) {
+	public BobVictorSPX(int deviceNumber) {
 		super(deviceNumber);
 		this.configNominalOutputForward(0.0);
 		this.configNominalOutputReverse(0.0);
@@ -65,10 +66,6 @@ public class BobTalonSRX extends TalonSRX {
 		return super.configSelectedFeedbackSensor(feedbackDevice, pidIdx, DEFAULT_TIMEOUT_MS);
 	}
 	
-	public ErrorCode configContinuousCurrentLimit(int amps) {
-		return super.configContinuousCurrentLimit(amps, DEFAULT_TIMEOUT_MS);
-	}
-	
 	public ErrorCode configOpenloopRamp(double secondsFromNeutralToFull) {
 		return super.configOpenloopRamp(secondsFromNeutralToFull, DEFAULT_TIMEOUT_MS);
 	}
@@ -101,28 +98,8 @@ public class BobTalonSRX extends TalonSRX {
 		return super.configMotionCruiseVelocity(sensorUnitsPer100ms, DEFAULT_TIMEOUT_MS);
 	}
 	
-	public ErrorCode setStatusFramePeriod(StatusFrameEnhanced status13BasePidf0, int periodMs) {
-		return super.setStatusFramePeriod(status13BasePidf0, periodMs, DEFAULT_TIMEOUT_MS);
-	}
-	
 	public ErrorCode configMotionProfileTrajectoryPeriod(int baseTrajDurationMs) {
 		return super.configMotionProfileTrajectoryPeriod(baseTrajDurationMs, DEFAULT_TIMEOUT_MS);
-	}
-	
-	public ErrorCode configForwardSoftLimitEnable(boolean enable) {
-		return super.configForwardSoftLimitEnable(enable, DEFAULT_TIMEOUT_MS);
-	}
-	
-	public ErrorCode configForwardSoftLimitThreshold(int forwardSensorLimit) {
-		return super.configForwardSoftLimitThreshold(forwardSensorLimit, DEFAULT_TIMEOUT_MS);
-	}
-	
-	public ErrorCode configReverseSoftLimitEnable(boolean enable) {
-		return super.configReverseSoftLimitEnable(enable, DEFAULT_TIMEOUT_MS);
-	}
-	
-	public ErrorCode configReverseSoftLimitThreshold(int reverseSensorLimit) {
-		return super.configReverseSoftLimitThreshold(reverseSensorLimit, DEFAULT_TIMEOUT_MS);
 	}
 	
 	public double configGetParameter(ParamEnum param, int ordinal) {

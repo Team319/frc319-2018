@@ -15,7 +15,7 @@ public class AutoDriveForwardThreeFeet extends CommandGroup {
     public AutoDriveForwardThreeFeet() {
     	
     	//addSequential(new FollowTrajectory("ThreeFeet"));
-    	addSequential(new FollowTrajectory(new ThreeFeet()));
+    	addSequential(new FollowTrajectory(new CrossTheLine()));
         //addSequential(new FollowTrajectory(new FiveFeetAndTurn()));
     	// Add Commands here:
         // e.g. addSequential(new Command1());

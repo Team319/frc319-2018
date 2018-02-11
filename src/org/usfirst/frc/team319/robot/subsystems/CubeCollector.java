@@ -28,14 +28,13 @@ public class CubeCollector extends Subsystem {
 	public final static int COLLECTOR_PROFILE = 0;
 	public final BobTalonSRX collectorLeftMotor = new BobTalonSRX(2); // 11
 	public final BobTalonSRX collectorRightMotor = new BobTalonSRX(10);
-	Ultrasonic collectorDistanceSensor = new Ultrasonic(0,1);
+	AnalogInput collectorDistanceSensor = new AnalogInput(0);
 	StringBuilder _sb = new StringBuilder();
 	int loops = 0;
 	private static int _loops = 0;
 	private static int _timesInMotionMagic = 0;
 
-	//Ultrasonic collectorSensorRight = new Ultrasonic(2, 3);
-	//Ultrasonic collectorSensorLeft = new Ultrasonic(3, 4);
+	
 	
 	
 	public CubeCollector() {
@@ -76,7 +75,6 @@ public class CubeCollector extends Subsystem {
 		this.collectorRightMotor.configMotionCruiseVelocity(2000);
 		//////////////////////////////////////////////////////////////////////////
 		
-		this.collectorDistanceSensor.setAutomaticMode(true);
 		//this.collectorSensorLeft.setAutomaticMode(true);
 		//this.collectorSensorRight.setAutomaticMode(true);
 		
@@ -112,8 +110,8 @@ public class CubeCollector extends Subsystem {
     	collectorLeftMotor.set(controlMode, speed);
     }
    
-    public double centerUltrasonic() {
-    	return this.collectorDistanceSensor.getRangeInches();
+    public double getCollectorDistanceSensorValue() {
+    	return this.collectorDistanceSensor.getValue();
     }
     
     public double leftCollectorVelocity() {
@@ -142,16 +140,8 @@ public class CubeCollector extends Subsystem {
     	System.out.println("method called " + this.collectorLeftMotor.getClosedLoopTarget(COLLECTOR_PROFILE));
     }
     
-   /*public double leftUltrasonic() {
-    	return this.collectorSensorLeft.getRangeInches();
-    }
-    CubeCollectorTest.java
-    public double rightUltrasonic() {
-    	return this.collectorSensorRight.getRangeInches();
-    }*/
-    
     public boolean isCubeCollected() {
-    	if(centerUltrasonic() < 8.0) {
+    	if(getCollectorDistanceSensorValue() < 8.0) {
     		return true;
     	}
     	else 
@@ -240,7 +230,7 @@ public class CubeCollector extends Subsystem {
         
     @Override
     public void periodic() {
-		SmartDashboard.putNumber("UltrasonicSensor", this.centerUltrasonic());
+		SmartDashboard.putNumber("UltrasonicSensor", this.getCollectorDistanceSensorValue());
 		SmartDashboard.putNumber("Left Collector Velocity", this.leftCollectorVelocity());
 		SmartDashboard.putNumber("Left Collector Position", this.leftCollectorPosition());
 		SmartDashboard.putNumber("Right Collector Velocity", this.rightCollectorVelocity());

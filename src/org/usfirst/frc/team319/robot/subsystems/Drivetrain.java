@@ -65,7 +65,7 @@ public class Drivetrain extends Subsystem {
     	this.rightLead.setNeutralMode(NeutralMode.Coast);
     	
     	this.configPIDF(HIGH_GEAR_PROFILE, 0.0, 0.0, 0.0, 0.146);
-    	this.configPIDF(LOW_GEAR_PROFILE, 0.155, 0.0, 0.0, 0.664); //0.332
+    	this.configPIDF(LOW_GEAR_PROFILE, 0.233, 0.0, 0.0, 0.664); //0.332 //.155
     	//this.configPIDF(HIGH_GEAR_PROFILE, 0.45, 0.0, 0.45, 0.238); //gearbob values
 		
     }

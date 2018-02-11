@@ -16,9 +16,9 @@ public class AutoTuneWrist extends CommandGroup {
     public AutoTuneWrist() {
 
     	addSequential(new AutoTuneVelocityConfigure(Robot.wrist, Robot.wrist.wristMotor, 
-    			Robot.wrist.WRIST_PROFILE, FeedbackDevice.CTRE_MagEncoder_Relative, true, false));
+    			Robot.wrist.WRIST_PROFILE_UP, FeedbackDevice.CTRE_MagEncoder_Relative, true, false));
 
     	addSequential(new AutoTuneVelocity(Robot.wrist, Robot.wrist.wristMotor,
-    			Robot.wrist.WRIST_PROFILE, 850, 50));
+    			Robot.wrist.WRIST_PROFILE_UP, 850, 50));
     }
 }

@@ -23,6 +23,7 @@ import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStraighten;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorTest;
+import org.usfirst.frc.team319.robot.commands.pneumantics.CollectorToggle;
 import org.usfirst.frc.team319.robot.commands.pneumantics.DrivetrainShiftToggle;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoHome;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToCollectCube;
@@ -47,17 +48,20 @@ public class OI {
 		this.driverController.rightTriggerButton.whileHeld(new CubeCollectorTest());
 		this.driverController.leftTriggerButton.whileHeld(new CubeCollectorSpit());
 		this.driverController.bButton.whenPressed(new CubeCollectorStop());
-		this.driverController.xButton.whenPressed(new CubeCollectorStraighten());
+		//this.driverController.xButton.whenPressed(new CubeCollectorStraighten());
 		this.driverController.rightBumper.whenPressed(new DrivetrainShiftToggle());
 		this.driverController.Dpad.Up.whileHeld(new CubeCollectorTest());
 		
-		this.operatorController  = new BobXboxController(1);
+		this.operatorController  = new BobXboxController(1);																																																																																			
 		
-		this.operatorController.rightTriggerButton.whenPressed(new AutoTuneDrivetrainLeft());
-		this.operatorController.leftTriggerButton.whenPressed(new CubeCollectorGoToZero());
+		//this.operatorController.rightTriggerButton.whenPressed(new AutoTuneDrivetrainLeft());
+		this.operatorController.leftBumper.whenPressed(new CollectorToggle());
+		
+		
+		//this.operatorController.leftTriggerButton.whenPressed(new CubeCollectorGoToZero());
 		//this.operatorController.aButton.whenPressed(new WristGoHome());
 		//this.operatorController.bButton.whenPressed(new WristGoToCollectCube());
-		this.operatorController.leftBumper.whenPressed(new AutoDriveForwardThreeFeet());
+		//this.operatorController.leftBumper.whenPressed(new AutoDriveForwardThreeFeet());
 		//this.operatorController.rightBumper.whenPressed(new FollowTrajectory(FiveFeetAndTurn));
 		//operatorController.xButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt3"));
 		//operatorController.rightTriggerButton.whenPressed(new AutoTuneWrist());

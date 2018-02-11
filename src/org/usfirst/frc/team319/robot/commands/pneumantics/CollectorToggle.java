@@ -1,34 +1,37 @@
-package org.usfirst.frc.team319.robot.commands.elevator;
+package org.usfirst.frc.team319.robot.commands.pneumantics;
 
 import org.usfirst.frc.team319.robot.Robot;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class JoystickElevator extends Command {
+public class CollectorToggle extends Command {
 
-    public JoystickElevator() {
-        requires(Robot.elevator);
+    public CollectorToggle() {
+        // Use requires() here to declare subsystem dependencies
+    	requires(Robot.pneumatics);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	if(Robot.pneumatics.isCollectorSolenoidExtended == false) {
+    		Robot.pneumatics.extendCollector();
+    		System.out.println("Collector Extended");
+    	}else if (Robot.pneumatics.isCollectorSolenoidExtended == true) {
+    		Robot.pneumatics.retractCollector();
+    		System.out.println("Collector Retracted");
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double signal = -0.5 * Robot.oi.operatorController.leftStick.getY();
-    	Robot.elevator.setElevator(ControlMode.PercentOutput, signal);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

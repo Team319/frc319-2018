@@ -15,12 +15,15 @@ public class Pneumatics extends Subsystem {
 	public boolean isDrivetrainHighGear;
 	public boolean isElevatorHighGear;
 	public boolean isWinchBrakeHighGear;
+	public boolean isCollectorSolenoidExtended;
 	
 	Compressor compressor = new Compressor(0);
-	DoubleSolenoid drivetrainShifter = new DoubleSolenoid(2, 3);
-	DoubleSolenoid elevatorShifter = new DoubleSolenoid(4, 5);
-	DoubleSolenoid winchBrakeShifter = new DoubleSolenoid(6, 7);
 
+	DoubleSolenoid elevatorShifter = new DoubleSolenoid(0, 1);
+	DoubleSolenoid drivetrainShifter = new DoubleSolenoid(2, 3);
+	DoubleSolenoid collectorSolenoid = new DoubleSolenoid(4, 5);
+	DoubleSolenoid winchBrakeShifter = new DoubleSolenoid(6, 7);
+	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -61,6 +64,16 @@ public class Pneumatics extends Subsystem {
     public void winchBreakShiftDown() {
     	this.winchBrakeShifter.set(DoubleSolenoid.Value.kReverse);
     	this.isWinchBrakeHighGear = false;
+    }
+    
+    public void extendCollector() {
+    	this.collectorSolenoid.set(DoubleSolenoid.Value.kForward);
+    	this.isCollectorSolenoidExtended = true;
+    }
+    
+    public void retractCollector( ) {
+    	this.collectorSolenoid.set(DoubleSolenoid.Value.kReverse);
+    	this.isCollectorSolenoidExtended = false;
     }
 }
 

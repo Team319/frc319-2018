@@ -18,7 +18,7 @@ public class LeaderBobTalonSRX extends BobTalonSRX{
 	 * @param leaderDeviceNumber
 	 * @param followerDeviceNumbers
 	 */
-	public LeaderBobTalonSRX(int leaderDeviceNumber, int[] followerDeviceNumbers) {
+	public LeaderBobTalonSRX(int leaderDeviceNumber, boolean victorSPXFollowers, int[] followerDeviceNumbers) {
 		// the superconstructor
 		super(leaderDeviceNumber);
 		
@@ -34,6 +34,12 @@ public class LeaderBobTalonSRX extends BobTalonSRX{
 			this.followers.add(follower);
 		}
 	}
+	
+	public LeaderBobTalonSRX(int leaderDeviceNumber, int[] followerDeviceNumbers) {
+		this(leaderDeviceNumber, false, followerDeviceNumbers);
+	}
+	
+	
 	
 	/* (non-Javadoc)
 	 * @see com.ctre.phoenix.motorcontrol.can.BaseMotorController#setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode)
