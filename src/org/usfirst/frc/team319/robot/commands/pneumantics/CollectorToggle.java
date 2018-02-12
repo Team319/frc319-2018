@@ -17,10 +17,10 @@ public class CollectorToggle extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	if(Robot.pneumatics.isCollectorSolenoidExtended == false) {
-    		Robot.pneumatics.extendCollector();
+    		Robot.pneumatics.openCollector();
     		System.out.println("Collector Extended");
     	}else if (Robot.pneumatics.isCollectorSolenoidExtended == true) {
-    		Robot.pneumatics.retractCollector();
+    		Robot.pneumatics.closeCollector();
     		System.out.println("Collector Retracted");
     	}
     }

@@ -14,9 +14,10 @@ public class DoubleSwitchLeft extends CommandGroup {
         
     	addSequential(new PrintCommand("Left"));
         addSequential(new FollowTrajectory("CenterToLeftSwitch"));
-        addSequential(new FollowTrajectory("CenterToLeftSwitchPt2"));
+        addSequential(new DropArmThenSpit());
+       /* addSequential(new FollowTrajectory("CenterToLeftSwitchPt2"));
         addSequential(new FollowTrajectory("CenterToLeftSwitchPt3"));
         addSequential(new FollowTrajectory("CenterToLeftSwitchPt4"));
-        addSequential(new FollowTrajectory("CenterToLeftSwitchPt5"));
+        addSequential(new FollowTrajectory("CenterToLeftSwitchPt5")); */
     }
 }

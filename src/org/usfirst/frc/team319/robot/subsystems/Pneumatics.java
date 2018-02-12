@@ -66,12 +66,12 @@ public class Pneumatics extends Subsystem {
     	this.isWinchBrakeHighGear = false;
     }
     
-    public void extendCollector() {
+    public void openCollector() {
     	this.collectorSolenoid.set(DoubleSolenoid.Value.kForward);
     	this.isCollectorSolenoidExtended = true;
     }
     
-    public void retractCollector( ) {
+    public void closeCollector( ) {
     	this.collectorSolenoid.set(DoubleSolenoid.Value.kReverse);
     	this.isCollectorSolenoidExtended = false;
     }

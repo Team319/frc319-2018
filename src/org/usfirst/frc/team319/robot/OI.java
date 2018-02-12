@@ -25,13 +25,17 @@ import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStraigh
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorTest;
 import org.usfirst.frc.team319.robot.commands.pneumantics.CollectorToggle;
 import org.usfirst.frc.team319.robot.commands.pneumantics.DrivetrainShiftToggle;
+import org.usfirst.frc.team319.robot.commands.pneumantics.OpenCollector;
+import org.usfirst.frc.team319.robot.commands.pneumantics.CloseCollector;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoHome;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToCollectCube;
+import org.usfirst.frc.team319.robot.commands.wrist.WristGoToSwitch;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.autonomous.AutoDriveForwardThreeFeet;
+import org.usfirst.frc.team319.robot.commands.autonomous.DropArmThenSpit;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -55,8 +59,10 @@ public class OI {
 		this.operatorController  = new BobXboxController(1);																																																																																			
 		
 		//this.operatorController.rightTriggerButton.whenPressed(new AutoTuneDrivetrainLeft());
-		this.operatorController.leftBumper.whenPressed(new CollectorToggle());
-		
+		this.operatorController.leftBumper.whenPressed(new WristGoHome());
+		this.operatorController.rightBumper.whenPressed(new WristGoToSwitch());
+		this.operatorController.aButton.whenPressed(new DropArmThenSpit());
+		this.operatorController.xButton.whenPressed(new CollectorToggle());
 		
 		//this.operatorController.leftTriggerButton.whenPressed(new CubeCollectorGoToZero());
 		//this.operatorController.aButton.whenPressed(new WristGoHome());

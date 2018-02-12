@@ -166,7 +166,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		
-		
+		//System.out.println("Wrist Error " + this.wrist.wristMotor.getClosedLoopError(0));
 		SmartDashboard.putNumber("Dpad value: ", this.oi.driverController.getPOV());
 		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.leftStick.getY());
 		SmartDashboard.putNumber("Driver Left Stick Y", this.oi.driverController.leftStick.getY());

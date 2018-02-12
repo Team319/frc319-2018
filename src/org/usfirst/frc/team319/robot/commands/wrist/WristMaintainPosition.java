@@ -1,32 +1,35 @@
-package org.usfirst.frc.team319.robot.commands.pneumantics;
+package org.usfirst.frc.team319.robot.commands.wrist;
 
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class RetractCollector extends Command {
+public class WristMaintainPosition extends Command {
 
-    public RetractCollector() {
+    public WristMaintainPosition() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.pneumatics);
+        requires(Robot.wrist);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.pneumatics.retractCollector();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    
+    	double position = Robot.wrist.wristMotor.getClosedLoopTarget(0);
+    	Robot.wrist.wristMove(ControlMode.MotionMagic, position);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

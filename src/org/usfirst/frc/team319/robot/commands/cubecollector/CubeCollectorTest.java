@@ -22,9 +22,8 @@ public class CubeCollectorTest extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	ControlMode controlMode = ControlMode.Velocity;
-    	double speed = 2000; //1.0
-    	Robot.cubeCollector.setCubeCollector(controlMode, speed);
+    	double speed = 1.0; //1.0
+    	Robot.cubeCollector.setCubeCollector(ControlMode.PercentOutput, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

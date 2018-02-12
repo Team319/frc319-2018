@@ -6,6 +6,7 @@ import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.Instrum;
 import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.wrist.WristJoystick;
+import org.usfirst.frc.team319.robot.commands.wrist.WristMaintainPosition;
 import org.usfirst.frc.team319.robot.commands.wrist.WristMotionMagicTest;
 import org.usfirst.frc.team319.robot.commands.wrist.WristStop;
 
@@ -26,8 +27,9 @@ public class Wrist extends Subsystem {
 	public final static int WRIST_PROFILE_DOWN = 1;
 	StringBuilder _sb = new StringBuilder();
 	int loops = 0;
-	public final static int upPositionLimit = -3319;
-	public final static int downPositionLimit = 0;
+	public final static int upPositionLimit = 0;
+	public final static int downPositionLimit = 3319;
+	private final static int threshold = 100;
 
 	public final BobTalonSRX wristMotor = new BobTalonSRX(4);
 
@@ -67,12 +69,13 @@ public class Wrist extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new WristMotionMagicTest()); //WristStop
-		 setDefaultCommand(new WristStop());
+		setDefaultCommand(new WristMaintainPosition());
 		//setDefaultCommand(new WristJoystick());
 	}
 
-	public void wristMove(ControlMode controlMode, double signal) {
-		wristMotor.set(controlMode, signal);
+	public void wristMove(ControlMode controlMode, double targetPosition) {
+		//this.manageGainProfile(targetPosition);
+		wristMotor.set(controlMode, targetPosition);
 	}
 	
 	
@@ -144,13 +147,25 @@ public class Wrist extends Subsystem {
 		}
 	}
 
-	public double getWristPosition() {
+	public int getWristPosition() {
 		return this.wristMotor.getSelectedSensorPosition(WRIST_PROFILE_UP);
 	}
 
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("Wrist Position", this.getWristPosition());
+		//System.out.println("Wrist Position " + this.getWristPosition());
+		
+	}
+	
+	public boolean isWristInPostion(int targetPosition) {
+		int currentPosition = this.getWristPosition();
+		 int positionError = Math.abs(currentPosition - targetPosition);
+			if (positionError < threshold) {
+				return true;
+			} else {
+				return false;
+			}
 	}
 
 }

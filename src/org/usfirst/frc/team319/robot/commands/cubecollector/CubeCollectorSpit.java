@@ -18,7 +18,7 @@ public class CubeCollectorSpit extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    
+    	System.out.println("spitting");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,8 +28,8 @@ public class CubeCollectorSpit extends Command {
     	// or spins in the right direction at the wrong speed, we don't know why.
     	//double rpm = -210; 
         //double speed = rpm * 4096 / 600;
-    	double speed = -2000.0;
-    	Robot.cubeCollector.setCubeCollector(ControlMode.Velocity, speed);
+    	double speed = -1.0;
+    	Robot.cubeCollector.setCubeCollector(ControlMode.PercentOutput, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

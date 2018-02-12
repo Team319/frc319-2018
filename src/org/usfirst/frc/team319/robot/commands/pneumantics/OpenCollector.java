@@ -7,16 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ExtendCollector extends Command {
+public class OpenCollector extends Command {
 
-    public ExtendCollector() {
+    public OpenCollector() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.pneumatics);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.pneumatics.extendCollector();
+    	Robot.pneumatics.openCollector();
     }
 
     // Called repeatedly when this Command is scheduled to run
