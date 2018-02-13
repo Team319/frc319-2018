@@ -1,5 +1,6 @@
 package org.usfirst.frc.team319.robot.commands.autonomous;
 
+import org.usfirst.frc.team319.paths.CenterToLeftSwitch;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.PrintCommand;
 

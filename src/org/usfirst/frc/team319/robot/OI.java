@@ -63,6 +63,7 @@ public class OI {
 		this.operatorController.rightBumper.whenPressed(new WristGoToSwitch());
 		this.operatorController.aButton.whenPressed(new DropArmThenSpit());
 		this.operatorController.xButton.whenPressed(new CollectorToggle());
+		this.operatorController.bButton.whenPressed(new FollowTrajectory("TestSTurnAuto"));
 		
 		//this.operatorController.leftTriggerButton.whenPressed(new CubeCollectorGoToZero());
 		//this.operatorController.aButton.whenPressed(new WristGoHome());

@@ -122,17 +122,17 @@ public class Robot extends TimedRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 		//SmartDashboard.putData("Auto mode", m_chooser);
-		String selectedAuto = (String)autoChooser.getSelected();
+		/*String selectedAuto = (String)autoChooser.getSelected();
 		switch (selectedAuto) {
-		case "CenterAuto":
+		case "CenterAuto": */
 			autonomousCommand = new CenterAuto(gameState);
-			break;
+			 /*break;
 		case "LeftAuto":
 			autonomousCommand = new LeftAuto(gameState);
 		default:
 			autonomousCommand = new FollowTrajectory("CrossTheLine");
-			break;
-		}
+			break; */
+		//}
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
@@ -146,6 +146,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println("left drive position" +Robot.drivetrain.getLeftDriveLeadDistance());
+		System.out.println(" right drive position"+ Robot.drivetrain.getRightDriveLeadDistance());
+		
 	}
 
 	@Override
