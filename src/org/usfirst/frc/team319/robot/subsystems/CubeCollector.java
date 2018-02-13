@@ -32,10 +32,7 @@ public class CubeCollector extends Subsystem {
 	StringBuilder _sb = new StringBuilder();
 	int loops = 0;
 	private static int _loops = 0;
-	private static int _timesInMotionMagic = 0;
-
-	
-	
+	private static int _timesInMotionMagic = 0;	
 	
 	public CubeCollector() {
 		

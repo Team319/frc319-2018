@@ -1,5 +1,6 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
+import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorStop;
 import org.usfirst.frc.team319.robot.commands.elevator.JoystickElevator;
@@ -24,8 +25,7 @@ public class Elevator extends Subsystem {
 	public final static int upPositionLimit = 0;// needs to be determined manually
 	public final static int downPositionLimit = 0;
 	
-	private int[] elevatorFollowers = {5, 6, 7};
-    public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(3, elevatorFollowers); //Was talon 5
+    public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(3, new BobTalonSRX(5), new BobTalonSRX(6), new BobTalonSRX(7)); //Was talon 5
     
     public Elevator() {
     	
