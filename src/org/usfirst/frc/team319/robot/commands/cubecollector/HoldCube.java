@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands.wrist;
+package org.usfirst.frc.team319.robot.commands.cubecollector;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -9,13 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class WristGoHome extends Command {
+public class HoldCube extends Command {
 
-	int targetPosition = 0;
-	
-    public WristGoHome() {
+    public HoldCube() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.wrist);
+        requires(Robot.cubeCollector);
     }
 
     // Called just before this Command runs the first time
@@ -24,14 +22,13 @@ public class WristGoHome extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    
-    	
-    	Robot.wrist.wristMove(ControlMode.MotionMagic, targetPosition);
+    	Double speed = 0.05;
+    	Robot.cubeCollector.setCubeCollector(ControlMode.PercentOutput, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.wrist.isWristInPostion(targetPosition);
+        return false;
     }
 
     // Called once after isFinished returns true

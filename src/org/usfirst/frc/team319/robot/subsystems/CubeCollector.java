@@ -33,6 +33,7 @@ public class CubeCollector extends Subsystem {
 	int loops = 0;
 	private static int _loops = 0;
 	private static int _timesInMotionMagic = 0;
+	private static final double cubeDistanceThreshhold = 1.5;
 
 	
 	
@@ -111,7 +112,7 @@ public class CubeCollector extends Subsystem {
     }
    
     public double getCollectorDistanceSensorValue() {
-    	return this.collectorDistanceSensor.getValue();
+    	return this.collectorDistanceSensor.getVoltage();
     }
     
     public double leftCollectorVelocity() {
@@ -138,16 +139,6 @@ public class CubeCollector extends Subsystem {
     	this.collectorLeftMotor.set(ControlMode.MotionMagic, 180);
     	System.out.println("method called " + this.collectorLeftMotor.getControlMode());
     	System.out.println("method called " + this.collectorLeftMotor.getClosedLoopTarget(COLLECTOR_PROFILE));
-    }
-    
-    public boolean isCubeCollected() {
-    	if(getCollectorDistanceSensorValue() < 8.0) {
-    		return true;
-    	}
-    	else 
-    	{
-    		return false; 	
-    	}
     }
     
     public void velocityPIDTest() {
@@ -230,11 +221,22 @@ public class CubeCollector extends Subsystem {
         
     @Override
     public void periodic() {
-		SmartDashboard.putNumber("UltrasonicSensor", this.getCollectorDistanceSensorValue());
+		SmartDashboard.putNumber("IR Sensor", this.getCollectorDistanceSensorValue());
 		SmartDashboard.putNumber("Left Collector Velocity", this.leftCollectorVelocity());
 		SmartDashboard.putNumber("Left Collector Position", this.leftCollectorPosition());
 		SmartDashboard.putNumber("Right Collector Velocity", this.rightCollectorVelocity());
 		SmartDashboard.putNumber("Right Collector Position", this.rightCollectorPosition());
+    }
+    
+    public boolean isCubeCollected() {
+    	double irSensorValue = this.getCollectorDistanceSensorValue();
+    	if(irSensorValue > cubeDistanceThreshhold) {
+    		return true;
+    	}else {
+    		return false;
+    	}
+    	
+    	
     }
     
 }

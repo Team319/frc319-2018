@@ -10,6 +10,8 @@ package org.usfirst.frc.team319.robot;
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.models.BobController;
 import org.usfirst.frc.team319.paths.FiveFeetAndTurn;
+import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
+import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.AutoTuneCollectorLeft;
 import org.usfirst.frc.team319.robot.commands.AutoTuneCollectorRight;
 import org.usfirst.frc.team319.robot.commands.AutoTuneDrivetrainLeft;
@@ -22,7 +24,7 @@ import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorMotionM
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStraighten;
-import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorTest;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorCollect;
 import org.usfirst.frc.team319.robot.commands.pneumantics.CollectorToggle;
 import org.usfirst.frc.team319.robot.commands.pneumantics.DrivetrainShiftToggle;
 import org.usfirst.frc.team319.robot.commands.pneumantics.OpenCollector;
@@ -49,29 +51,23 @@ public class OI {
 		
 		this.driverController = new BobXboxController(0);
 		
-		this.driverController.rightTriggerButton.whileHeld(new CubeCollectorTest());
+		this.driverController.rightTriggerButton.whileHeld(new CubeCollectorCollect());
 		this.driverController.leftTriggerButton.whileHeld(new CubeCollectorSpit());
 		this.driverController.bButton.whenPressed(new CubeCollectorStop());
 		//this.driverController.xButton.whenPressed(new CubeCollectorStraighten());
 		this.driverController.rightBumper.whenPressed(new DrivetrainShiftToggle());
-		this.driverController.Dpad.Up.whileHeld(new CubeCollectorTest());
+		this.driverController.Dpad.Up.whileHeld(new CubeCollectorCollect());
 		
 		this.operatorController  = new BobXboxController(1);																																																																																			
 		
 		//this.operatorController.rightTriggerButton.whenPressed(new AutoTuneDrivetrainLeft());
 		this.operatorController.leftBumper.whenPressed(new WristGoHome());
-		this.operatorController.rightBumper.whenPressed(new WristGoToSwitch());
+		this.operatorController.rightBumper.whenPressed(new WristGoToCollectCube());
 		this.operatorController.aButton.whenPressed(new DropArmThenSpit());
 		this.operatorController.xButton.whenPressed(new CollectorToggle());
-		this.operatorController.bButton.whenPressed(new FollowTrajectory("TestSTurnAuto"));
-		
-		//this.operatorController.leftTriggerButton.whenPressed(new CubeCollectorGoToZero());
-		//this.operatorController.aButton.whenPressed(new WristGoHome());
-		//this.operatorController.bButton.whenPressed(new WristGoToCollectCube());
-		//this.operatorController.leftBumper.whenPressed(new AutoDriveForwardThreeFeet());
-		//this.operatorController.rightBumper.whenPressed(new FollowTrajectory(FiveFeetAndTurn));
-		//operatorController.xButton.whenPressed(new FollowTrajectory("CenterToRightSwitchPt3"));
-		//operatorController.rightTriggerButton.whenPressed(new AutoTuneWrist());
+		this.operatorController.yButton.whenPressed(new AutoCollectCubeOpened());
+		this.operatorController.bButton.whenPressed(new AutoCollectCubeClosed());
+		//this.operatorController.bButton.whenPressed(new FollowTrajectory("TestSTurnAuto"));
 		
 	
 	}

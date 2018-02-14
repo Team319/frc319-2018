@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CubeCollectorTest extends Command {
+public class CubeCollectorCollect extends Command {
 
-    public CubeCollectorTest() {
+    public CubeCollectorCollect() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.cubeCollector);
     }
