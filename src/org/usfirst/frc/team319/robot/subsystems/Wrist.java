@@ -31,7 +31,7 @@ public class Wrist extends Subsystem {
 	public final static int downPositionLimit = 3319;
 	private final static int threshold = 200;
 
-	public final BobTalonSRX wristMotor = new BobTalonSRX(4);
+	public final BobTalonSRX wristMotor = new BobTalonSRX(5);
 
 	public Wrist() {
 
