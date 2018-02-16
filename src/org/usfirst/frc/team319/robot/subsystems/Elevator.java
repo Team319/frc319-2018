@@ -25,7 +25,9 @@ public class Elevator extends Subsystem {
 	public final static int upPositionLimit = 0;// needs to be determined manually
 	public final static int downPositionLimit = 0;
 	
+
     public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(3, new BobTalonSRX(5), new BobTalonSRX(6), new BobTalonSRX(7)); //Was talon 5
+
     
     public Elevator() {
     	

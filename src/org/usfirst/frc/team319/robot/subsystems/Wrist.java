@@ -29,9 +29,9 @@ public class Wrist extends Subsystem {
 	int loops = 0;
 	public final static int upPositionLimit = 0;
 	public final static int downPositionLimit = 3319;
-	private final static int threshold = 100;
+	private final static int threshold = 200;
 
-	public final BobTalonSRX wristMotor = new BobTalonSRX(4);
+	public final BobTalonSRX wristMotor = new BobTalonSRX(5);
 
 	public Wrist() {
 
@@ -61,7 +61,7 @@ public class Wrist extends Subsystem {
 
 		this.wristMotor.setNeutralMode(NeutralMode.Coast); //would we rather have this be brake? JD
 
-		this.wristMotor.configPIDF(WRIST_PROFILE_UP, 0.219, 0.0, 0.0, 0.799);
+		this.wristMotor.configPIDF(WRIST_PROFILE_UP, 0.419, 0.0, 0.0, 0.799);
 		this.wristMotor.configPIDF(WRIST_PROFILE_DOWN, 0.10, 0.0, 0.0, 0.799);
 
 	}
@@ -74,7 +74,6 @@ public class Wrist extends Subsystem {
 	}
 
 	public void wristMove(ControlMode controlMode, double targetPosition) {
-		//this.manageGainProfile(targetPosition);
 		wristMotor.set(controlMode, targetPosition);
 	}
 	

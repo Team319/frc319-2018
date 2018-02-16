@@ -6,15 +6,14 @@ import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.Instrum;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorMotionMagicTest;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
-import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorVelocityPIDTest;
 import org.usfirst.frc.team319.robot.commands.cubecollector.SetCubeCollectorLeftMotor;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -26,13 +25,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CubeCollector extends Subsystem {
 	
 	public final static int COLLECTOR_PROFILE = 0;
-	public final BobTalonSRX collectorLeftMotor = new BobTalonSRX(2); // 11
-	public final BobTalonSRX collectorRightMotor = new BobTalonSRX(10);
+	public final VictorSPX collectorLeftMotor = new VictorSPX(3); // 11
+	public final VictorSPX collectorRightMotor = new VictorSPX(4);
 	AnalogInput collectorDistanceSensor = new AnalogInput(0);
 	StringBuilder _sb = new StringBuilder();
 	int loops = 0;
 	private static int _loops = 0;
-	private static int _timesInMotionMagic = 0;	
+
+	private static int _timesInMotionMagic = 0;
+	private static final double cubeDistanceThreshhold = 1.5;
+
+	
+	
+
 	
 	public CubeCollector() {
 		
@@ -48,7 +53,7 @@ public class CubeCollector extends Subsystem {
 		this.collectorRightMotor.setInverted(true);
 		
 		////////////////////////////motion magic//////////////////////////////////
-		
+		/*
 		this.collectorLeftMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
 		this.collectorLeftMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
 		
@@ -70,6 +75,7 @@ public class CubeCollector extends Subsystem {
 				
 		this.collectorRightMotor.configMotionAcceleration(500);
 		this.collectorRightMotor.configMotionCruiseVelocity(2000);
+		*/
 		//////////////////////////////////////////////////////////////////////////
 		
 		//this.collectorSensorLeft.setAutomaticMode(true);
@@ -78,8 +84,8 @@ public class CubeCollector extends Subsystem {
 		this.collectorLeftMotor.setNeutralMode(NeutralMode.Coast);
 		this.collectorRightMotor.setNeutralMode(NeutralMode.Coast);
 		
-		this.collectorLeftMotor.configPIDF(COLLECTOR_PROFILE, 0.105, 0.0, 0.0, 0.345); // p: 0.008, f: 0.374
-		this.collectorRightMotor.configPIDF(COLLECTOR_PROFILE, 0.0734, 0.0, 0.0, 0.299);
+		//this.collectorLeftMotor.configPIDF(COLLECTOR_PROFILE, 0.105, 0.0, 0.0, 0.345); // p: 0.008, f: 0.374
+		//this.collectorRightMotor.configPIDF(COLLECTOR_PROFILE, 0.0734, 0.0, 0.0, 0.299);
 	
 	}
 
@@ -106,132 +112,26 @@ public class CubeCollector extends Subsystem {
     public void setCubeCollectorLeftMotor(ControlMode controlMode, double speed) {
     	collectorLeftMotor.set(controlMode, speed);
     }
-   
-    public double getCollectorDistanceSensorValue() {
-    	return this.collectorDistanceSensor.getValue();
-    }
-    
-    public double leftCollectorVelocity() {
-    	this.collectorLeftMotor.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_100Ms, 0);
-    	return this.collectorLeftMotor.getSelectedSensorVelocity(COLLECTOR_PROFILE);
-    }
-    
-    public double rightCollectorVelocity() {
-    	return this.collectorRightMotor.getSelectedSensorVelocity(COLLECTOR_PROFILE);    
-    }
-    
-    public double rightCollectorPosition() {
-    	return this.collectorRightMotor.getSelectedSensorPosition(COLLECTOR_PROFILE);
-    }
-    
-    public double leftCollectorPosition() {
-    	return this.collectorLeftMotor.getSelectedSensorPosition(COLLECTOR_PROFILE);
-    }
-    
-    public void cubeCollectorMotionMagicTest() {
-    	System.out.println("method called " + this.collectorLeftMotor.getControlMode());
-    	//double revs = degrees/360.0;
-    	//this.collectorLeftMotor.set(ControlMode.MotionMagic, 180);
-    	this.collectorLeftMotor.set(ControlMode.MotionMagic, 180);
-    	System.out.println("method called " + this.collectorLeftMotor.getControlMode());
-    	System.out.println("method called " + this.collectorLeftMotor.getClosedLoopTarget(COLLECTOR_PROFILE));
-    }
-    
-    public boolean isCubeCollected() {
-    	if(getCollectorDistanceSensorValue() < 8.0) {
-    		return true;
-    	}
-    	else 
-    	{
-    		return false; 	
-    	}
-    }
-    
-    public void velocityPIDTest() {
-    	
-    	BobTalonSRX _talon = this.collectorLeftMotor;
-    	double leftYstick = Robot.oi.operatorController.leftStick.getY();
-    	double motorOutput = _talon.getMotorOutputPercent();
-    	
-	/* prepare line to print */
-	_sb.append("\tout:");
-	_sb.append(motorOutput);
-	_sb.append("\tspd:");
-	_sb.append(_talon.getSelectedSensorVelocity(this.COLLECTOR_PROFILE));
-	//_sb.append("LowLevelspeed:");
-	//_sb.append(_talon.getSensorCollection());
 
-	if (Robot.oi.driverController.getRawButton(1)) {
-		/* Speed mode */
-		/* Convert 500 RPM to units / 100ms.
-		 * 4096 Units/Rev * 500 RPM / 600 100ms/min in either direction:
-		 * velocity setpoint is in units/100ms
-		 */
-		double targetVelocity_UnitsPer100ms = 210.0 * 4096 / 600;
-		/* 500 RPM in either direction */
-		_talon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
-
-		/* append more signals to print when in speed mode. */
-		_sb.append("\terr:");
-		_sb.append(_talon.getClosedLoopError(this.COLLECTOR_PROFILE));
-		_sb.append("\ttrg:");
-		_sb.append(targetVelocity_UnitsPer100ms);
-	} else {
-		/* Percent voltage mode */
-		_talon.set(ControlMode.PercentOutput, leftYstick);
-		System.out.println("y-axis" +Robot.oi.driverController.leftStick.getY());
-	}
-
-	if (++loops >= 10) {
-		loops = 0;
-		System.out.println(_sb.toString());
-	}
-	_sb.setLength(0);
-}
- 
-    public void motionMagicTest() {
-    	
-    	BobTalonSRX _talon = this.collectorRightMotor;
-    	
-		/* get gamepad axis - forward stick is positive */
-		double leftYstick = Robot.oi.operatorController.leftStick.getY();
-		/* calculate the percent motor output */
-		double motorOutput = _talon.getMotorOutputPercent();
-		/* prepare line to print */
-		_sb.append("\tOut%:");
-		_sb.append(motorOutput);
-		_sb.append("\tVel:");
-		_sb.append(_talon.getSelectedSensorVelocity(this.COLLECTOR_PROFILE));
-
-		if (Robot.oi.operatorController.getRawButton(1)) {
-			/* Motion Magic - 4096 ticks/rev * 10 Rotations in either direction */
-			double targetPos = -1 * leftYstick * 4096 * 10.0;
-			_talon.set(ControlMode.MotionMagic, targetPos);
-
-			/* append more signals to print when in speed mode. */
-			_sb.append("\terr:");
-			_sb.append(_talon.getClosedLoopError(this.COLLECTOR_PROFILE));
-			_sb.append("\ttrg:");
-			_sb.append(targetPos);
-		} else {
-			/* Percent voltage mode */
-			_talon.set(ControlMode.PercentOutput, leftYstick);
-		}
-		/* instrumentation */
-		Instrum.Process(_talon, _sb);
-		try {
-			TimeUnit.MILLISECONDS.sleep(10);
-		} catch (Exception e) {
-		}
-	}
-        
     @Override
     public void periodic() {
-		SmartDashboard.putNumber("UltrasonicSensor", this.getCollectorDistanceSensorValue());
-		SmartDashboard.putNumber("Left Collector Velocity", this.leftCollectorVelocity());
-		SmartDashboard.putNumber("Left Collector Position", this.leftCollectorPosition());
-		SmartDashboard.putNumber("Right Collector Velocity", this.rightCollectorVelocity());
-		SmartDashboard.putNumber("Right Collector Position", this.rightCollectorPosition());
+		SmartDashboard.putNumber("IR Sensor", this.getCollectorDistanceSensorValue());
+    }
+    
+    public double getCollectorDistanceSensorValue() {
+    	return this.collectorDistanceSensor.getVoltage();
+	}
+
+
+	public boolean isCubeCollected() {
+    	double irSensorValue = this.getCollectorDistanceSensorValue();
+    	if(irSensorValue > cubeDistanceThreshhold) {
+    		return true;
+    	}else {
+    		return false;
+    	}
+    	
+    	
     }
     
 }

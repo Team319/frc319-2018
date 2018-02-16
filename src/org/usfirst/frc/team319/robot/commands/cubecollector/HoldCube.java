@@ -2,14 +2,16 @@ package org.usfirst.frc.team319.robot.commands.cubecollector;
 
 import org.usfirst.frc.team319.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CubeCollectorVelocityPIDTest extends Command {
+public class HoldCube extends Command {
 
-    public CubeCollectorVelocityPIDTest() {
+    public HoldCube() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.cubeCollector);
     }
@@ -20,7 +22,8 @@ public class CubeCollectorVelocityPIDTest extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.cubeCollector.velocityPIDTest();
+    	Double speed = 0.05;
+    	Robot.cubeCollector.setCubeCollector(ControlMode.PercentOutput, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
