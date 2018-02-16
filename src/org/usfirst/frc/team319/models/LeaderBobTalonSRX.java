@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
  
 /**
  * @author BigBa
@@ -11,35 +12,28 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
  */
 public class LeaderBobTalonSRX extends BobTalonSRX{
 	// a list of talons to follow the leader
-	private final List<BobTalonSRX> followers;
+	private final List<BaseMotorController> followerList;
 	
 	// the constructor
 	/**
 	 * @param leaderDeviceNumber
 	 * @param followerDeviceNumbers
 	 */
-	public LeaderBobTalonSRX(int leaderDeviceNumber, boolean victorSPXFollowers, int[] followerDeviceNumbers) {
+	public LeaderBobTalonSRX(int leaderDeviceNumber, BaseMotorController... followers) {
 		// the superconstructor
 		super(leaderDeviceNumber);
 		
 		// create an empty list of followers
-		this.followers = new ArrayList<BobTalonSRX>(); 
+		followerList = new ArrayList<BaseMotorController>(); 
 		
-		// for each number in the array, create a BobTalonSRX
+		// for each controller in the array,
 		// tell it to follow the leader, and add it to the list
 		// of followers
-		for (int followerDeviceNumber : followerDeviceNumbers) {
-			BobTalonSRX follower = new BobTalonSRX(followerDeviceNumber);
+		for (BaseMotorController follower : followers) {
 			follower.follow(this);
-			this.followers.add(follower);
+			followerList.add(follower);
 		}
-	}
-	
-	public LeaderBobTalonSRX(int leaderDeviceNumber, int[] followerDeviceNumbers) {
-		this(leaderDeviceNumber, false, followerDeviceNumbers);
-	}
-	
-	
+	}	
 	
 	/* (non-Javadoc)
 	 * @see com.ctre.phoenix.motorcontrol.can.BaseMotorController#setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode)
@@ -47,16 +41,16 @@ public class LeaderBobTalonSRX extends BobTalonSRX{
 	@Override
 	public void setNeutralMode(NeutralMode neutralMode) {
 		super.setNeutralMode(neutralMode);
-		for (BobTalonSRX bobTalonSRX : followers) {
-			bobTalonSRX.setNeutralMode(neutralMode);
+		for (BaseMotorController follower : followerList) {
+			follower.setNeutralMode(neutralMode);
 		}
 	}
 	
 	@Override
 	public void setInverted(boolean invert) {
 		super.setInverted(invert);
-		for (BobTalonSRX bobTalonSRX : followers) {
-			bobTalonSRX.setInverted(invert);
+		for (BaseMotorController follower : followerList) {
+			follower.setInverted(invert);
 		}
 	}
 

@@ -31,11 +31,13 @@ public class CubeCollector extends Subsystem {
 	StringBuilder _sb = new StringBuilder();
 	int loops = 0;
 	private static int _loops = 0;
+
 	private static int _timesInMotionMagic = 0;
 	private static final double cubeDistanceThreshhold = 1.5;
 
 	
 	
+
 	
 	public CubeCollector() {
 		
