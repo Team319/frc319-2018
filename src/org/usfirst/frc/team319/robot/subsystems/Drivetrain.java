@@ -24,13 +24,11 @@ public class Drivetrain extends Subsystem {
 
 	public static final int LOW_GEAR_PROFILE = 0;
 	public static final int HIGH_GEAR_PROFILE = 1;
-	private int[] leftFollowers = {0}; //9
-	private int[] rightFollowers = {9}; // 0
 	StringBuilder _sb = new StringBuilder();
 	private static int _loops = 0;
 	
-    public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, leftFollowers); // 8
-    public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(8, rightFollowers); // 1
+    public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, new BobTalonSRX(0)); // 8
+    public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(8, new BobTalonSRX(9)); // 1
     //775 drivetrain code
 	//private int[] leftFollowers = {2, 3, 4};
 	//private int[] rightFollowers = {7, 8, 9};
