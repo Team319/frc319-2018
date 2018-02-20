@@ -40,6 +40,16 @@ public class BobTalonSRX extends TalonSRX {
 		errorCode = this.config_kF(slotIdx, F);
 		return errorCode;
 	}
+	
+	public ErrorCode configPIDF(int slotIdx, double P, double I, double D, double F, int iZone) {
+		ErrorCode eCode = this.configPIDF(slotIdx, P, I, D, F);
+		eCode = this.config_IntegralZone(slotIdx, iZone);
+		return eCode;
+	}
+	
+	public ErrorCode config_IntegralZone(int slotIdx, int izone) {
+		return super.config_IntegralZone(slotIdx, izone, DEFAULT_TIMEOUT_MS);
+	}
 
 	public ErrorCode configNominalOutputForward(double percentOut) {
 		return super.configNominalOutputForward(percentOut, DEFAULT_TIMEOUT_MS);
@@ -58,7 +68,7 @@ public class BobTalonSRX extends TalonSRX {
 	}
 	
 	public ErrorCode setGains(SRXGains gains) {
-		return this.configPIDF(gains.parameterSlot, gains.P, gains.I, gains.D, gains.F);
+		return this.configPIDF(gains.parameterSlot, gains.P, gains.I, gains.D, gains.F, gains.iZone);
 	}
 	
 	public ErrorCode configSelectedFeedbackSensor(FeedbackDevice feedbackDevice, int pidIdx) {

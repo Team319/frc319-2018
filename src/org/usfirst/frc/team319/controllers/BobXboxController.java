@@ -11,6 +11,12 @@ public class BobXboxController extends Joystick {
 	public BobXboxController(int port) {
 		super(port);
 	}
+	
+	public BobXboxController(int port, double xDeadband, double yDeadband) {
+		this(port);
+		this.leftStick.setDeadband(xDeadband, yDeadband);
+		this.rightStick.setDeadband(xDeadband, yDeadband);
+	}
 
 	public BobButton xButton = new BobButton(this, XboxButton.X);
 	public BobButton yButton = new BobButton(this, XboxButton.Y);

@@ -1,23 +1,22 @@
-package org.usfirst.frc.team319.robot.commands.pneumantics;
+package org.usfirst.frc.team319.robot.commands.elevator;
 
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CloseCollector extends Command {
+public class ElevatorGoToHomePosition extends Command {
 
-    public CloseCollector() {
+    public ElevatorGoToHomePosition() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.pneumatics);
+        requires(Robot.elevator);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.pneumatics.closeCollector();
+    	Robot.elevator.setTargetPosition(10000);
     }
 
     // Called repeatedly when this Command is scheduled to run

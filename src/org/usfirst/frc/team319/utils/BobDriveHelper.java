@@ -11,8 +11,8 @@ import org.usfirst.frc.team319.models.DriveSignal;
  */
 public class BobDriveHelper {
 
-    private static final double kThrottleDeadband = 0.08;//.02
-    private static final double kWheelDeadband = 0.04;//0.02
+    private static final double kThrottleDeadband = 0.0;//.02
+    private static final double kWheelDeadband = 0.0;//0.02
 
     // These factor determine how fast the wheel traverses the "non linear" sine curve.
     private static final double kHighWheelNonLinearity = 0.65;//.65

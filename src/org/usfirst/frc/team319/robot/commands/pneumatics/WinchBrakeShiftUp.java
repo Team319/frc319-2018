@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands.pneumantics;
+package org.usfirst.frc.team319.robot.commands.pneumatics;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -7,22 +7,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CollectorToggle extends Command {
+public class WinchBrakeShiftUp extends Command {
 
-    public CollectorToggle() {
+    public WinchBrakeShiftUp() {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.pneumatics);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(Robot.pneumatics.isCollectorSolenoidExtended == false) {
-    		Robot.pneumatics.openCollector();
-    		System.out.println("Collector Extended");
-    	}else if (Robot.pneumatics.isCollectorSolenoidExtended == true) {
-    		Robot.pneumatics.closeCollector();
-    		System.out.println("Collector Retracted");
-    	}
+    	Robot.pneumatics.winchBreakShiftUp();
+    	System.out.println("Winch Brake Engaged");
     }
 
     // Called repeatedly when this Command is scheduled to run

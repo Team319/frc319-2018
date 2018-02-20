@@ -1,23 +1,24 @@
-package org.usfirst.frc.team319.robot.commands.pneumantics;
+package org.usfirst.frc.team319.robot.commands.elevator;
 
 import org.usfirst.frc.team319.robot.Robot;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class WinchBrakeShiftUp extends Command {
+public class ElevatorMotionMagicTest extends Command {
 
-    public WinchBrakeShiftUp() {
+    public ElevatorMotionMagicTest() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.pneumatics);
+        requires(Robot.elevator);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.pneumatics.winchBreakShiftUp();
-    	System.out.println("Winch Brake Engaged");
+    	Robot.elevator.setTargetPosition(30000);
     }
 
     // Called repeatedly when this Command is scheduled to run

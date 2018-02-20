@@ -5,10 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.Instrum;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.wrist.WristJoystick;
 import org.usfirst.frc.team319.robot.commands.wrist.WristMaintainPosition;
-import org.usfirst.frc.team319.robot.commands.wrist.WristMotionMagicTest;
-import org.usfirst.frc.team319.robot.commands.wrist.WristStop;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -46,10 +43,8 @@ public class Wrist extends Subsystem {
 		this.wristMotor.configPeakOutputForward(1);
 		this.wristMotor.configPeakOutputReverse(-1);
 
-		this.wristMotor.setSelectedSensorPosition(0, WRIST_PROFILE_UP);
-
-		this.wristMotor.configMotionAcceleration(500);
-		this.wristMotor.configMotionCruiseVelocity(2000);
+		this.wristMotor.configMotionAcceleration(1000);
+		this.wristMotor.configMotionCruiseVelocity(2750);
 
 		this.wristMotor.configForwardSoftLimitThreshold(downPositionLimit);
 		this.wristMotor.configReverseSoftLimitThreshold(upPositionLimit);
@@ -59,7 +54,7 @@ public class Wrist extends Subsystem {
 
 		///////////////////
 
-		this.wristMotor.setNeutralMode(NeutralMode.Coast); //would we rather have this be brake? JD
+		this.wristMotor.setNeutralMode(NeutralMode.Coast); // would we rather have this be brake? JD
 
 		this.wristMotor.configPIDF(WRIST_PROFILE_UP, 0.419, 0.0, 0.0, 0.799);
 		this.wristMotor.configPIDF(WRIST_PROFILE_DOWN, 0.10, 0.0, 0.0, 0.799);
@@ -70,31 +65,31 @@ public class Wrist extends Subsystem {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new WristMotionMagicTest()); //WristStop
 		setDefaultCommand(new WristMaintainPosition());
-		//setDefaultCommand(new WristJoystick());
+		// setDefaultCommand(new WristJoystick());
 	}
 
 	public void wristMove(ControlMode controlMode, double targetPosition) {
+		this.manageGainProfile(targetPosition);
 		wristMotor.set(controlMode, targetPosition);
 	}
-	
-	
-	/*controls the position of the collector between upPositionLimit
-	 * and downPositionLimit based on the scalar input between -1 and 1.
+
+	/*
+	 * controls the position of the collector between upPositionLimit and
+	 * downPositionLimit based on the scalar input between -1 and 1.
 	 */
 	public void motionMagicPositionControl(double positionScalar) {
 		double encoderPosition = 0;
-		
+
 		if (positionScalar > 0) {
 			encoderPosition = positionScalar * upPositionLimit;
-		}else {
+		} else {
 			encoderPosition = -positionScalar * downPositionLimit;
-		}		
-		
-		//manageGainProfile(encoderPosition);
-		wristMotor.set(ControlMode.MotionMagic, encoderPosition);		
+		}
+
+		// manageGainProfile(encoderPosition);
+		wristMotor.set(ControlMode.MotionMagic, encoderPosition);
 	}
-	
-	
+
 	/*
 	 * choose which set of gains to use based on direction of travel.
 	 */
@@ -103,8 +98,7 @@ public class Wrist extends Subsystem {
 		// negative direction moves wrist up
 		if (currentPosition < targetPosition) {
 			wristMotor.selectProfileSlot(WRIST_PROFILE_DOWN, 0);
-		}
-		else {
+		} else {
 			wristMotor.selectProfileSlot(WRIST_PROFILE_UP, 0);
 		}
 	}
@@ -153,18 +147,18 @@ public class Wrist extends Subsystem {
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("Wrist Position", this.getWristPosition());
-		//System.out.println("Wrist Position " + this.getWristPosition());
-		
+		// System.out.println("Wrist Position " + this.getWristPosition());
+
 	}
-	
+
 	public boolean isWristInPostion(int targetPosition) {
 		int currentPosition = this.getWristPosition();
-		 int positionError = Math.abs(currentPosition - targetPosition);
-			if (positionError < threshold) {
-				return true;
-			} else {
-				return false;
-			}
+		int positionError = Math.abs(currentPosition - targetPosition);
+		if (positionError < threshold) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

@@ -1,35 +1,31 @@
-package org.usfirst.frc.team319.robot.commands.elevator;
+package org.usfirst.frc.team319.robot.commands.pneumatics;
 
 import org.usfirst.frc.team319.robot.Robot;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class JoystickElevator extends Command {
+public class OpenCollector extends Command {
 
-    public JoystickElevator() {
-        requires(Robot.elevator);
+    public OpenCollector() {
+        // Use requires() here to declare subsystem dependencies
+        requires(Robot.pneumatics);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	Robot.pneumatics.openCollector();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double signal = -Robot.oi.operatorController.leftStick.getY();
-    	Robot.elevator.setElevator(ControlMode.PercentOutput, signal);
-    	System.out.println("Elevator Velocity" + Robot.elevator.elevatorLead.getSelectedSensorVelocity(0));
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
 import org.usfirst.frc.team319.models.GameState;
+import org.usfirst.frc.team319.paths.CrossTheLine;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.autonomous.CenterAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous.CenterToSwitchAuto;
@@ -71,6 +72,8 @@ public class Robot extends TimedRobot {
         autoChooser = new SendableChooser<String>();
         autoChooser.addDefault("Center Auto", "CenterAuto");
         autoChooser.addObject("Left Auto", "LeftAuto");
+        autoChooser.addObject("Cross The Line", "CrossTheLine");        
+        autoChooser.addObject("Do Nothing", "DoNothing");
 		//autoChooser.addDefault("Default", new DefaultAuto());
 		//autoChooser.addObject("Center", new CenterToSwitchAuto());
 		//autoChooser.addObject("Left", new LeftAutoTest());
@@ -96,6 +99,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		this.cubeCollector.setCubeCollector(ControlMode.PercentOutput, 0);
+		this.elevator.setTargetPosition(elevator.getCurrentPosition());
 		this.gameState = new GameState(DriverStation.getInstance().getGameSpecificMessage());
 		Scheduler.getInstance().run();
 	}
@@ -129,6 +134,13 @@ public class Robot extends TimedRobot {
 			 break;
 		case "LeftAuto":
 			autonomousCommand = new LeftAuto(gameState);
+			break;
+		case "DoNothing":
+			autonomousCommand = new DefaultAuto();
+			break;
+		case "CrossTheLine":
+			autonomousCommand = new FollowTrajectory(new CrossTheLine());
+			break;
 		default:
 			autonomousCommand = new FollowTrajectory("CrossTheLine");
 			break; 
@@ -146,8 +158,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		System.out.println("left drive position" +Robot.drivetrain.getLeftDriveLeadDistance());
-		System.out.println(" right drive position"+ Robot.drivetrain.getRightDriveLeadDistance());
 		
 	}
 
@@ -172,7 +182,9 @@ public class Robot extends TimedRobot {
 		//System.out.println("Wrist Error " + this.wrist.wristMotor.getClosedLoopError(0));
 		SmartDashboard.putNumber("Dpad value: ", this.oi.driverController.getPOV());
 		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.leftStick.getY());
+		SmartDashboard.putNumber("Operator Right Stick Y", this.oi.operatorController.rightStick.getY());
 		SmartDashboard.putNumber("Driver Left Stick Y", this.oi.driverController.leftStick.getY());
+		SmartDashboard.putNumber("Driver Right Stick X", this.oi.driverController.rightStick.getX());
 		
 	}
 

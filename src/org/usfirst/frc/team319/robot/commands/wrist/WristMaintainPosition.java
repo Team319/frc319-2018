@@ -23,8 +23,8 @@ public class WristMaintainPosition extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     
-    	double position = Robot.wrist.wristMotor.getClosedLoopTarget(0);
-    	Robot.wrist.wristMove(ControlMode.MotionMagic, position);
+    	//double position = Robot.wrist.wristMotor.getClosedLoopTarget(0);
+    	//Robot.wrist.wristMove(ControlMode.MotionMagic, position);
     }
 
     // Make this return true when this Command no longer needs to run execute()

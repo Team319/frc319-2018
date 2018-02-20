@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands.pneumantics;
+package org.usfirst.frc.team319.robot.commands.pneumatics;
 
 import org.usfirst.frc.team319.robot.Robot;
 

@@ -3,6 +3,7 @@ package org.usfirst.frc.team319.robot.subsystems;
 import java.util.concurrent.TimeUnit;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
+import org.usfirst.frc.team319.models.BobVictorSPX;
 import org.usfirst.frc.team319.models.Instrum;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.robot.Robot;
@@ -25,15 +26,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CubeCollector extends Subsystem {
 	
 	public final static int COLLECTOR_PROFILE = 0;
-	public final VictorSPX collectorLeftMotor = new VictorSPX(3); // 11
-	public final VictorSPX collectorRightMotor = new VictorSPX(4);
+	public final BobTalonSRX collectorLeftMotor = new BobTalonSRX(3); // 11
+	public final BobTalonSRX collectorRightMotor = new BobTalonSRX(4);
 	AnalogInput collectorDistanceSensor = new AnalogInput(0);
 	StringBuilder _sb = new StringBuilder();
 	int loops = 0;
 	private static int _loops = 0;
 
 	private static int _timesInMotionMagic = 0;
-	private static final double cubeDistanceThreshhold = 1.5;
+	private static final double cubeCollectedDistanceThreshhold = 1.5;
+	private static final double cubeLostDistanceThreshhold = 1.5;
+
 
 	
 	
@@ -92,7 +95,7 @@ public class CubeCollector extends Subsystem {
 
     public void initDefaultCommand() {
     	//setDefaultCommand(new CubeCollectorVelocityPIDTest());
-    	setDefaultCommand(new CubeCollectorStop());
+    	//setDefaultCommand(new CubeCollectorStop());
     	//setDefaultCommand(new SetCubeCollectorLeftMotor());
     	//setDefaultCommand(new CubeCollectorMotionMagicTest());
     }
@@ -112,27 +115,25 @@ public class CubeCollector extends Subsystem {
     public void setCubeCollectorLeftMotor(ControlMode controlMode, double speed) {
     	collectorLeftMotor.set(controlMode, speed);
     }
+    
+    public double getCollectorDistanceSensorValue() {
+    	return this.collectorDistanceSensor.getVoltage();
+	}
 
     @Override
     public void periodic() {
 		SmartDashboard.putNumber("IR Sensor", this.getCollectorDistanceSensorValue());
     }
     
-    public double getCollectorDistanceSensorValue() {
-    	return this.collectorDistanceSensor.getVoltage();
-	}
-
-
+    
 	public boolean isCubeCollected() {
-    	double irSensorValue = this.getCollectorDistanceSensorValue();
-    	if(irSensorValue > cubeDistanceThreshhold) {
-    		return true;
-    	}else {
-    		return false;
-    	}
-    	
-    	
+    	return this.getCollectorDistanceSensorValue() > cubeCollectedDistanceThreshhold;  	
     }
+	
+	public boolean isCubeLost() {
+		return this.getCollectorDistanceSensorValue() < cubeLostDistanceThreshhold;
+	}
+	
     
 }
 

@@ -39,7 +39,7 @@ public class AutoTuneVelocityConfigure extends Command {
     	_talon.configNominalOutputForward(1.0);
     	_talon.configNominalOutputReverse(1.0);
     	
-    	_talon.setGains(new SRXGains(parameterSlot, 0, 0, 0, 0));
+    	_talon.setGains(new SRXGains(parameterSlot, 0, 0, 0, 0, 0));
     	
     	System.out.println("Starting motor in 5 seconds.  STAND CLEAR.");
     }

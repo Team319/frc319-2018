@@ -53,5 +53,14 @@ public class LeaderBobTalonSRX extends BobTalonSRX{
 			follower.setInverted(invert);
 		}
 	}
+	
+	public ArrayList<Double> getOutputCurrents() {
+		ArrayList<Double> outputCurrents = new ArrayList<Double>();
+		outputCurrents.add(super.getOutputCurrent());
+		for (BaseMotorController follower : followerList) {
+			outputCurrents.add(((BobTalonSRX)follower).getOutputCurrent());
+		}		
+		return outputCurrents;
+	}
 
 }

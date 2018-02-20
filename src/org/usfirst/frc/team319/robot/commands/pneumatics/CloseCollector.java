@@ -1,22 +1,23 @@
-package org.usfirst.frc.team319.robot.commands.pneumantics;
+package org.usfirst.frc.team319.robot.commands.pneumatics;
 
 import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CompressorRun extends Command {
+public class CloseCollector extends Command {
 
-    public CompressorRun() {
+    public CloseCollector() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.pneumatics);
+        requires(Robot.pneumatics);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.pneumatics.compressorRun();
+    	Robot.pneumatics.closeCollector();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,7 +26,7 @@ public class CompressorRun extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

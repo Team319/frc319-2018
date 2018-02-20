@@ -1,6 +1,7 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
-import org.usfirst.frc.team319.robot.commands.pneumantics.CompressorRun;
+import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.robot.commands.pneumatics.CompressorRun;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -21,7 +22,7 @@ public class Pneumatics extends Subsystem {
 
 	DoubleSolenoid elevatorShifter = new DoubleSolenoid(0, 1);
 	DoubleSolenoid drivetrainShifter = new DoubleSolenoid(2, 3);
-	DoubleSolenoid collectorSolenoid = new DoubleSolenoid(4, 5);
+	DoubleSolenoid collectorSolenoid = new DoubleSolenoid(5, 4);
 	DoubleSolenoid winchBrakeShifter = new DoubleSolenoid(6, 7);
 	
     // Put methods for controlling this subsystem
@@ -48,12 +49,12 @@ public class Pneumatics extends Subsystem {
     
     public void elevatorShiftUp() {
     	this.elevatorShifter.set(DoubleSolenoid.Value.kForward);
-    	this.isElevatorHighGear = true;
+    	Robot.elevator.setHighGear(true);
     }
     
     public void elevatorShiftDown() {
     	this.elevatorShifter.set(DoubleSolenoid.Value.kReverse);
-    	this.isElevatorHighGear = false;
+    	Robot.elevator.setHighGear(false);
     }
     
     public void winchBreakShiftUp() {

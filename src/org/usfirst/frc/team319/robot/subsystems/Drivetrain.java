@@ -1,6 +1,9 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
+import java.util.ArrayList;
+
 import org.usfirst.frc.team319.models.BobTalonSRX;
+import org.usfirst.frc.team319.models.BobVictorSPX;
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.robot.Robot;
@@ -28,14 +31,9 @@ public class Drivetrain extends Subsystem {
 	StringBuilder _sb = new StringBuilder();
 	private static int _loops = 0;
 	
-    public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, new BobTalonSRX(0)); // 8
-    public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(8, new BobTalonSRX(9)); // 1
+    public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(6, new BobTalonSRX(7)); // 8
+    public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(1, new BobTalonSRX(2)); // 1
 
-    //775 drivetrain code
-	//private int[] leftFollowers = {2, 3, 4};
-	//private int[] rightFollowers = {7, 8, 9};
-    //public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, leftFollowers);
-    //public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(6, rightFollowers);
     
     public Drivetrain() {
     	
@@ -54,25 +52,24 @@ public class Drivetrain extends Subsystem {
 		this.rightLead.configPeakOutputReverse(-1);
     	
     	this.leftLead.enableCurrentLimit(true);
-    	this.leftLead.configContinuousCurrentLimit(30);
+    	this.leftLead.configContinuousCurrentLimit(60);
     	this.rightLead.enableCurrentLimit(true);
-    	this.rightLead.configContinuousCurrentLimit(30);
+    	this.rightLead.configContinuousCurrentLimit(60);
     	
     	this.leftLead.configOpenloopRamp(0.25);
     	this.rightLead.configOpenloopRamp(0.25);
     	
-    	this.leftLead.setNeutralMode(NeutralMode.Coast);
-    	this.rightLead.setNeutralMode(NeutralMode.Coast);
+    	setNeutralMode(NeutralMode.Coast);
     	
     	this.configPIDF(HIGH_GEAR_PROFILE, 0.0, 0.0, 0.0, 0.146);
-    	this.configPIDF(LOW_GEAR_PROFILE, 0.233, 0.0, 0.0, 0.664); //0.332 //.155
+    	this.configPIDF(LOW_GEAR_PROFILE, 2.400, 0.0, 48.00, 0.400); //0.233 
     	//this.configPIDF(HIGH_GEAR_PROFILE, 0.45, 0.0, 0.45, 0.238); //gearbob values
 		
     }
     
     public void initDefaultCommand() {
         // et the default command for a subsystem here.
-    	//setDefaultCommand(new BobDrive());
+    	setDefaultCommand(new BobDrive());
     	//setDefaultCommand(new DrivetrainVelocityPIDTest());
     }
     
@@ -137,12 +134,24 @@ public class Drivetrain extends Subsystem {
     	return this.rightLead;
     }
     
+    public void setNeutralMode(NeutralMode neutralMode) {
+    	this.leftLead.setNeutralMode(neutralMode);
+    	this.rightLead.setNeutralMode(neutralMode);
+    }
+    
     @Override
     public void periodic() {
 		SmartDashboard.putNumber("Left Drive Position", getLeftDriveLeadDistance());
-		SmartDashboard.putNumber("Right Lead Position", getRightDriveLeadDistance());
+		SmartDashboard.putNumber("Right Drive Position", getRightDriveLeadDistance());
 		SmartDashboard.putNumber("Left Drive Velocity", getLeftDriveLeadVelocity());
 		SmartDashboard.putNumber("Right Drive Velocity", getRightDriveLeadVelocity());
+		ArrayList<Double> leftCurrents = leftLead.getOutputCurrents();
+		
+		int i = 0;
+		for (Double current : leftCurrents) {
+			SmartDashboard.putNumber("LeftMotorCurrent" + i, current);
+			i++;
+		}
     }
     	
 public void velocityPIDTest() {

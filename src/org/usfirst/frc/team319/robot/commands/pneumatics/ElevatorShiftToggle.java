@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands.pneumantics;
+package org.usfirst.frc.team319.robot.commands.pneumatics;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -7,16 +7,22 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class OpenCollector extends Command {
+public class ElevatorShiftToggle extends Command {
 
-    public OpenCollector() {
+    public ElevatorShiftToggle() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.pneumatics);
+    	requires(Robot.pneumatics);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.pneumatics.openCollector();
+    	if(Robot.pneumatics.isDrivetrainHighGear == false) {
+    		Robot.pneumatics.elevatorShiftUp();
+    		System.out.println("Elevaotr is in High Gear");
+    	}else if (Robot.pneumatics.isDrivetrainHighGear == true) {
+    		Robot.pneumatics.elevatorShiftDown();
+    		System.out.println("Elevator is in Low Gear");
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
