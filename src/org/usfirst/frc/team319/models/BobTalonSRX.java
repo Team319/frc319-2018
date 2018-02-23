@@ -47,6 +47,10 @@ public class BobTalonSRX extends TalonSRX {
 		return eCode;
 	}
 	
+	public ErrorCode configPIDF(SRXGains gains) {
+		return this.configPIDF(gains.parameterSlot, gains.P, gains.I, gains.D, gains.F, gains.iZone);
+	}
+	
 	public ErrorCode config_IntegralZone(int slotIdx, int izone) {
 		return super.config_IntegralZone(slotIdx, izone, DEFAULT_TIMEOUT_MS);
 	}

@@ -76,7 +76,8 @@ public class Elevator extends Subsystem {
     
     public void initDefaultCommand() {
     	//setDefaultCommand(new ElevatorStop());
-    	setDefaultCommand(new ElevatorMotionMagicControl());
+    	//setDefaultCommand(new ElevatorMotionMagicControl());
+    	setDefaultCommand(new JoystickElevator());
     }
     
     public void setElevator(ControlMode controlMode, double signal) {

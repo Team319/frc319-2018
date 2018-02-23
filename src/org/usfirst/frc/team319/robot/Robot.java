@@ -81,6 +81,7 @@ public class Robot extends TimedRobot {
 		//autoChooser.addObject("Test", new FollowTrajectory("OneFoot"));
 
 		SmartDashboard.putData("Autonomous Chooser", autoChooser);
+		SmartDashboard.putData("CrossTheLine", new FollowTrajectory(new CrossTheLine()));
 		//drivetrain = new Drivetrain();
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
