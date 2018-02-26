@@ -12,6 +12,7 @@ import org.usfirst.frc.team319.models.BobController;
 import org.usfirst.frc.team319.paths.CrossTheLine;
 import org.usfirst.frc.team319.paths.FifteenFeet;
 import org.usfirst.frc.team319.paths.FiveFeetAndTurn;
+import org.usfirst.frc.team319.paths.WallToScaleRightSide;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.AutoTuneDrivetrainLeft;
@@ -34,6 +35,7 @@ import org.usfirst.frc.team319.robot.commands.pneumatics.OpenCollector;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorCollect;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoHome;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToCollectCube;
+import org.usfirst.frc.team319.robot.commands.wrist.WristGoToDunk;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToExchange;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToSwitch;
 
@@ -43,6 +45,7 @@ import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory_OldWay;
 import org.usfirst.frc.team319.robot.commands.autonomous.AutoDriveForwardThreeFeet;
 import org.usfirst.frc.team319.robot.commands.autonomous.DropArmThenSpit;
+import org.usfirst.frc.team319.robot.commands.autonomous.RightSideScaleAuto;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -56,26 +59,29 @@ public class OI {
 		
 		this.driverController = new BobXboxController(0, 0.10, 0.08);
 		
-		this.driverController.rightTriggerButton.whenPressed(new AutoCollectCubeOpened());
-		this.driverController.leftTriggerButton.whenPressed(new AutoCollectCubeClosed());
-		this.driverController.rightBumper.whenPressed(new CollectorToggle());
-		this.driverController.leftBumper.whenPressed( new CubeCollectorSpit());
+		this.driverController.rightBumper.whenPressed(new AutoCollectCubeOpened());
+		this.driverController.leftBumper.whenPressed(new AutoCollectCubeClosed());
+		this.driverController.rightTriggerButton.whenPressed(new CollectorToggle());
+		this.driverController.leftTriggerButton.whileHeld(new CubeCollectorSpit());
 		this.driverController.bButton.whenPressed(new CubeCollectorStop());
 		this.driverController.startButton.whenPressed(new DrivetrainBrakeMode());
-		this.driverController.rightTriggerButton.whileHeld(new DrivetrainGoToSpeed());
 		this.driverController.leftStickButton.whenPressed(new DrivetrainShiftToggle());
-		this.driverController.xButton.whenPressed(new FollowTrajectory(new FiveFeetAndTurn()));
-
 		
+		//this.driverController.xButton.whenPressed(new FollowTrajectory(new FiveFeetAndTurn()));
 		
 		this.operatorController  = new BobXboxController(1, 0.08, 0.08);																																																																																			
 		
 		this.operatorController.leftBumper.whenPressed(new WristGoHome());
 		this.operatorController.rightBumper.whenPressed(new WristGoToCollectCube());
 		this.operatorController.aButton.whenPressed(new WristGoToExchange());
-		this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());
-		this.operatorController.bButton.whenPressed(new ElevatorGoToHomePosition());
+		this.operatorController.xButton.whenPressed(new WristGoToSwitch());
+		this.operatorController.yButton.whenPressed(new WristGoToDunk());
+		//this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());
+		//this.operatorController.bButton.whenPressed(new ElevatorGoToHomePosition());
 		
 	
+		//---------------test buttons-------------------//
+		
+		this.driverController.xButton.whenPressed(new RightSideScaleAuto());
 	}
 }

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WristGoToExchange extends Command {
 	
-	int targetPosition = 2700;
+	int exchangePosition = 3289;
 
     public WristGoToExchange() {
         // Use requires() here to declare subsystem dependencies
@@ -20,18 +20,18 @@ public class WristGoToExchange extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.wrist.setTargetPosition(exchangePosition);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    
+    	Robot.wrist.motionMagicControl();
    
-    	Robot.wrist.wristMove(ControlMode.MotionMagic, targetPosition);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.wrist.isWristInPostion(targetPosition);
+        return Robot.wrist.isInPosition(exchangePosition);
     }
 
     // Called once after isFinished returns true

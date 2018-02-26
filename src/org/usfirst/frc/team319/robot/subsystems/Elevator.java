@@ -2,6 +2,7 @@ package org.usfirst.frc.team319.robot.subsystems;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.BobVictorSPX;
+import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.Robot;
@@ -20,12 +21,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class Elevator extends Subsystem {
-
+public class Elevator extends Subsystem implements IPositionControlledSubsystem{
+	
+	public final static int homePosition = 0;
+	public final static int topOfFirstStagePosition = 24000;
+	public final static int dunkPosition = 33500;
+	
 	public final static int ELEVATOR_HIGH_UP = 0;
 	public final static int ELEVATOR_HIGH_DOWN = 1;
 	public final static int ELEVATOR_LOW_UP = 2;
-	public final static int ELEVATOR_LOW_DOWN = 0;
+	public final static int ELEVATOR_LOW_DOWN = 3;
 	
 	public final static int upPositionLimit = 48000;// needs to be determined manually
 	public final static int downPositionLimit = 0;
@@ -33,8 +38,10 @@ public class Elevator extends Subsystem {
 	private boolean isHighGear = false;
 	private int targetPosition = 0;
 	
+	private final static int threshold = 100;
+	
 	private final SRXGains lowGearUpGains = new SRXGains(ELEVATOR_LOW_UP, 0.560, 0.0, 5.600, 0.620, 100);
-	private final SRXGains lowGearDownGains = new SRXGains(ELEVATOR_LOW_DOWN, 0.0, 0.0, 0.0, 0.427, 0);
+	private final SRXGains lowGearDownGains = new SRXGains(ELEVATOR_LOW_DOWN, 0.560, 0.0, 5.600, 0.427, 0);
 
 	private final SRXGains highGearUpGains = new SRXGains(ELEVATOR_HIGH_UP, 0.0, 0.0, 0.0, 0.427, 0);
 	private final SRXGains highGearDownGains = new SRXGains(ELEVATOR_HIGH_DOWN, 0.0, 0.0, 0.0, 0.427, 0);	
@@ -94,7 +101,7 @@ public class Elevator extends Subsystem {
     }
     
     public int getCurrentPosition() {
-    	return this.elevatorLead.getSelectedSensorPosition(ELEVATOR_HIGH_UP);
+    	return this.elevatorLead.getSelectedSensorPosition(0);
     }
     
     public boolean getHighGear() {
@@ -109,8 +116,13 @@ public class Elevator extends Subsystem {
     	return this.targetPosition;
     }
     
-    public void setTargetPosition(int position) {
-    	this.targetPosition = position;
+    public boolean setTargetPosition(int position) {
+    	if (position > upPositionLimit || position < downPositionLimit) {
+			return false;
+		}else {
+	    	this.targetPosition = position;
+	    	return true;
+		}
     }
     
     public void manageGainProfile(double targetPosition) {
@@ -131,12 +143,27 @@ public class Elevator extends Subsystem {
 			}
 		}
 	} 
-
     
     @Override
 	public void periodic() {
 		SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
 		SmartDashboard.putNumber("Elevator Closed Loop Error", this.elevatorLead.getClosedLoopError(0));
+	}
+
+	@Override
+	public double getCurrentVelocity() {
+		return 0;
+	}
+
+	@Override
+	public boolean isInPosition(int targetPosition) {
+		int currentPosition = this.getCurrentPosition();
+		int positionError = Math.abs(currentPosition - targetPosition);
+		if (positionError < threshold) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 

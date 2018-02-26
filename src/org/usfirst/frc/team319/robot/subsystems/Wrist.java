@@ -3,9 +3,11 @@ package org.usfirst.frc.team319.robot.subsystems;
 import java.util.concurrent.TimeUnit;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
+import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
 import org.usfirst.frc.team319.models.Instrum;
+import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.wrist.WristMaintainPosition;
+import org.usfirst.frc.team319.robot.commands.wrist.WristMotionMagicControl;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -18,15 +20,30 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class Wrist extends Subsystem {
+public class Wrist extends Subsystem implements IPositionControlledSubsystem {
+
+	public final static int maxUpTravelPosition = -1750;
+	public final static int dunkPosition = -1713;
+	public final static int homePosition = 0;
+	public final static int switchPosition = 1000;
+	public final static int exchangePosition = 3289;
+	public final static int collectPosition = 3700;
 
 	public final static int WRIST_PROFILE_UP = 0;
 	public final static int WRIST_PROFILE_DOWN = 1;
 	StringBuilder _sb = new StringBuilder();
 	int loops = 0;
-	public final static int upPositionLimit = 0;
-	public final static int downPositionLimit = 3319;
+	private int upPositionLimit = homePosition;
+	private int downPositionLimit = 4000;
 	private final static int threshold = 200;
+	private int targetPosition = 0;
+	private final static int upAcceleration = 2000;
+	private final static int downAcceleration = 5000;
+	private final static int upCruiseVelocity = 1024;
+	private final static int downCruiseVelocity = 512;
+
+	public final static SRXGains upGains = new SRXGains(WRIST_PROFILE_UP, 0.800, 0.010, 8.0, 0.799, 100);
+	public final static SRXGains downGains = new SRXGains(WRIST_PROFILE_DOWN, 0.400, 0.010, 15.0, 0.799, 100);
 
 	public final BobTalonSRX wristMotor = new BobTalonSRX(5);
 
@@ -43,8 +60,8 @@ public class Wrist extends Subsystem {
 		this.wristMotor.configPeakOutputForward(1);
 		this.wristMotor.configPeakOutputReverse(-1);
 
-		this.wristMotor.configMotionAcceleration(1000);
-		this.wristMotor.configMotionCruiseVelocity(2750);
+		this.wristMotor.configMotionAcceleration(2000);
+		this.wristMotor.configMotionCruiseVelocity(1024);
 
 		this.wristMotor.configForwardSoftLimitThreshold(downPositionLimit);
 		this.wristMotor.configReverseSoftLimitThreshold(upPositionLimit);
@@ -54,23 +71,31 @@ public class Wrist extends Subsystem {
 
 		///////////////////
 
-		this.wristMotor.setNeutralMode(NeutralMode.Coast); // would we rather have this be brake? JD
+		this.wristMotor.setNeutralMode(NeutralMode.Brake); // would we rather have this be brake? JD
 
-		this.wristMotor.configPIDF(WRIST_PROFILE_UP, 0.419, 0.0, 0.0, 0.799);
-		this.wristMotor.configPIDF(WRIST_PROFILE_DOWN, 0.10, 0.0, 0.0, 0.799);
+		this.wristMotor.configPIDF(upGains);
+		this.wristMotor.configPIDF(downGains);
 
 	}
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new WristMotionMagicTest()); //WristStop
-		setDefaultCommand(new WristMaintainPosition());
+		// setDefaultCommand(new WristMaintainPosition());
 		// setDefaultCommand(new WristJoystick());
+		setDefaultCommand(new WristMotionMagicControl());
 	}
 
 	public void wristMove(ControlMode controlMode, double targetPosition) {
-		this.manageGainProfile(targetPosition);
+		this.manageMotion(targetPosition);
 		wristMotor.set(controlMode, targetPosition);
+	}
+
+	public void motionMagicControl() {
+		this.manageMotion(targetPosition);
+		this.wristMotor.set(ControlMode.MotionMagic, targetPosition);
+		// System.out.println("Closed Loop Error " +
+		// this.elevatorLead.getClosedLoopError(0));
 	}
 
 	/*
@@ -93,14 +118,69 @@ public class Wrist extends Subsystem {
 	/*
 	 * choose which set of gains to use based on direction of travel.
 	 */
-	public void manageGainProfile(double targetPosition) {
-		double currentPosition = getWristPosition();
-		// negative direction moves wrist up
-		if (currentPosition < targetPosition) {
-			wristMotor.selectProfileSlot(WRIST_PROFILE_DOWN, 0);
+	public void manageMotion(double targetPosition) {
+		double currentPosition = getCurrentPosition();
+
+		manageLimits();
+		// if we're in negative position
+		if (currentPosition < homePosition) {
+			if (currentPosition > targetPosition) {
+				useDownGains();
+			} else {
+				useUpGains();
+			}
 		} else {
-			wristMotor.selectProfileSlot(WRIST_PROFILE_UP, 0);
+			if (currentPosition > targetPosition) {
+				useUpGains();
+			} else {
+				useDownGains();
+			}
 		}
+		this.wristMotor.configForwardSoftLimitThreshold(downPositionLimit);
+		this.wristMotor.configReverseSoftLimitThreshold(upPositionLimit);
+	}
+	
+	private void manageLimits() {
+		if (Robot.elevator.getCurrentPosition() > Robot.elevator.topOfFirstStagePosition) {
+			this.upPositionLimit = maxUpTravelPosition;
+			//System.out.println("Setting up position limit to " + upPositionLimit);
+		} else {
+			this.upPositionLimit = homePosition;
+			//System.out.println("Setting up position limit to " + upPositionLimit);
+			if (this.targetPosition < homePosition) {
+				this.targetPosition = homePosition;
+			}
+		}
+	}
+
+	private void useUpGains() {
+		wristMotor.selectProfileSlot(WRIST_PROFILE_UP, 0);
+		wristMotor.configMotionAcceleration(upAcceleration);
+		wristMotor.configMotionCruiseVelocity(upCruiseVelocity);
+	}
+
+	private void useDownGains() {
+		wristMotor.selectProfileSlot(WRIST_PROFILE_DOWN, 0);
+		wristMotor.configMotionAcceleration(downAcceleration);
+		wristMotor.configMotionCruiseVelocity(downCruiseVelocity);
+	}
+
+	public int getTargetPosition() {
+		return this.targetPosition;
+	}
+
+	public boolean setTargetPosition(int position) {
+		manageLimits();
+		if (position < upPositionLimit || position > downPositionLimit) {
+			return false;
+		}else {
+			this.targetPosition = position;
+			return true;
+		}
+	}
+
+	public int getUpwardLimit() {
+		return this.upPositionLimit;
 	}
 
 	public void motionMagicTest() {
@@ -140,19 +220,27 @@ public class Wrist extends Subsystem {
 		}
 	}
 
-	public int getWristPosition() {
-		return this.wristMotor.getSelectedSensorPosition(WRIST_PROFILE_UP);
+	public int getCurrentPosition() {
+		return this.wristMotor.getSelectedSensorPosition(0);
 	}
 
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("Wrist Position", this.getWristPosition());
+		SmartDashboard.putNumber("Wrist Position", this.getCurrentPosition());
+		SmartDashboard.putNumber("Wrist Velocity", this.getCurrentVelocity());
 		// System.out.println("Wrist Position " + this.getWristPosition());
 
 	}
 
-	public boolean isWristInPostion(int targetPosition) {
-		int currentPosition = this.getWristPosition();
+
+	@Override
+	public double getCurrentVelocity() {
+		return wristMotor.getSelectedSensorVelocity(0);
+	}
+
+	@Override
+	public boolean isInPosition(int targetPosition) {
+		int currentPosition = this.getCurrentPosition();
 		int positionError = Math.abs(currentPosition - targetPosition);
 		if (positionError < threshold) {
 			return true;
