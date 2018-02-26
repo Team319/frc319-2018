@@ -25,7 +25,7 @@ public class FollowTrajectory extends Command {
 
 	private BobTalonSRX rightTalon = Robot.drivetrain.rightLead;
 	private BobTalonSRX leftTalon = Robot.drivetrain.leftLead;
-	
+
 	private String trajectoryName = "";
 	private int kMinPointsInTalon = 5;
 
@@ -58,21 +58,23 @@ public class FollowTrajectory extends Command {
 		public void run() {
 			leftTalon.processMotionProfileBuffer();
 			rightTalon.processMotionProfileBuffer();
-			leftLastPointSent = manageBuffer(leftTalon, trajectoryToFollow.leftProfile, Robot.drivetrain.LOW_GEAR_PROFILE, leftLastPointSent);
-			rightLastPointSent = manageBuffer(rightTalon, trajectoryToFollow.rightProfile, Robot.drivetrain.LOW_GEAR_PROFILE, rightLastPointSent);
+			leftLastPointSent = manageBuffer(leftTalon, trajectoryToFollow.leftProfile,
+					Robot.drivetrain.LOW_GEAR_PROFILE, leftLastPointSent);
+			rightLastPointSent = manageBuffer(rightTalon, trajectoryToFollow.rightProfile,
+					Robot.drivetrain.LOW_GEAR_PROFILE, rightLastPointSent);
 		}
-		
+
 		private int manageBuffer(BobTalonSRX talon, SrxMotionProfile prof, int pidfSlot, int lastPointSent) {
 			if (lastPointSent >= prof.numPoints) {
 				return lastPointSent;
 			}
-			
+
 			if (!talon.isMotionProfileTopLevelBufferFull() && lastPointSent < prof.numPoints) {
 				TrajectoryPoint point = new TrajectoryPoint();
 				/* for each point, fill our structure and pass it to API */
 				point.position = prof.points[lastPointSent][0];
 				point.velocity = prof.points[lastPointSent][1];
-				point.timeDur = getTrajectoryDuration(prof.points[lastPointSent][2]);
+				point.timeDur = getTrajectoryDuration((int) prof.points[lastPointSent][2]);
 				point.profileSlotSelect0 = pidfSlot;
 				point.profileSlotSelect1 = pidfSlot;
 				point.zeroPos = false;
@@ -82,24 +84,22 @@ public class FollowTrajectory extends Command {
 				}
 				point.isLastPoint = false;
 				if ((lastPointSent + 1) == prof.numPoints) {
-					point.isLastPoint = true; /* set this to true on the last point*/
+					point.isLastPoint = true; /* set this to true on the last point */
 				}
-				ErrorCode error = talon.pushMotionProfileTrajectory(point);
-				if (error != ErrorCode.OK) {
-					System.out.println("WTF BBQ");
-				}
+				talon.pushMotionProfileTrajectory(point);
 				lastPointSent++;
-			}			
+			}
 			return lastPointSent;
 		}
-    
-    private TrajectoryDuration getTrajectoryDuration(int ms) {
-      TrajectoryDuration retval = TrajectoryDuration.Trajectory_Duration_0ms;
 
-      retval = retval.valueOf(ms);
+		private TrajectoryDuration getTrajectoryDuration(int ms) {
+			TrajectoryDuration retval = TrajectoryDuration.Trajectory_Duration_0ms;
 
-      return retval;
-    }
+			retval = retval.valueOf(ms);
+
+			return retval;
+		}
+
 	}
 
 	// Runs the runnable
@@ -115,8 +115,7 @@ public class FollowTrajectory extends Command {
 		requires(Robot.drivetrain);
 		this.trajectoryToFollow = trajectoryToFollow;
 	}
-	
-	
+
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		this.hasPathStarted = false;
@@ -141,8 +140,6 @@ public class FollowTrajectory extends Command {
 		}
 		bufferNotifier = new Notifier(new BufferLoader());
 		bufferNotifier.startPeriodic(.005);
-		System.out.println("Trajectory Points: " + this.trajectoryToFollow.leftProfile.numPoints + "," 
-		+ this.trajectoryToFollow.rightProfile.numPoints);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -163,7 +160,7 @@ public class FollowTrajectory extends Command {
 				&& leftStatus.isLast) {
 			// if both profiles are at their last points, hold the last point
 			setValue = SetValueMotionProfile.Hold;
-			//System.out.println("HOLDING LAST POINT!!!!!");
+			// System.out.println("HOLDING LAST POINT!!!!!");
 		}
 
 		leftTalon.set(ControlMode.MotionProfile, setValue.value);
@@ -177,9 +174,9 @@ public class FollowTrajectory extends Command {
 		}
 		boolean leftComplete = leftStatus.activePointValid && leftStatus.isLast;
 		boolean rightComplete = rightStatus.activePointValid && rightStatus.isLast;
-		//System.out.println("Complete: " + leftComplete + "," + rightComplete);
+		// System.out.println("Complete: " + leftComplete + "," + rightComplete);
 		boolean trajectoryComplete = leftComplete && rightComplete;
-		if(trajectoryComplete) {
+		if (trajectoryComplete) {
 			System.out.println("Finished Trajectory");
 		}
 		return trajectoryComplete || isFinished;
@@ -195,9 +192,8 @@ public class FollowTrajectory extends Command {
 	protected void interrupted() {
 		cleanUp();
 	}
-	
+
 	public void cleanUp() {
-		System.out.println("cleaning Up...");
 		resetTalon(rightTalon, ControlMode.PercentOutput, 0);
 		resetTalon(leftTalon, ControlMode.PercentOutput, 0);
 		bufferNotifier.stop();
@@ -212,7 +208,7 @@ public class FollowTrajectory extends Command {
 	// set the to the desired controlMode
 	// used at the end of the motion profile
 	public void resetTalon(TalonSRX talon, ControlMode controlMode, double setValue) {
-		//System.out.println("Clearing MP Trajectories");
+		// System.out.println("Clearing MP Trajectories");
 		talon.clearMotionProfileTrajectories();
 		talon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
 		talon.set(controlMode, setValue);
