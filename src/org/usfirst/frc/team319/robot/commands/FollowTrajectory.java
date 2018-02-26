@@ -57,51 +57,22 @@ public class FollowTrajectory extends Command {
 	private SetValueMotionProfile setValue = SetValueMotionProfile.Disable;
 
 	private class BufferLoader implements java.lang.Runnable {
-		private int leftLastPointSent = 0;
-		private int rightLastPointSent = 0;
+		//private int leftLastPointSent = 0;
+		//private int rightLastPointSent = 0;
 
 		public BufferLoader() {
-			this.leftLastPointSent = 0;
-			this.rightLastPointSent = 0;
+			//this.leftLastPointSent = 0;
+			//this.rightLastPointSent = 0;
 		}
 
 		public void run() {
 			leftTalon.processMotionProfileBuffer();
 			rightTalon.processMotionProfileBuffer();
-			leftLastPointSent = manageBuffer(leftTalon, trajectoryToFollow.leftProfile, Robot.drivetrain.LOW_GEAR_PROFILE, leftLastPointSent);
-			rightLastPointSent = manageBuffer(rightTalon, trajectoryToFollow.rightProfile, Robot.drivetrain.LOW_GEAR_PROFILE, rightLastPointSent);
+			//leftLastPointSent = manageBuffer(leftTalon, trajectoryToFollow.leftProfile, Robot.drivetrain.LOW_GEAR_PROFILE, leftLastPointSent);
+			//rightLastPointSent = manageBuffer(rightTalon, trajectoryToFollow.rightProfile, Robot.drivetrain.LOW_GEAR_PROFILE, rightLastPointSent);
 		}
 		
-		private int manageBuffer(BobTalonSRX talon, SrxMotionProfile prof, int pidfSlot, int lastPointSent) {
-			if (lastPointSent >= prof.numPoints) {
-				return lastPointSent;
-			}
-			
-			if (!talon.isMotionProfileTopLevelBufferFull() && lastPointSent < prof.numPoints) {
-				TrajectoryPoint point = new TrajectoryPoint();
-				/* for each point, fill our structure and pass it to API */
-				point.position = prof.points[lastPointSent][0];
-				point.velocity = prof.points[lastPointSent][1];
-				point.timeDur = TrajectoryDuration.Trajectory_Duration_10ms;
-				point.profileSlotSelect0 = pidfSlot;
-				point.profileSlotSelect1 = pidfSlot;
-				point.zeroPos = false;
-				if (lastPointSent == 0) {
-					point.zeroPos = true; /* set this to true on the first point */
-
-				}
-				point.isLastPoint = false;
-				if ((lastPointSent + 1) == prof.numPoints) {
-					point.isLastPoint = true; /* set this to true on the last point*/
-				}
-				ErrorCode error = talon.pushMotionProfileTrajectory(point);
-				if (error != ErrorCode.OK) {
-					System.out.println("WTF BBQ");
-				}
-				lastPointSent++;
-			}			
-			return lastPointSent;
-		}
+		
 	}
 
 	// Runs the runnable
@@ -141,10 +112,11 @@ public class FollowTrajectory extends Command {
 				return;
 			}
 		}
+
+		fillTalonBuffer(leftTalon, trajectoryToFollow.leftProfile, Robot.drivetrain.HIGH_GEAR_PROFILE);
+		fillTalonBuffer(rightTalon, trajectoryToFollow.rightProfile, Robot.drivetrain.HIGH_GEAR_PROFILE);
 		bufferNotifier = new Notifier(new BufferLoader());
 		bufferNotifier.startPeriodic(.005);
-		System.out.println("Trajectory Points: " + this.trajectoryToFollow.leftProfile.numPoints + "," 
-		+ this.trajectoryToFollow.rightProfile.numPoints);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -213,10 +185,39 @@ public class FollowTrajectory extends Command {
 	// set the to the desired controlMode
 	// used at the end of the motion profile
 	public void resetTalon(TalonSRX talon, ControlMode controlMode, double setValue) {
-		//System.out.println("Clearing MP Trajectories");
 		talon.clearMotionProfileTrajectories();
-		talon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
 		talon.set(controlMode, setValue);
+	}
+	
+	private TrajectoryDuration getTrajectoryDuration(int ms) {
+		TrajectoryDuration retval = TrajectoryDuration.Trajectory_Duration_0ms;
+		
+		retval = retval.valueOf(ms);
+		
+		return retval;
+	}
+	
+	private void fillTalonBuffer(BobTalonSRX talon, SrxMotionProfile prof, int pidfSlot) {
+		for (int i = 0; i < prof.points.length; i++) {
+			TrajectoryPoint point = new TrajectoryPoint();
+			/* for each point, fill our structure and pass it to API */
+			point.position = prof.points[i][0];
+			point.velocity = prof.points[i][1];
+			point.timeDur = getTrajectoryDuration((int)prof.points[i][2]);
+			point.profileSlotSelect0 = pidfSlot;
+			point.profileSlotSelect1 = 0;
+			point.headingDeg = 0; 
+			point.zeroPos = false;
+			if (i == 0) {
+				point.zeroPos = true; /* set this to true on the first point */
+
+			}
+			point.isLastPoint = false;
+			if ((i + 1) == prof.numPoints) {
+				point.isLastPoint = true; /* set this to true on the last point*/
+			}
+			talon.pushMotionProfileTrajectory(point);			
+		}
 	}
 
 }

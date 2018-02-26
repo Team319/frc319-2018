@@ -6,6 +6,7 @@ import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.BobVictorSPX;
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
+import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.drivetrain.BobDrive;
 import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainVelocityPIDTest;
@@ -27,7 +28,11 @@ public class Drivetrain extends Subsystem {
 
 	public static final int LOW_GEAR_PROFILE = 0;
 	public static final int HIGH_GEAR_PROFILE = 1;
+	
+	private static final SRXGains highGearLeftGains = new SRXGains(HIGH_GEAR_PROFILE, 0.40, 0.0, 10.00, 0.189, 0);
+	private static final SRXGains highGearRightGains = new SRXGains(HIGH_GEAR_PROFILE, 0.40, 0.0, 10.00, 0.189, 0);
 
+	
 	StringBuilder _sb = new StringBuilder();
 	private static int _loops = 0;
 	
@@ -51,9 +56,9 @@ public class Drivetrain extends Subsystem {
 		this.rightLead.configPeakOutputForward(1);
 		this.rightLead.configPeakOutputReverse(-1);
     	
-    	this.leftLead.enableCurrentLimit(true);
+    	this.leftLead.enableCurrentLimit(false);
     	this.leftLead.configContinuousCurrentLimit(60);
-    	this.rightLead.enableCurrentLimit(true);
+    	this.rightLead.enableCurrentLimit(false);
     	this.rightLead.configContinuousCurrentLimit(60);
     	
     	this.leftLead.configOpenloopRamp(0.25);
@@ -61,7 +66,10 @@ public class Drivetrain extends Subsystem {
     	
     	setNeutralMode(NeutralMode.Coast);
     	
-    	this.configPIDF(HIGH_GEAR_PROFILE, 0.0, 0.0, 0.0, 0.146);
+    	
+    	
+    	this.leftLead.configPIDF(highGearLeftGains);
+    	this.rightLead.configPIDF(highGearRightGains);
     	this.configPIDF(LOW_GEAR_PROFILE, 2.400, 0.0, 48.00, 0.400); //0.233 
     	//this.configPIDF(HIGH_GEAR_PROFILE, 0.45, 0.0, 0.45, 0.238); //gearbob values
 		
@@ -126,6 +134,14 @@ public class Drivetrain extends Subsystem {
     	return this.rightLead.getMotorOutputVoltage();
     }
     
+    public double getLeftClosedLoopError() {
+    	return this.leftLead.getClosedLoopError(0);
+    }
+    
+    public double getRightClosedLoopError() {
+    	return this.rightLead.getClosedLoopError(0);
+    }
+    
     public TalonSRX getLeftLeadTalon() {
     	return this.getLeftLeadTalon();
     }
@@ -145,6 +161,9 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("Right Drive Position", getRightDriveLeadDistance());
 		SmartDashboard.putNumber("Left Drive Velocity", getLeftDriveLeadVelocity());
 		SmartDashboard.putNumber("Right Drive Velocity", getRightDriveLeadVelocity());
+		SmartDashboard.putNumber("Left Drive Closed Loop Error", getLeftClosedLoopError());
+		SmartDashboard.putNumber("Right Drive Closed Loop Error", getRightClosedLoopError());
+
 		ArrayList<Double> leftCurrents = leftLead.getOutputCurrents();
 		
 		int i = 0;

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands.elevator;
+package org.usfirst.frc.team319.robot.commands.drivetrain;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -9,22 +9,24 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class JoystickElevator extends Command {
+public class DrivetrainGoToSpeed extends Command {
 
-    public JoystickElevator() {
-        requires(Robot.elevator);
+    public DrivetrainGoToSpeed() {
+        // Use requires() here to declare subsystem dependencies
+        requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	Robot.drivetrain.leftLead.selectProfileSlot(Robot.drivetrain.HIGH_GEAR_PROFILE, 0);
+    	Robot.drivetrain.rightLead.selectProfileSlot(Robot.drivetrain.HIGH_GEAR_PROFILE, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double signal = -Robot.oi.operatorController.leftStick.getY();
-    	Robot.elevator.setElevator(ControlMode.PercentOutput, signal);
-    	//System.out.println("Elevator Velocity" + Robot.elevator.elevatorLead.getSelectedSensorVelocity(0));
+    	Robot.drivetrain.drive(ControlMode.Velocity, 2000, 2000);
+    	System.out.println("Left Error: " + Robot.drivetrain.getLeftClosedLoopError()
+    	+ "Right Error: " + Robot.drivetrain.getRightClosedLoopError());
     }
 
     // Make this return true when this Command no longer needs to run execute()

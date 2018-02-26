@@ -10,6 +10,7 @@ package org.usfirst.frc.team319.robot;
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.models.BobController;
 import org.usfirst.frc.team319.paths.CrossTheLine;
+import org.usfirst.frc.team319.paths.FifteenFeet;
 import org.usfirst.frc.team319.paths.FiveFeetAndTurn;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
@@ -23,6 +24,7 @@ import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStraighten;
 import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainBrakeMode;
+import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainGoToSpeed;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToHomePosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorMotionMagicTest;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CloseCollector;
@@ -53,17 +55,18 @@ public class OI {
 	public OI() {	
 		
 		this.driverController = new BobXboxController(0, 0.10, 0.08);
-		/*
+		
 		this.driverController.rightTriggerButton.whenPressed(new AutoCollectCubeOpened());
 		this.driverController.leftTriggerButton.whenPressed(new AutoCollectCubeClosed());
 		this.driverController.rightBumper.whenPressed(new CollectorToggle());
 		this.driverController.leftBumper.whenPressed( new CubeCollectorSpit());
 		this.driverController.bButton.whenPressed(new CubeCollectorStop());
-		this.driverController.leftStickButton.whenPressed(new DrivetrainShiftToggle());
 		this.driverController.startButton.whenPressed(new DrivetrainBrakeMode());
-		*/
+		this.driverController.rightTriggerButton.whileHeld(new DrivetrainGoToSpeed());
+		this.driverController.leftStickButton.whenPressed(new DrivetrainShiftToggle());
+		this.driverController.xButton.whenPressed(new FollowTrajectory(new FiveFeetAndTurn()));
+
 		
-		this.driverController.xButton.whenPressed(new FollowTrajectory(new CrossTheLine()));
 		
 		this.operatorController  = new BobXboxController(1, 0.08, 0.08);																																																																																			
 		
