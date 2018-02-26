@@ -10,36 +10,35 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class WristGoToSwitch extends Command {
-	
-	int targetPosition = 1000;
-	
-    public WristGoToSwitch() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.wrist);
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    		System.out.println("command called");
-    	    }
+	int switchPosition = 1000;
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.wrist.wristMove(ControlMode.MotionMagic, targetPosition);	
-    }
+	public WristGoToSwitch() {
+		// Use requires() here to declare subsystem dependencies
+		requires(Robot.wrist);
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return Robot.wrist.isWristInPostion(targetPosition);
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		Robot.wrist.setTargetPosition(switchPosition);
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    	System.out.println("wrist ended");
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		Robot.wrist.motionMagicControl();
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return Robot.wrist.isInPosition(switchPosition);
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

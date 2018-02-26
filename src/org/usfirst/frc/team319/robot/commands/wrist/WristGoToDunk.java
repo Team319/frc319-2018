@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands.elevator;
+package org.usfirst.frc.team319.robot.commands.wrist;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -7,26 +7,41 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ElevatorGoToHomePosition extends Command {
-
-    public ElevatorGoToHomePosition() {
+public class WristGoToDunk extends Command {
+	
+	private int dunkPosition = Robot.wrist.dunkPosition;
+	private boolean allowedToMove = false;
+    public WristGoToDunk() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.elevator);
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.elevator.setTargetPosition(Robot.elevator.homePosition);
+    	
+    	allowedToMove = Robot.wrist.setTargetPosition(dunkPosition);//Robot.wrist.getUpwardLimit() < Robot.wrist.homePosition;
+    	
+    	if (allowedToMove) {
+    		System.out.println("Allowed to move");
+        }else{
+			System.out.println("Not allowed to move");
+		}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.elevator.motionMagicControl();
+    	if (allowedToMove) {
+        	Robot.wrist.motionMagicControl();
+		}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.elevator.isInPosition(Robot.elevator.homePosition);
+    	if (allowedToMove) {
+            return Robot.wrist.isInPosition(dunkPosition);
+		} else {
+			return true;
+		}
     }
 
     // Called once after isFinished returns true

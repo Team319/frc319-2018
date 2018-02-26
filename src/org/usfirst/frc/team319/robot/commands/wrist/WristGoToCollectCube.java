@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WristGoToCollectCube extends Command {
 
-	int targetPosition = 2900;
+	int collectPosition = 3700;
 	
     public WristGoToCollectCube() {
         // Use requires() here to declare subsystem dependencies
@@ -20,16 +20,17 @@ public class WristGoToCollectCube extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.wrist.setTargetPosition(collectPosition);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.wrist.wristMove(ControlMode.MotionMagic, targetPosition);
+    	Robot.wrist.motionMagicControl();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.wrist.isWristInPostion(targetPosition);
+        return Robot.wrist.isInPosition(collectPosition);
     }
 
     // Called once after isFinished returns true

@@ -72,7 +72,7 @@ public class FollowTrajectory extends Command {
 				/* for each point, fill our structure and pass it to API */
 				point.position = prof.points[lastPointSent][0];
 				point.velocity = prof.points[lastPointSent][1];
-				point.timeDur = TrajectoryDuration.Trajectory_Duration_10ms;
+				point.timeDur = getTrajectoryDuration(prof.points[lastPointSent][2]);
 				point.profileSlotSelect0 = pidfSlot;
 				point.profileSlotSelect1 = pidfSlot;
 				point.zeroPos = false;
@@ -92,6 +92,14 @@ public class FollowTrajectory extends Command {
 			}			
 			return lastPointSent;
 		}
+    
+    private TrajectoryDuration getTrajectoryDuration(int ms) {
+      TrajectoryDuration retval = TrajectoryDuration.Trajectory_Duration_0ms;
+
+      retval = retval.valueOf(ms);
+
+      return retval;
+    }
 	}
 
 	// Runs the runnable
@@ -169,10 +177,11 @@ public class FollowTrajectory extends Command {
 		}
 		boolean leftComplete = leftStatus.activePointValid && leftStatus.isLast;
 		boolean rightComplete = rightStatus.activePointValid && rightStatus.isLast;
-		System.out.println("Bottom Buffer Counts:  " + leftStatus.btmBufferCnt + "," + rightStatus.btmBufferCnt);
-		System.out.println("Top Buffer Counts:  " + leftStatus.topBufferCnt + "," + rightStatus.topBufferCnt);
-		System.out.println("Complete: " + leftComplete + "," + rightComplete);
+		//System.out.println("Complete: " + leftComplete + "," + rightComplete);
 		boolean trajectoryComplete = leftComplete && rightComplete;
+		if(trajectoryComplete) {
+			System.out.println("Finished Trajectory");
+		}
 		return trajectoryComplete || isFinished;
 	}
 
@@ -208,5 +217,4 @@ public class FollowTrajectory extends Command {
 		talon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
 		talon.set(controlMode, setValue);
 	}
-
 }

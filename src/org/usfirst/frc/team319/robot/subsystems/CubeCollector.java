@@ -7,6 +7,7 @@ import org.usfirst.frc.team319.models.BobVictorSPX;
 import org.usfirst.frc.team319.models.Instrum;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorJoystickControl;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.cubecollector.SetCubeCollectorLeftMotor;
 
@@ -55,49 +56,18 @@ public class CubeCollector extends Subsystem {
 		this.collectorLeftMotor.setInverted(false);
 		this.collectorRightMotor.setInverted(true);
 		
-		////////////////////////////motion magic//////////////////////////////////
-		/*
-		this.collectorLeftMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
-		this.collectorLeftMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
-		
-		this.collectorLeftMotor.configPeakOutputForward(1);
-		this.collectorLeftMotor.configPeakOutputReverse(-1);
-		
-		this.collectorLeftMotor.setSelectedSensorPosition(0, COLLECTOR_PROFILE);
-				
-		this.collectorLeftMotor.configMotionAcceleration(500);
-		this.collectorLeftMotor.configMotionCruiseVelocity(2000);
-		
-		this.collectorRightMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
-		this.collectorRightMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
-		
-		this.collectorRightMotor.configPeakOutputForward(1);
-		this.collectorRightMotor.configPeakOutputReverse(-1);
-		
-		this.collectorRightMotor.setSelectedSensorPosition(0, COLLECTOR_PROFILE);
-				
-		this.collectorRightMotor.configMotionAcceleration(500);
-		this.collectorRightMotor.configMotionCruiseVelocity(2000);
-		*/
-		//////////////////////////////////////////////////////////////////////////
-		
 		//this.collectorSensorLeft.setAutomaticMode(true);
 		//this.collectorSensorRight.setAutomaticMode(true);
 		
 		this.collectorLeftMotor.setNeutralMode(NeutralMode.Coast);
 		this.collectorRightMotor.setNeutralMode(NeutralMode.Coast);
 		
-		//this.collectorLeftMotor.configPIDF(COLLECTOR_PROFILE, 0.105, 0.0, 0.0, 0.345); // p: 0.008, f: 0.374
-		//this.collectorRightMotor.configPIDF(COLLECTOR_PROFILE, 0.0734, 0.0, 0.0, 0.299);
 	
 	}
 
 
     public void initDefaultCommand() {
-    	//setDefaultCommand(new CubeCollectorVelocityPIDTest());
     	//setDefaultCommand(new CubeCollectorStop());
-    	//setDefaultCommand(new SetCubeCollectorLeftMotor());
-    	//setDefaultCommand(new CubeCollectorMotionMagicTest());
     }
     
     // set leftmotor speed to negative to combat issues with it running full 
@@ -119,10 +89,21 @@ public class CubeCollector extends Subsystem {
     public double getCollectorDistanceSensorValue() {
     	return this.collectorDistanceSensor.getVoltage();
 	}
+    
+    public double getLeftCurrent() {
+    	return this.collectorLeftMotor.getOutputCurrent();
+    }
+    
+    public double getRightCurrent() {
+    	return this.collectorRightMotor.getOutputCurrent();
+    }
 
     @Override
     public void periodic() {
 		SmartDashboard.putNumber("IR Sensor", this.getCollectorDistanceSensorValue());
+		//SmartDashboard.putNumber("Left Collector Current", this.getLeftCurrent());
+		//SmartDashboard.putNumber("Right Collector Current", this.getRightCurrent());
+		
     }
     
     

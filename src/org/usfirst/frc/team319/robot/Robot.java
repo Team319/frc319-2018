@@ -102,6 +102,7 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		this.cubeCollector.setCubeCollector(ControlMode.PercentOutput, 0);
 		this.elevator.setTargetPosition(elevator.getCurrentPosition());
+		this.wrist.setTargetPosition(wrist.getCurrentPosition());
 		this.gameState = new GameState(DriverStation.getInstance().getGameSpecificMessage());
 		Scheduler.getInstance().run();
 	}
