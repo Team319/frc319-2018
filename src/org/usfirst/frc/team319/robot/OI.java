@@ -16,10 +16,6 @@ import org.usfirst.frc.team319.paths.FiveFeetAndTurn;
 import org.usfirst.frc.team319.paths.RightWallToRightSwitch;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
-import org.usfirst.frc.team319.robot.commands.AutoTuneDrivetrainLeft;
-//import org.usfirst.frc.team319.robot.commands.AutoDriveForwardThreeFeet;
-import org.usfirst.frc.team319.robot.commands.AutoTuneVelocity;
-import org.usfirst.frc.team319.robot.commands.AutoTuneWrist;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorGoToPosition;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorGoToZero;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorLeftSideSpit;
@@ -47,6 +43,9 @@ import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory_OldWay;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightSideLeftSwitchRightScale;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.DropArmThenSpit;
+import org.usfirst.frc.team319.robot.commands.autotune.AutoTuneDrivetrainLeft;
+import org.usfirst.frc.team319.robot.commands.autotune.AutoTuneVelocity;
+import org.usfirst.frc.team319.robot.commands.autotune.AutoTuneWrist;
 
 /**
  * This class is the glue that binds the controls on the physical operator

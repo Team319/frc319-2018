@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands;
+package org.usfirst.frc.team319.robot.commands.autotune;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.SRXGains;

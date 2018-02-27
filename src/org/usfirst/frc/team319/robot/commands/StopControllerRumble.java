@@ -12,6 +12,8 @@ package org.usfirst.frc.team319.robot.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
+
+import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.robot.*;
 
 /**
@@ -19,18 +21,21 @@ import org.usfirst.frc.team319.robot.*;
  */
 public class StopControllerRumble extends Command {
 
+	BobXboxController[] controllers = {Robot.oi.driverController, Robot.oi.operatorController}; 
+
 	public StopControllerRumble() {
-
-		requires(Robot.cubeCollector);
-
 	}
+	
+	public StopControllerRumble(BobXboxController... bobXboxControllers) {
+		this.controllers = bobXboxControllers;
+	}
+	
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.oi.driverController.setRumble(RumbleType.kLeftRumble, 0.0);
-		Robot.oi.driverController.setRumble(RumbleType.kRightRumble, 0.0);
-		Robot.oi.operatorController.setRumble(RumbleType.kLeftRumble, 0.0);
-		Robot.oi.operatorController.setRumble(RumbleType.kRightRumble, 0.0);
+		for (BobXboxController bobXboxController : controllers) {
+			bobXboxController.setRumble(0, 0);
+		}
 	}
 
 	// Called repeatedly when this Command is scheduled to run

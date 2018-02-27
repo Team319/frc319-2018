@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands;
+package org.usfirst.frc.team319.robot.commands.autonomous_subsystems;
 
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToSwitchPosition;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToCollectCube;

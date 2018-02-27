@@ -12,6 +12,8 @@ package org.usfirst.frc.team319.robot.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
+
+import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.robot.Robot;
 
 /**
@@ -19,21 +21,37 @@ import org.usfirst.frc.team319.robot.Robot;
  */
 public class StartControllerRumble extends Command {
 
-	private double rumbleStrength = 0;
+	private double leftRumbleStrength = 0;
+	private double rightRumbleStrength = 0;	
+	BobXboxController[] controllers = {Robot.oi.driverController, Robot.oi.operatorController}; 
 
 	public StartControllerRumble(double strength) {
-
-		this.rumbleStrength = strength;
-		requires(Robot.cubeCollector);
-
+		this.leftRumbleStrength = strength;
+		this.rightRumbleStrength = strength;
+	}
+	
+	public StartControllerRumble(double leftStrength, double rightStrength) {
+		this.leftRumbleStrength = leftStrength;
+		this.rightRumbleStrength = rightStrength;
+	}
+	
+	public StartControllerRumble(double strength, BobXboxController... bobXboxControllers) {
+		this.leftRumbleStrength = strength;
+		this.rightRumbleStrength = strength;
+		this.controllers = bobXboxControllers;
+	}
+	
+	public StartControllerRumble(double leftStrength, double rightStrength, BobXboxController... bobXboxControllers) {
+		this.leftRumbleStrength = leftStrength;
+		this.rightRumbleStrength = rightStrength;
+		this.controllers = bobXboxControllers;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.oi.driverController.setRumble(RumbleType.kLeftRumble, rumbleStrength);
-		Robot.oi.driverController.setRumble(RumbleType.kRightRumble, rumbleStrength);
-		Robot.oi.operatorController.setRumble(RumbleType.kLeftRumble, rumbleStrength);
-		Robot.oi.operatorController.setRumble(RumbleType.kRightRumble, rumbleStrength);
+		for (BobXboxController bobXboxController : controllers) {
+			bobXboxController.setRumble(leftRumbleStrength, rightRumbleStrength);
+		}
 	}
 
 	// Called repeatedly when this Command is scheduled to run

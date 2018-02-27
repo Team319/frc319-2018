@@ -3,7 +3,7 @@ package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 import org.usfirst.frc.team319.paths.RightWallToRightSwitch;
 import org.usfirst.frc.team319.paths.RightWallToRightSwitchPt2;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
-import org.usfirst.frc.team319.robot.commands.GoToSwitchPose;
+import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPose;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
