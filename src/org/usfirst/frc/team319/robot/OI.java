@@ -45,11 +45,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory_OldWay;
-import org.usfirst.frc.team319.robot.commands.autonomous.AutoDriveForwardThreeFeet;
-import org.usfirst.frc.team319.robot.commands.autonomous.DropArmThenSpit;
-import org.usfirst.frc.team319.robot.commands.autonomous.RightSideLeftSwitchRightScale;
-import org.usfirst.frc.team319.robot.commands.autonomous.RightSideRightSwitchRightScale;
-import org.usfirst.frc.team319.robot.commands.autonomous.RightSideRightSwitchLeftScale;
+import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightSideLeftSwitchRightScale;
+import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.DropArmThenSpit;
 
 /**
  * This class is the glue that binds the controls on the physical operator

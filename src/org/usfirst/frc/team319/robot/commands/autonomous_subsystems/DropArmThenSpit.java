@@ -1,10 +1,6 @@
-package org.usfirst.frc.team319.robot.commands.autonomous;
+package org.usfirst.frc.team319.robot.commands.autonomous_subsystems;
 
-import org.usfirst.frc.team319.models.GameState;
-import org.usfirst.frc.team319.models.GameState.Side;
-import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
-import org.usfirst.frc.team319.robot.commands.pneumatics.CloseCollector;
 import org.usfirst.frc.team319.robot.commands.pneumatics.OpenCollector;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToCollectCube;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToSwitch;
@@ -19,7 +15,7 @@ public class DropArmThenSpit extends CommandGroup {
     public DropArmThenSpit() {
     	
     	addSequential(new WristGoToSwitch());
-       	addSequential(new CubeCollectorSpit(), -1);
+       	addSequential(new CubeCollectorSpit(-1.0), 0.5);
     	addSequential(new OpenCollector());
     	addSequential(new WristGoToCollectCube());
     	

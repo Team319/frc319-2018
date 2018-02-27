@@ -1,23 +1,31 @@
-package org.usfirst.frc.team319.robot.commands.autonomous;
+package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
-import org.usfirst.frc.team319.paths.CrossTheLine;
-import org.usfirst.frc.team319.paths.FiveFeetAndTurn;
-import org.usfirst.frc.team319.paths.ThreeFeet;
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+import org.usfirst.frc.team319.models.SrxTrajectory;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
+import org.usfirst.frc.team319.utils.SrxTrajectoryImporter;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class AutoDriveForwardThreeFeet extends CommandGroup {
+public class CenterToRightSwitch extends CommandGroup {
+	SrxTrajectoryImporter importer = new SrxTrajectoryImporter("/home/lvuser/Autos");
+	SrxTrajectory toFollow = null;
 
-    public AutoDriveForwardThreeFeet() {
+    public CenterToRightSwitch() {
+    	try {
+			this.toFollow = importer.importSrxTrajectory("CenterToRightSwitch");
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
-    	//addSequential(new FollowTrajectory("ThreeFeet"));
-    	addSequential(new FollowTrajectory(new CrossTheLine()));
-        //addSequential(new FollowTrajectory(new FiveFeetAndTurn()));
-    	// Add Commands here:
+    	addSequential(new FollowTrajectory(toFollow));
+        // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.

@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class WristJoystick extends Command {
+public class JoystickWrist extends Command {
 
-    public WristJoystick() {
+    public JoystickWrist() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.wrist);
     }

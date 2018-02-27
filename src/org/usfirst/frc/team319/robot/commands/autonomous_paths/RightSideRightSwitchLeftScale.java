@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands.autonomous;
+package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
 import org.usfirst.frc.team319.paths.RightWallToRightSwitch;
 import org.usfirst.frc.team319.paths.RightWallToRightSwitchPt2;
