@@ -27,8 +27,8 @@ public class TaskDirectControlLEDStrip implements ILoopable {
 		/* Calculate theta in degrees */
 		float theta = (float) Math.atan2(x, y) * 180f / (float) Math.PI;
 		/*
-		 * Take the magnitude and cap it at '1'. This will be our saturation
-		 * (how far away from white we want to be)
+		 * Take the magnitude and cap it at '1'. This will be our saturation (how far
+		 * away from white we want to be)
 		 */
 		float saturation = (float) Math.sqrt(x * x + y * y);
 		saturation = (float) Util.cap(saturation, 1);

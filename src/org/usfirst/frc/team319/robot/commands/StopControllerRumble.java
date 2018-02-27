@@ -8,8 +8,8 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package org.usfirst.frc.team319.robot.commands;
+
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team319.robot.*;
@@ -19,36 +19,36 @@ import org.usfirst.frc.team319.robot.*;
  */
 public class StopControllerRumble extends Command {
 
-    public StopControllerRumble() {
+	public StopControllerRumble() {
 
-        requires(Robot.cubeCollector);
+		requires(Robot.cubeCollector);
 
-            }
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	Robot.oi.driverController.setRumble(RumbleType.kLeftRumble, 0.0);
-    	Robot.oi.driverController.setRumble(RumbleType.kRightRumble, 0.0);
-    	Robot.oi.operatorController.setRumble(RumbleType.kLeftRumble, 0.0);
-    	Robot.oi.operatorController.setRumble(RumbleType.kRightRumble, 0.0);
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		Robot.oi.driverController.setRumble(RumbleType.kLeftRumble, 0.0);
+		Robot.oi.driverController.setRumble(RumbleType.kRightRumble, 0.0);
+		Robot.oi.operatorController.setRumble(RumbleType.kLeftRumble, 0.0);
+		Robot.oi.operatorController.setRumble(RumbleType.kRightRumble, 0.0);
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;  //nothing else to do
-    }
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return true; // nothing else to do
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

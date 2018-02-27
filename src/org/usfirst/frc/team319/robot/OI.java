@@ -55,11 +55,11 @@ import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.DropArmThenS
 public class OI {
 	public BobXboxController driverController;
 	public BobXboxController operatorController;
-	
-	public OI() {	
-		
+
+	public OI() {
+
 		this.driverController = new BobXboxController(0, 0.10, 0.08);
-		
+
 		this.driverController.rightBumper.whenPressed(new AutoCollectCubeOpened());
 		this.driverController.leftBumper.whenPressed(new AutoCollectCubeClosed());
 		this.driverController.rightTriggerButton.whenPressed(new CollectorToggle());
@@ -67,25 +67,25 @@ public class OI {
 		this.driverController.bButton.whenPressed(new CubeCollectorStop());
 		this.driverController.startButton.whenPressed(new DrivetrainBrakeMode());
 		this.driverController.leftStickButton.whenPressed(new DrivetrainShiftToggle());
-		
-		//this.driverController.xButton.whenPressed(new FollowTrajectory(new FiveFeetAndTurn()));
-		
-		this.operatorController  = new BobXboxController(1, 0.08, 0.08);																																																																																			
-		
+
+		// this.driverController.xButton.whenPressed(new FollowTrajectory(new
+		// FiveFeetAndTurn()));
+
+		this.operatorController = new BobXboxController(1, 0.08, 0.08);
+
 		this.operatorController.leftBumper.whenPressed(new WristGoHome());
 		this.operatorController.rightBumper.whenPressed(new WristGoToCollectCube());
 		this.operatorController.aButton.whenPressed(new WristGoToExchange());
 		this.operatorController.xButton.whenPressed(new WristGoToSwitch());
 		this.operatorController.yButton.whenPressed(new WristGoToDunk());
-		//this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());
-		//this.operatorController.bButton.whenPressed(new ElevatorGoToHomePosition());
-		
-	
-		//---------------test buttons-------------------//
-		
-		//this.driverController.xButton.whenPressed(new RightSideScaleAuto());
+		// this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());
+		// this.operatorController.bButton.whenPressed(new ElevatorGoToHomePosition());
+
+		// ---------------test buttons-------------------//
+
+		// this.driverController.xButton.whenPressed(new RightSideScaleAuto());
 		this.driverController.xButton.whenPressed(new RightSideLeftSwitchRightScale());
-		//this.driverController.aButton.whenPressed(new CubeCollectorLeftSideSpit());
-		
+		// this.driverController.aButton.whenPressed(new CubeCollectorLeftSideSpit());
+
 	}
 }

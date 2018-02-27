@@ -139,14 +139,14 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 		this.wristMotor.configForwardSoftLimitThreshold(downPositionLimit);
 		this.wristMotor.configReverseSoftLimitThreshold(upPositionLimit);
 	}
-	
+
 	private void manageLimits() {
 		if (Robot.elevator.getCurrentPosition() > Robot.elevator.topOfFirstStagePosition) {
 			this.upPositionLimit = maxUpTravelPosition;
-			//System.out.println("Setting up position limit to " + upPositionLimit);
+			// System.out.println("Setting up position limit to " + upPositionLimit);
 		} else {
 			this.upPositionLimit = homePosition;
-			//System.out.println("Setting up position limit to " + upPositionLimit);
+			// System.out.println("Setting up position limit to " + upPositionLimit);
 			if (this.targetPosition < homePosition) {
 				this.targetPosition = homePosition;
 			}
@@ -173,7 +173,7 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 		manageLimits();
 		if (position < upPositionLimit || position > downPositionLimit) {
 			return false;
-		}else {
+		} else {
 			this.targetPosition = position;
 			return true;
 		}
@@ -231,7 +231,6 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 		// System.out.println("Wrist Position " + this.getWristPosition());
 
 	}
-
 
 	@Override
 	public double getCurrentVelocity() {

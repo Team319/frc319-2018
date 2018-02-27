@@ -3,11 +3,16 @@ package org.usfirst.frc.team319.models;
 public interface IPositionControlledSubsystem {
 
 	public int targetPosition = 0;
-	
+
 	public boolean setTargetPosition(int targetPosition);
+
 	public int getTargetPosition();
+
 	public int getCurrentPosition();
+
 	public double getCurrentVelocity();
+
 	public void motionMagicControl();
+
 	public boolean isInPosition(int targetPosition);
 }

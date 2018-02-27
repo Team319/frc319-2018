@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class LeftSideRightSwitchRightScale extends CommandGroup {
 
-    public LeftSideRightSwitchRightScale() {
-        
-    	addParallel(new GoToSwitchPose());
-    	addSequential(new FollowTrajectory(new LeftWallToRightSide()));
-    	
-    }
+	public LeftSideRightSwitchRightScale() {
+
+		addParallel(new GoToSwitchPose());
+		addSequential(new FollowTrajectory(new LeftWallToRightSide()));
+
+	}
 }

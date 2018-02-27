@@ -13,12 +13,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class RightSideRightSwitchLeftScale extends CommandGroup {
 
-    public RightSideRightSwitchLeftScale() {
-       
-    	addParallel(new GoToSwitchPose());
-    	addSequential(new FollowTrajectory(new RightWallToRightSwitch())); 
-    	addSequential(new FollowTrajectory(new RightWallToRightSwitchPt2()));
-    	addSequential(new CubeCollectorSpit(-1.0));
-    	
-    }
+	public RightSideRightSwitchLeftScale() {
+
+		addParallel(new GoToSwitchPose());
+		addSequential(new FollowTrajectory(new RightWallToRightSwitch()));
+		addSequential(new FollowTrajectory(new RightWallToRightSwitchPt2()));
+		addSequential(new CubeCollectorSpit(-1.0));
+
+	}
 }

@@ -51,14 +51,14 @@ public class BobController extends Joystick {
 	}
 
 	public double getRightStickX() {
-		return this.getRawAxis(4); //4
+		return this.getRawAxis(4); // 4
 	}
 
 	public double getRightStickY() {
 		return -this.getRawAxis(5);
 	}
-	
-	public void setRumble(double leftValue, double rightValue){
+
+	public void setRumble(double leftValue, double rightValue) {
 		setRumble(RumbleType.kLeftRumble, leftValue);
 		setRumble(RumbleType.kRightRumble, rightValue);
 	}

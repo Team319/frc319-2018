@@ -23,8 +23,7 @@ public class TaskMainLoop implements ILoopable {
 	public void onLoop() {
 		boolean gamepadPresent = false;
 		/*
-		 * Don't have the ability to check if game-pad is connected, manually
-		 * enable
+		 * Don't have the ability to check if game-pad is connected, manually enable
 		 */
 		if (gamepadPresent) {
 			Schedulers.PeriodicTasks.start(Tasks.taskPWMmotorController);

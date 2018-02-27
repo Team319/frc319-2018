@@ -12,14 +12,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class DoubleSwitchLeft extends CommandGroup {
 
-    public DoubleSwitchLeft() {
-        
-    	addSequential(new PrintCommand("Left"));
-        addSequential(new FollowTrajectory(new CenterToLeftSwitch()));
-        addSequential(new CubeCollectorSpit(), 1.0);
-       /* addSequential(new FollowTrajectory("CenterToLeftSwitchPt2"));
-        addSequential(new FollowTrajectory("CenterToLeftSwitchPt3"));
-        addSequential(new FollowTrajectory("CenterToLeftSwitchPt4"));
-        addSequential(new FollowTrajectory("CenterToLeftSwitchPt5")); */
-    }
+	public DoubleSwitchLeft() {
+
+		addSequential(new PrintCommand("Left"));
+		addSequential(new FollowTrajectory(new CenterToLeftSwitch()));
+		addSequential(new CubeCollectorSpit(), 1.0);
+		/*
+		 * addSequential(new FollowTrajectory("CenterToLeftSwitchPt2"));
+		 * addSequential(new FollowTrajectory("CenterToLeftSwitchPt3"));
+		 * addSequential(new FollowTrajectory("CenterToLeftSwitchPt4"));
+		 * addSequential(new FollowTrajectory("CenterToLeftSwitchPt5"));
+		 */
+	}
 }

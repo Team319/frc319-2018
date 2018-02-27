@@ -6,11 +6,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 
-public class BobAxisButton extends Button{
-		private final Joystick joy;
-		private final int axis;
-		private double targetVal;
-		private ThresholdType thresholdType;
+public class BobAxisButton extends Button {
+	private final Joystick joy;
+	private final int axis;
+	private double targetVal;
+	private ThresholdType thresholdType;
 
 	public BobAxisButton(Joystick joystick, int axis, double threshold, ThresholdType thresholdType) {
 		this.joy = joystick;
@@ -18,12 +18,10 @@ public class BobAxisButton extends Button{
 		this.targetVal = threshold;
 		this.thresholdType = thresholdType;
 	}
-		
+
 	public BobAxisButton(Joystick joystick, XboxAxis axis, double threshold, ThresholdType thresholdType) {
 		this(joystick, axis.value, threshold, thresholdType);
 	}
-		
-	
 
 	public boolean get() {
 		switch (this.thresholdType) {
@@ -37,13 +35,12 @@ public class BobAxisButton extends Button{
 		case POV:
 			return joy.getPOV() == this.targetVal;
 		default:
-		return false;
+			return false;
 		}
 	}
-	
-	static enum ThresholdType
-	{
-			LESS_THAN, GREATER_THAN, EXACT, POV;	
+
+	static enum ThresholdType {
+		LESS_THAN, GREATER_THAN, EXACT, POV;
 	}
 
 }

@@ -11,32 +11,32 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class CubeCollectorStop extends Command {
 
-    public CubeCollectorStop() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.cubeCollector);
-    }
+	public CubeCollectorStop() {
+		// Use requires() here to declare subsystem dependencies
+		requires(Robot.cubeCollector);
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	double speed = 0.0;
-    	Robot.cubeCollector.setCubeCollector(ControlMode.PercentOutput, speed);
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		double speed = 0.0;
+		Robot.cubeCollector.setCubeCollector(ControlMode.PercentOutput, speed);
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return true;
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

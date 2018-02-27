@@ -11,12 +11,11 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class GoToSwitchPose extends CommandGroup {
 
-    public GoToSwitchPose() {
-      
-    	addSequential(new WaitCommand(1.0));
-    	addParallel(new WristGoToCollectCube());
-    	addSequential(new ElevatorGoToSwitchPosition());
-    	
-    	
-    }
+	public GoToSwitchPose() {
+
+		addSequential(new WaitCommand(1.0));
+		addParallel(new WristGoToCollectCube());
+		addSequential(new ElevatorGoToSwitchPosition());
+
+	}
 }

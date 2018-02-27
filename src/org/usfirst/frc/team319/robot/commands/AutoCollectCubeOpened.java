@@ -17,17 +17,17 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class AutoCollectCubeOpened extends CommandGroup {
 
-    public AutoCollectCubeOpened() {
+	public AutoCollectCubeOpened() {
 
-    	addParallel(new StartControllerRumble(1.0));
-    	addParallel(new WristGoToCollectCube());
-    	addParallel(new OpenCollector());
-    	addSequential(new CubeCollectorCollect());
-    	addParallel(new StopControllerRumble());
-    	addSequential(new CloseCollector());
-    	addSequential(new WaitCommand(0.25));
-    	addSequential(new HoldCube());
-    	addSequential(new WristGoToExchange());
-    	
-    }
+		addParallel(new StartControllerRumble(1.0));
+		addParallel(new WristGoToCollectCube());
+		addParallel(new OpenCollector());
+		addSequential(new CubeCollectorCollect());
+		addParallel(new StopControllerRumble());
+		addSequential(new CloseCollector());
+		addSequential(new WaitCommand(0.25));
+		addSequential(new HoldCube());
+		addSequential(new WristGoToExchange());
+
+	}
 }

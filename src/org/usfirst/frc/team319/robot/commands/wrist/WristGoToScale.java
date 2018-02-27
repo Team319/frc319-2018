@@ -12,33 +12,33 @@ import edu.wpi.first.wpilibj.command.Command;
 public class WristGoToScale extends Command {
 
 	int scalePosition = 0;
-	
-    public WristGoToScale() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.wrist);
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	Robot.wrist.setTargetPosition(scalePosition);
-    }
+	public WristGoToScale() {
+		// Use requires() here to declare subsystem dependencies
+		requires(Robot.wrist);
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.wrist.motionMagicControl();
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		Robot.wrist.setTargetPosition(scalePosition);
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return Robot.wrist.isInPosition(scalePosition);
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		Robot.wrist.motionMagicControl();
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return Robot.wrist.isInPosition(scalePosition);
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class DropArmThenSpit extends CommandGroup {
 
-    public DropArmThenSpit() {
-    	
-    	addSequential(new WristGoToSwitch());
-       	addSequential(new CubeCollectorSpit(-1.0), 0.5);
-    	addSequential(new OpenCollector());
-    	addSequential(new WristGoToCollectCube());
-    	
-    }
+	public DropArmThenSpit() {
+
+		addSequential(new WristGoToSwitch());
+		addSequential(new CubeCollectorSpit(-1.0), 0.5);
+		addSequential(new OpenCollector());
+		addSequential(new WristGoToCollectCube());
+
+	}
 }

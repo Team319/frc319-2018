@@ -81,5 +81,4 @@ public class Pneumatics extends Subsystem {
 		this.isCollectorSolenoidExtended = false;
 	}
 
-	
 }

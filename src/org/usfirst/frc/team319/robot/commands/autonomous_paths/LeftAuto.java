@@ -11,18 +11,18 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class LeftAuto extends CommandGroup {
 
-    public LeftAuto(GameState gameState) {
-    	
-    	addSequential(new DrivetrainShiftUp());
-    	
-    	if(gameState.mySwitchSide == Side.LEFT && gameState.scaleSide == Side.LEFT) {
+	public LeftAuto(GameState gameState) {
+
+		addSequential(new DrivetrainShiftUp());
+
+		if (gameState.mySwitchSide == Side.LEFT && gameState.scaleSide == Side.LEFT) {
 			addSequential(new LeftSideLeftSwitchLeftScale());
-		}else if(gameState.mySwitchSide == Side.LEFT && gameState.scaleSide == Side.RIGHT){
+		} else if (gameState.mySwitchSide == Side.LEFT && gameState.scaleSide == Side.RIGHT) {
 			addSequential(new LeftSideLeftSwitchRightScale());
-		}else if(gameState.mySwitchSide == Side.RIGHT && gameState.scaleSide == Side.LEFT) {
+		} else if (gameState.mySwitchSide == Side.RIGHT && gameState.scaleSide == Side.LEFT) {
 			addSequential(new LeftSideRightSwitchLeftScale());
-		}else if(gameState.mySwitchSide == Side.RIGHT && gameState.scaleSide == Side.RIGHT) {
+		} else if (gameState.mySwitchSide == Side.RIGHT && gameState.scaleSide == Side.RIGHT) {
 			addSequential(new LeftSideRightSwitchRightScale());
 		}
-    }
+	}
 }

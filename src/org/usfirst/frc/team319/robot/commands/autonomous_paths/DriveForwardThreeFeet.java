@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class DriveForwardThreeFeet extends CommandGroup {
 
-    public DriveForwardThreeFeet() {
-    	
-    	addSequential(new FollowTrajectory(new CrossTheLine()));
-        
-    }
+	public DriveForwardThreeFeet() {
+
+		addSequential(new FollowTrajectory(new CrossTheLine()));
+
+	}
 }

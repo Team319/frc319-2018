@@ -31,7 +31,6 @@ import org.usfirst.frc.team319.robot.subsystems.Wrist;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -40,59 +39,57 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
  * project.
  */
 public class Robot extends TimedRobot {
-	
+
 	Command autonomousCommand;
 	SendableChooser<String> autoChooser;
-	
+
 	public GameState gameState;
-	
+
 	public static final CubeCollector cubeCollector = new CubeCollector();
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static final Pneumatics pneumatics = new Pneumatics();
 	public static final Elevator elevator = new Elevator();
 	public static final Wrist wrist = new Wrist();
-	//public static final Climber climber = new Climber();
+	// public static final Climber climber = new Climber();
 	public static OI oi;
-	
 
-	//SendableChooser<Command> m_chooser = new SendableChooser<>();
+	// SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
+	 * This function is run when the robot is first started up and should be used
+	 * for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		
-		 
+
 		oi = new OI();
-		this.drivetrain.setDrivetrainPositionToZero();		
-	 
-        autoChooser = new SendableChooser<String>();
-        autoChooser.addDefault("Center Auto", "CenterAuto");
-        autoChooser.addObject("Left Auto", "LeftAuto");
-        autoChooser.addObject("Right Auto", "RightAuto");
-        autoChooser.addObject("Cross The Line", "CrossTheLine");        
-        autoChooser.addObject("Do Nothing", "DoNothing");
-		//autoChooser.addDefault("Default", new DefaultAuto());
-		//autoChooser.addObject("Center", new CenterToSwitchAuto());
-		//autoChooser.addObject("Left", new LeftAutoTest());
-		//autoChooser.addObject("Right", new RightAuto());
-		//autoChooser.addObject("Test", new FollowTrajectory("OneFoot"));
+		this.drivetrain.setDrivetrainPositionToZero();
+
+		autoChooser = new SendableChooser<String>();
+		autoChooser.addDefault("Center Auto", "CenterAuto");
+		autoChooser.addObject("Left Auto", "LeftAuto");
+		autoChooser.addObject("Right Auto", "RightAuto");
+		autoChooser.addObject("Cross The Line", "CrossTheLine");
+		autoChooser.addObject("Do Nothing", "DoNothing");
+		// autoChooser.addDefault("Default", new DefaultAuto());
+		// autoChooser.addObject("Center", new CenterToSwitchAuto());
+		// autoChooser.addObject("Left", new LeftAutoTest());
+		// autoChooser.addObject("Right", new RightAuto());
+		// autoChooser.addObject("Test", new FollowTrajectory("OneFoot"));
 
 		SmartDashboard.putData("Autonomous Chooser", autoChooser);
 		SmartDashboard.putData("CrossTheLine", new FollowTrajectory(new CrossTheLine()));
-		//drivetrain = new Drivetrain();
-		//m_chooser.addDefault("Default Auto", new ExampleCommand());
+		// drivetrain = new Drivetrain();
+		// m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-	 
 
-	/**
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
-	 */
+		/**
+		 * This function is called once each time the robot enters Disabled mode. You
+		 * can use it to reset any subsystem information you want to clear when the
+		 * robot is disabled.
+		 */
 	}
+
 	@Override
 	public void disabledInit() {
 
@@ -109,31 +106,32 @@ public class Robot extends TimedRobot {
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
+	 * between different autonomous modes using the dashboard. The sendable chooser
+	 * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
+	 * remove all of the chooser code and uncomment the getString code to get the
+	 * auto name from the text box below the Gyro
 	 *
-	 * <p>You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
+	 * <p>
+	 * You can add additional auto modes by adding additional commands to the
+	 * chooser code above (like the commented example) or additional comparisons to
+	 * the switch structure below with additional strings & commands.
 	 */
 	@Override
 	public void autonomousInit() {
-		//m_autonomousCommand = m_chooser.getSelected();
+		// m_autonomousCommand = m_chooser.getSelected();
 
 		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
+		 * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+		 * switch(autoSelected) { case "My Auto": autonomousCommand = new
+		 * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
+		 * ExampleCommand(); break; }
 		 */
-		//SmartDashboard.putData("Auto mode", m_chooser);
-		String selectedAuto = (String)autoChooser.getSelected();
+		// SmartDashboard.putData("Auto mode", m_chooser);
+		String selectedAuto = (String) autoChooser.getSelected();
 		switch (selectedAuto) {
-		case "CenterAuto": 
+		case "CenterAuto":
 			autonomousCommand = new CenterAuto(gameState);
-			 break;
+			break;
 		case "LeftAuto":
 			autonomousCommand = new LeftAuto(gameState);
 			break;
@@ -148,7 +146,7 @@ public class Robot extends TimedRobot {
 			break;
 		default:
 			autonomousCommand = new FollowTrajectory("CrossTheLine");
-			break; 
+			break;
 		}
 
 		// schedule the autonomous command (example)
@@ -163,7 +161,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		
+
 	}
 
 	@Override
@@ -183,14 +181,15 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
-		//System.out.println("Wrist Error " + this.wrist.wristMotor.getClosedLoopError(0));
+
+		// System.out.println("Wrist Error " +
+		// this.wrist.wristMotor.getClosedLoopError(0));
 		SmartDashboard.putNumber("Dpad value: ", this.oi.driverController.getPOV());
 		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.leftStick.getY());
 		SmartDashboard.putNumber("Operator Right Stick Y", this.oi.operatorController.rightStick.getY());
 		SmartDashboard.putNumber("Driver Left Stick Y", this.oi.driverController.leftStick.getY());
 		SmartDashboard.putNumber("Driver Right Stick X", this.oi.driverController.rightStick.getX());
-		
+
 	}
 
 	/**

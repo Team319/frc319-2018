@@ -14,34 +14,37 @@ public class AutoTuneVelocityEnd extends Command {
 
 	public BobTalonSRX _talon;
 	public int parameterSlot;
-    public AutoTuneVelocityEnd(Subsystem requiredSubsystem, BobTalonSRX talon, int srxParameterSlot) {
-        this._talon = talon;
-        this.parameterSlot = srxParameterSlot;
-        requires(requiredSubsystem);
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public AutoTuneVelocityEnd(Subsystem requiredSubsystem, BobTalonSRX talon, int srxParameterSlot) {
+		this._talon = talon;
+		this.parameterSlot = srxParameterSlot;
+		requires(requiredSubsystem);
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return true;
+	}
 
-    	System.out.println("Talon F gain set to: " + _talon.configGetParameter(ParamEnum.eProfileParamSlot_F, parameterSlot));   
-    	System.out.println("Talon P gain set to: " + _talon.configGetParameter(ParamEnum.eProfileParamSlot_P, parameterSlot)); 
-    }
+	// Called once after isFinished returns true
+	protected void end() {
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+		System.out.println(
+				"Talon F gain set to: " + _talon.configGetParameter(ParamEnum.eProfileParamSlot_F, parameterSlot));
+		System.out.println(
+				"Talon P gain set to: " + _talon.configGetParameter(ParamEnum.eProfileParamSlot_P, parameterSlot));
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

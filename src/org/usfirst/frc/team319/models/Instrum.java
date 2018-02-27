@@ -1,4 +1,5 @@
 package org.usfirst.frc.team319.models;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -9,15 +10,14 @@ public class Instrum {
 	private static int _timesInMotionMagic = 0;
 	private static int PID_PROFILE = 0;
 
-	public static void Process(TalonSRX tal, StringBuilder sb)
-	{
+	public static void Process(TalonSRX tal, StringBuilder sb) {
 		/* smart dash plots */
 		SmartDashboard.putNumber("SensorVel", tal.getSelectedSensorVelocity(PID_PROFILE));
 		SmartDashboard.putNumber("SensorPos", tal.getSelectedSensorPosition(PID_PROFILE));
 		SmartDashboard.putNumber("MotorOutputPercent", tal.getMotorOutputPercent());
 		SmartDashboard.putNumber("ClosedLoopError", tal.getClosedLoopError(PID_PROFILE));
 		SmartDashboard.putNumber("ClosedLoopTarget", tal.getClosedLoopTarget(PID_PROFILE));
-		
+
 		/* check if we are motion-magic-ing */
 		if (tal.getControlMode() == ControlMode.MotionMagic) {
 			++_timesInMotionMagic;
@@ -26,9 +26,9 @@ public class Instrum {
 		}
 		if (_timesInMotionMagic > 10) {
 			/* print the Active Trajectory Point Motion Magic is servoing towards */
-    		SmartDashboard.putNumber("ActTrajVelocity", tal.getActiveTrajectoryVelocity());
-    		SmartDashboard.putNumber("ActTrajPosition", tal.getActiveTrajectoryPosition());
-    		SmartDashboard.putNumber("ActTrajHeading", tal.getActiveTrajectoryHeading());
+			SmartDashboard.putNumber("ActTrajVelocity", tal.getActiveTrajectoryVelocity());
+			SmartDashboard.putNumber("ActTrajPosition", tal.getActiveTrajectoryPosition());
+			SmartDashboard.putNumber("ActTrajHeading", tal.getActiveTrajectoryHeading());
 		}
 		/* periodically print to console */
 		if (++_loops >= 10) {

@@ -23,7 +23,7 @@ public class FollowTrajectory_OldWay extends Command {
 
 	private String trajectoryToFollow;
 	private int kMinPointsInTalon = 5;
-	
+
 	private boolean isFinished = false;
 
 	private SrxTrajectory traj;
@@ -33,9 +33,9 @@ public class FollowTrajectory_OldWay extends Command {
 	private MotionProfileStatus leftStatus = new MotionProfileStatus();
 
 	/**
-	 * this is only either Disable, Enable, or Hold. Since we'd never want one
-	 * side to be enabled while the other is disabled, we'll use the same status
-	 * for both sides.
+	 * this is only either Disable, Enable, or Hold. Since we'd never want one side
+	 * to be enabled while the other is disabled, we'll use the same status for both
+	 * sides.
 	 */
 	private SetValueMotionProfile setValue = SetValueMotionProfile.Disable;
 
@@ -63,24 +63,23 @@ public class FollowTrajectory_OldWay extends Command {
 		setUpTalon(Robot.drivetrain.rightLead);
 
 		setValue = SetValueMotionProfile.Disable;
-		
+
 		Robot.drivetrain.leftLead.set(ControlMode.MotionProfile, setValue.value);
 		Robot.drivetrain.rightLead.set(ControlMode.MotionProfile, setValue.value);
 
 		SrxNotifier.startPeriodic(.005);
-		
-	//	this.traj = importer.importSrxTrajectory(trajectoryToFollow);
 
-		
+		// this.traj = importer.importSrxTrajectory(trajectoryToFollow);
+
 		try {
 			this.traj = importer.importSrxTrajectory(trajectoryToFollow);
 		} catch (IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		int pidfSlot = Robot.drivetrain.LOW_GEAR_PROFILE;
-		
+
 		System.out.println("OMG WTF BBQ");
 		fillTalonBuffer(Robot.drivetrain.rightLead, this.traj.rightProfile, pidfSlot);
 		fillTalonBuffer(Robot.drivetrain.leftLead, this.traj.leftProfile, pidfSlot);
@@ -92,28 +91,22 @@ public class FollowTrajectory_OldWay extends Command {
 
 		Robot.drivetrain.rightLead.getMotionProfileStatus(rightStatus);
 		Robot.drivetrain.leftLead.getMotionProfileStatus(leftStatus);
-		//System.out.println("Bottom buffer count: " + rightStatus.btmBufferCnt);
-		//System.out.println("Top buffer count: " + rightStatus.topBufferCnt);
-		
+		// System.out.println("Bottom buffer count: " + rightStatus.btmBufferCnt);
+		// System.out.println("Top buffer count: " + rightStatus.topBufferCnt);
 
-		if (rightStatus.isUnderrun || leftStatus.isUnderrun)
-		{
+		if (rightStatus.isUnderrun || leftStatus.isUnderrun) {
 			// if either MP has underrun, stop both
 			System.out.println("Motion profile has underrun!");
 			setValue = SetValueMotionProfile.Disable;
-		}
-		else if (rightStatus.btmBufferCnt > kMinPointsInTalon && leftStatus.btmBufferCnt > kMinPointsInTalon)
-		{
+		} else if (rightStatus.btmBufferCnt > kMinPointsInTalon && leftStatus.btmBufferCnt > kMinPointsInTalon) {
 			// if we have enough points in the talon, go.
 			setValue = SetValueMotionProfile.Enable;
-		}	
-		else if (rightStatus.activePointValid && rightStatus.isLast && leftStatus.activePointValid
-				&& leftStatus.isLast)
-		{
+		} else if (rightStatus.activePointValid && rightStatus.isLast && leftStatus.activePointValid
+				&& leftStatus.isLast) {
 			// if both profiles are at their last points, hold the last point
 			setValue = SetValueMotionProfile.Hold;
 		}
-		
+
 		Robot.drivetrain.leftLead.set(ControlMode.MotionProfile, setValue.value);
 		Robot.drivetrain.rightLead.set(ControlMode.MotionProfile, setValue.value);
 	}
@@ -139,7 +132,7 @@ public class FollowTrajectory_OldWay extends Command {
 		SrxNotifier.stop();
 		resetTalon(Robot.drivetrain.rightLead, ControlMode.PercentOutput, 0);
 		resetTalon(Robot.drivetrain.leftLead, ControlMode.PercentOutput, 0);
-	}	
+	}
 
 	// set up the talon for motion profile control
 	public void setUpTalon(TalonSRX talon) {
@@ -150,7 +143,7 @@ public class FollowTrajectory_OldWay extends Command {
 	// set the to the desired controlMode
 	// used at the end of the motion profile
 	public void resetTalon(TalonSRX talon, ControlMode controlMode, double setValue) {
-		//System.out.println("Clearing MP Trajectories");
+		// System.out.println("Clearing MP Trajectories");
 		talon.clearMotionProfileTrajectories();
 		talon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
 		talon.set(controlMode, setValue);

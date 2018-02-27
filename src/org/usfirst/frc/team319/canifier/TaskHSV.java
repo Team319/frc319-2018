@@ -4,7 +4,6 @@ import com.ctre.phoenix.ILoopable;
 import com.ctre.phoenix.CANifier;
 import org.usfirst.frc.team319.canifier.*;
 
-
 public class TaskHSV implements ILoopable {
 	public float Hue;
 	public float Saturation;
@@ -49,11 +48,8 @@ public class TaskHSV implements ILoopable {
 		_rgb[2] = _averageB.process(_rgb[2]);
 
 		/* Update CANifier's LED strip */
-		Hardware.canifier.setLEDOutput(_rgb[0],
-				CANifier.LEDChannel.LEDChannelA);
-		Hardware.canifier.setLEDOutput(_rgb[1],
-				CANifier.LEDChannel.LEDChannelB);
-		Hardware.canifier.setLEDOutput(_rgb[2],
-				CANifier.LEDChannel.LEDChannelC);
+		Hardware.canifier.setLEDOutput(_rgb[0], CANifier.LEDChannel.LEDChannelA);
+		Hardware.canifier.setLEDOutput(_rgb[1], CANifier.LEDChannel.LEDChannelB);
+		Hardware.canifier.setLEDOutput(_rgb[2], CANifier.LEDChannel.LEDChannelC);
 	}
 }

@@ -20,20 +20,20 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class RightSideRightSwitchRightScale extends CommandGroup {
 
-    public RightSideRightSwitchRightScale() {
-    	
-    	addParallel(new GoToDunkPose());
-    	addSequential(new FollowTrajectory(new RightWallToRightScale()));
-        addSequential(new CubeCollectorSpit(-0.75), 0.5);
-        addSequential(new WristGoToSwitch());
-        addParallel(new WristGoToCollectCube());
-        addSequential(new ElevatorGoToHomePosition());
-        addParallel(new WristGoToCollectCube());
-        addParallel(new OpenCollector());
-        addSequential(new FollowTrajectory(new ScaleToSwitchCubeRightSide()));
-        addSequential(new AutoCollectCubeOpened());
-        addSequential(new ElevatorGoToSwitchPosition());
-        addSequential(new FollowTrajectory(new OneFoot()));
-        addSequential(new CubeCollectorSpit(-1.0), 0.5);
-    }
+	public RightSideRightSwitchRightScale() {
+
+		addParallel(new GoToDunkPose());
+		addSequential(new FollowTrajectory(new RightWallToRightScale()));
+		addSequential(new CubeCollectorSpit(-0.75), 0.5);
+		addSequential(new WristGoToSwitch());
+		addParallel(new WristGoToCollectCube());
+		addSequential(new ElevatorGoToHomePosition());
+		addParallel(new WristGoToCollectCube());
+		addParallel(new OpenCollector());
+		addSequential(new FollowTrajectory(new ScaleToSwitchCubeRightSide()));
+		addSequential(new AutoCollectCubeOpened());
+		addSequential(new ElevatorGoToSwitchPosition());
+		addSequential(new FollowTrajectory(new OneFoot()));
+		addSequential(new CubeCollectorSpit(-1.0), 0.5);
+	}
 }

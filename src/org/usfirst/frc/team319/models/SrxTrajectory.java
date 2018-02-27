@@ -11,21 +11,21 @@ public class SrxTrajectory {
 		this.leftProfile = new SrxMotionProfile();
 		this.rightProfile = new SrxMotionProfile();
 	}
-	
+
 	public SrxTrajectory(SrxMotionProfile left, SrxMotionProfile right) {
 		this.leftProfile = left;
 		this.rightProfile = right;
 	}
 
-	public SrxTrajectory(JSONObject json){
+	public SrxTrajectory(JSONObject json) {
 		leftProfile = new SrxMotionProfile((JSONObject) json.get("left"));
 		rightProfile = new SrxMotionProfile((JSONObject) json.get("right"));
 	}
 
-	public JSONObject toJson(){
+	public JSONObject toJson() {
 		JSONObject trajectory = new JSONObject();
 		trajectory.put("left", leftProfile.toJson());
-		trajectory.put("right",rightProfile.toJson());
+		trajectory.put("right", rightProfile.toJson());
 		return trajectory;
 	}
 

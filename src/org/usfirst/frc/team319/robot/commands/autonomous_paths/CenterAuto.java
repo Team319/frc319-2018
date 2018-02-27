@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class CenterAuto extends CommandGroup {
 
-    public CenterAuto(GameState gameState) {
-    	
-    	addSequential(new DrivetrainShiftDown());
-    	
-    	if(gameState.mySwitchSide == Side.LEFT) {
+	public CenterAuto(GameState gameState) {
+
+		addSequential(new DrivetrainShiftDown());
+
+		if (gameState.mySwitchSide == Side.LEFT) {
 			addSequential(new DoubleSwitchLeft());
-		}else {
+		} else {
 			addSequential(new DoubleSwitchRight());
 		}
-    }
+	}
 }
