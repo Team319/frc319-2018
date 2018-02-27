@@ -13,7 +13,7 @@ public class MotionParameters {
 	
 	public MotionParameters() {}
 	
-	public SRXGains GetGains() {
+	public SRXGains getGains() {
 		return _gains;
 	}
 	
@@ -25,7 +25,7 @@ public class MotionParameters {
 		return _cruiseVelocity;
 	}
 	
-	public void SetSRXGains(SRXGains gains) {
+	public void setSRXGains(SRXGains gains) {
 		_gains = gains;
 	}
 	
