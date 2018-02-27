@@ -56,11 +56,11 @@ public class BobTalonSRX extends TalonSRX {
 	public void configMotionParameters(MotionParameters parameters) {
 		this.configMotionAcceleration(parameters.getAcceleration());
 		this.configMotionCruiseVelocity(parameters.getCruiseVelocity());
-		this.setGains(parameters.GetGains());
+		this.setGains(parameters.getGains());
 	}
 	
 	public void selectMotionParameters(MotionParameters parameters) {
-		this.selectProfileSlot(parameters.GetGains().parameterSlot);
+		this.selectProfileSlot(parameters.getGains().parameterSlot);
 		this.configMotionAcceleration(parameters.getAcceleration());
 		this.configMotionCruiseVelocity(parameters.getCruiseVelocity());
 	}
