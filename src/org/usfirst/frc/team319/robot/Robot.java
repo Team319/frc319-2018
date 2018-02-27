@@ -23,6 +23,7 @@ import org.usfirst.frc.team319.robot.commands.autonomous.CenterToSwitchAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous.DefaultAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous.LeftAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous.LeftAutoTest;
+import org.usfirst.frc.team319.robot.commands.autonomous.RightAuto;
 import org.usfirst.frc.team319.robot.subsystems.Climber;
 import org.usfirst.frc.team319.robot.subsystems.CubeCollector;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
@@ -137,6 +138,9 @@ public class Robot extends TimedRobot {
 			 break;
 		case "LeftAuto":
 			autonomousCommand = new LeftAuto(gameState);
+			break;
+		case "RightAuto":
+			autonomousCommand = new RightAuto(gameState);
 			break;
 		case "DoNothing":
 			autonomousCommand = new DefaultAuto();

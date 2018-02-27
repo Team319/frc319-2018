@@ -19,7 +19,7 @@ public class DropArmThenSpit extends CommandGroup {
     public DropArmThenSpit() {
     	
     	addSequential(new WristGoToSwitch());
-       	addSequential(new CubeCollectorSpit(), 1);
+       	addSequential(new CubeCollectorSpit(), -1);
     	addSequential(new OpenCollector());
     	addSequential(new WristGoToCollectCube());
     	
