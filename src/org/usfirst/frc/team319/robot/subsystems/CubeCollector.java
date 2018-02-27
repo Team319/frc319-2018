@@ -1,23 +1,11 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
-import java.util.concurrent.TimeUnit;
-
 import org.usfirst.frc.team319.models.BobTalonSRX;
-import org.usfirst.frc.team319.models.BobVictorSPX;
-import org.usfirst.frc.team319.models.Instrum;
-import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
-import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorJoystickControl;
-import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
-import org.usfirst.frc.team319.robot.commands.cubecollector.SetCubeCollectorLeftMotor;
 
-import com.ctre.phoenix.motorcontrol.*;
-import com.ctre.phoenix.motorcontrol.can.*;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

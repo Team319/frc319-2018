@@ -1,9 +1,7 @@
 package org.usfirst.frc.team319.canifier;
 
-import com.ctre.phoenix.ILoopable;
 import com.ctre.phoenix.CANifier;
-import org.usfirst.frc.team319.canifier.LinearInterpolation;
-import org.usfirst.frc.team319.canifier.Tasks;
+import com.ctre.phoenix.ILoopable;
 
 public class TaskLIDAR_ControlLEDStrip implements ILoopable {
 	/* ILoopable */

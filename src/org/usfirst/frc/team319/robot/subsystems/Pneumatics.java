@@ -1,15 +1,10 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
-import org.usfirst.frc.team319.canifier.LinearInterpolation;
-import org.usfirst.frc.team319.canifier.Tasks;
 import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CompressorRun;
 
-import com.ctre.phoenix.CANifier;
-
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**

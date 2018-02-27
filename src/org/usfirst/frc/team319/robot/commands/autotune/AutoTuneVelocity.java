@@ -1,11 +1,8 @@
 package org.usfirst.frc.team319.robot.commands.autotune;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
-import org.usfirst.frc.team319.models.SRXGains;
 
-import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;

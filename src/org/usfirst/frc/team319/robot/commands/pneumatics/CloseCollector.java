@@ -1,7 +1,6 @@
 package org.usfirst.frc.team319.robot.commands.pneumatics;
 
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 
 import edu.wpi.first.wpilibj.command.Command;
 

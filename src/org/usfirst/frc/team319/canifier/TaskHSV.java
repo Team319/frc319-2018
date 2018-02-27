@@ -1,8 +1,7 @@
 package org.usfirst.frc.team319.canifier;
 
-import com.ctre.phoenix.ILoopable;
 import com.ctre.phoenix.CANifier;
-import org.usfirst.frc.team319.canifier.*;
+import com.ctre.phoenix.ILoopable;
 
 public class TaskHSV implements ILoopable {
 	public float Hue;

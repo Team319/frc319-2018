@@ -1,14 +1,10 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
-import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.BobVictorSPX;
 import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.SRXGains;
-import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorMotionMagicControl;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorStop;
 import org.usfirst.frc.team319.robot.commands.elevator.JoystickElevator;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;

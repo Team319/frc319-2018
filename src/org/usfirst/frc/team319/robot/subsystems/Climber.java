@@ -1,8 +1,6 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
-import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
-import org.usfirst.frc.team319.robot.commands.climber.JoystickClimber;
 import org.usfirst.frc.team319.robot.commands.climber.ClimberStop;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;

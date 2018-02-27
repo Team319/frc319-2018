@@ -7,14 +7,6 @@
 
 package org.usfirst.frc.team319.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Ultrasonic;
-
 import org.usfirst.frc.team319.models.GameState;
 import org.usfirst.frc.team319.paths.CrossTheLine;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
@@ -22,7 +14,6 @@ import org.usfirst.frc.team319.robot.commands.autonomous_paths.CenterAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.DefaultAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightAuto;
-import org.usfirst.frc.team319.robot.subsystems.Climber;
 import org.usfirst.frc.team319.robot.subsystems.CubeCollector;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team319.robot.subsystems.Elevator;
@@ -30,6 +21,13 @@ import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team319.robot.subsystems.Wrist;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the

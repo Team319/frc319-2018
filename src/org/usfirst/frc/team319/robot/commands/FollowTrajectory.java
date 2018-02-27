@@ -1,15 +1,14 @@
 package org.usfirst.frc.team319.robot.commands;
 
-import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.command.Command;
-
 import java.io.IOException;
 
 import org.json.simple.parser.ParseException;
+import org.usfirst.frc.team319.models.BobTalonSRX;
+import org.usfirst.frc.team319.models.SrxMotionProfile;
+import org.usfirst.frc.team319.models.SrxTrajectory;
 import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.utils.SrxTrajectoryImporter;
 
-import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motion.MotionProfileStatus;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.ctre.phoenix.motion.TrajectoryPoint;
@@ -17,9 +16,8 @@ import com.ctre.phoenix.motion.TrajectoryPoint.TrajectoryDuration;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import org.usfirst.frc.team319.models.BobTalonSRX;
-import org.usfirst.frc.team319.models.SrxMotionProfile;
-import org.usfirst.frc.team319.models.SrxTrajectory;
+import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.command.Command;
 
 public class FollowTrajectory extends Command {
 

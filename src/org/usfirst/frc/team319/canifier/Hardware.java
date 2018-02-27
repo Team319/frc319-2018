@@ -1,6 +1,7 @@
 package org.usfirst.frc.team319.canifier;
 
 import com.ctre.phoenix.CANifier;
+
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Hardware {

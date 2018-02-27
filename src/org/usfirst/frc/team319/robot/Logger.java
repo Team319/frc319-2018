@@ -1,12 +1,13 @@
 package org.usfirst.frc.team319.robot;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
-import edu.wpi.first.wpilibj.ControllerPower;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team319.robot.subsystems.*;
 
 /**
  * 

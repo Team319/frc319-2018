@@ -1,7 +1,6 @@
 package org.usfirst.frc.team319.canifier;
 
 import com.ctre.phoenix.ILoopable;
-import org.usfirst.frc.team319.canifier.*;
 
 public class TaskPWMmotorController implements ILoopable {
 	float _percentOut;

@@ -5,7 +5,6 @@ import org.usfirst.frc.team319.controllers.BobXboxController.XboxAxis;
 import org.usfirst.frc.team319.controllers.BobXboxController.XboxDpad;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 
 public class BobDpad {
 	public final Joystick joy;

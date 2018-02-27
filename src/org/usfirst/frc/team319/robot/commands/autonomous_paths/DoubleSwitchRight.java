@@ -1,9 +1,9 @@
 package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
+import org.usfirst.frc.team319.paths.CenterToRightSwitch;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.PrintCommand;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
-import org.usfirst.frc.team319.paths.CenterToRightSwitch;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

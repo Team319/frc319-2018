@@ -1,7 +1,5 @@
 package org.usfirst.frc.team319.canifier;
 
-import org.usfirst.frc.team319.canifier.ConcurrentScheduler;
-
 public class Schedulers {
 	/*
 	 * the schedulers. Minimally you will likely want one periodic scheduler to run

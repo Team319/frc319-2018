@@ -3,8 +3,6 @@ package org.usfirst.frc.team319.canifier;
 import com.ctre.phoenix.ILoopable;
 import com.ctre.phoenix.Util;
 
-import org.usfirst.frc.team319.canifier.*;
-
 public class TaskDirectControlLEDStrip implements ILoopable {
 	/* ILoopable */
 	public void onStart() {

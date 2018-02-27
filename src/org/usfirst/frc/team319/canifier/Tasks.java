@@ -1,6 +1,5 @@
 package org.usfirst.frc.team319.canifier;
 
-import org.usfirst.frc.team319.canifier.*;
 import com.ctre.phoenix.ILoopable;
 
 public class Tasks {

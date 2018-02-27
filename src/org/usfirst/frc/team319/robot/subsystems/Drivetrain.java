@@ -3,20 +3,16 @@ package org.usfirst.frc.team319.robot.subsystems;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
-import org.usfirst.frc.team319.models.BobVictorSPX;
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.drivetrain.BobDrive;
-import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainVelocityPIDTest;
 
-import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

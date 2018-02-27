@@ -3,7 +3,6 @@ package org.usfirst.frc.team319.controllers;
 import org.usfirst.frc.team319.controllers.BobXboxController.XboxAxis;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 
 public class BobThumbStick {
 	Joystick controller;

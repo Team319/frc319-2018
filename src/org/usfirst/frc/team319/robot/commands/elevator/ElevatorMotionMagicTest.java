@@ -2,8 +2,6 @@ package org.usfirst.frc.team319.robot.commands.elevator;
 
 import org.usfirst.frc.team319.robot.Robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**

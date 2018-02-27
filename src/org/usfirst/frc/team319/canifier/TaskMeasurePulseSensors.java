@@ -1,10 +1,11 @@
 package org.usfirst.frc.team319.canifier;
 
-import com.ctre.phoenix.ILoopable;
-import com.ctre.phoenix.CANifier;
-import org.usfirst.frc.team319.canifier.*;
-import edu.wpi.first.wpilibj.can.CANJNI;
 import java.nio.ByteBuffer;
+
+import com.ctre.phoenix.CANifier;
+import com.ctre.phoenix.ILoopable;
+
+import edu.wpi.first.wpilibj.can.CANJNI;
 
 public class TaskMeasurePulseSensors implements ILoopable {
 	double[][] _dutyCycleAndPeriods = new double[][] { new double[] { 0, 0 }, new double[] { 0, 0 },

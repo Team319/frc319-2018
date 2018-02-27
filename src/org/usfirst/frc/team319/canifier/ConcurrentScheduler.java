@@ -1,7 +1,8 @@
 package org.usfirst.frc.team319.canifier;
 
-import com.ctre.phoenix.ILoopable;
 import java.util.ArrayList;
+
+import com.ctre.phoenix.ILoopable;
 
 public class ConcurrentScheduler implements com.ctre.phoenix.ILoopable {
 	ArrayList<com.ctre.phoenix.ILoopable> _loops = new ArrayList<com.ctre.phoenix.ILoopable>();

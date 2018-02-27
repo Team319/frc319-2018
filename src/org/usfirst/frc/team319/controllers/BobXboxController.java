@@ -2,9 +2,7 @@ package org.usfirst.frc.team319.controllers;
 
 import org.usfirst.frc.team319.controllers.BobAxisButton.ThresholdType;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 
 public class BobXboxController extends Joystick {
 

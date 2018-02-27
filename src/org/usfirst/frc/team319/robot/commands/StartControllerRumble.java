@@ -10,11 +10,10 @@
 
 package org.usfirst.frc.team319.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
