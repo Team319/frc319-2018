@@ -39,13 +39,7 @@ public class Drivetrain extends Subsystem {
 		this.rightLead.setInverted(false);// true
 		this.rightLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
 		this.rightLead.setSensorPhase(false);
-
-		this.leftLead.configPeakOutputForward(1);
-		this.leftLead.configPeakOutputReverse(-1);
-
-		this.rightLead.configPeakOutputForward(1);
-		this.rightLead.configPeakOutputReverse(-1);
-
+		
 		this.leftLead.enableCurrentLimit(false);
 		this.leftLead.configContinuousCurrentLimit(60);
 		this.rightLead.enableCurrentLimit(false);
@@ -62,7 +56,6 @@ public class Drivetrain extends Subsystem {
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new BobDrive());
-		// setDefaultCommand(new DrivetrainVelocityPIDTest());
 	}
 	
 	public void configGains(SRXGains gains) {
