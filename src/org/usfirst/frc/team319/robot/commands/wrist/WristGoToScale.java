@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WristGoToScale extends Command {
 
-	int scalePosition = 0;
+	int scalePosition = Robot.wrist.getScalePosition();
 
 	public WristGoToScale() {
 		// Use requires() here to declare subsystem dependencies

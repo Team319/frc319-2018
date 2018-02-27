@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WristGoToDunk extends Command {
 
-	private int dunkPosition = Robot.wrist.dunkPosition;
+	private int dunkPosition = Robot.wrist.getDunkPosition();
 	private boolean allowedToMove = false;
 
 	public WristGoToDunk() {

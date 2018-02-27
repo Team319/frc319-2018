@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ElevatorGoToHomePosition extends Command {
+	
+	private int homePosition = Robot.elevator.getHomePosition();
 
 	public ElevatorGoToHomePosition() {
 		// Use requires() here to declare subsystem dependencies
@@ -16,7 +18,7 @@ public class ElevatorGoToHomePosition extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.elevator.setTargetPosition(Robot.elevator.homePosition);
+		Robot.elevator.setTargetPosition(homePosition);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -26,7 +28,7 @@ public class ElevatorGoToHomePosition extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.elevator.isInPosition(Robot.elevator.homePosition);
+		return Robot.elevator.isInPosition(homePosition);
 	}
 
 	// Called once after isFinished returns true

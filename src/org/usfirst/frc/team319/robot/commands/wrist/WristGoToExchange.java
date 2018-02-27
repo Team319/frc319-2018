@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WristGoToExchange extends Command {
 
-	int exchangePosition = 3289;
+	int exchangePosition = Robot.wrist.getExchangePosition();
 
 	public WristGoToExchange() {
 		// Use requires() here to declare subsystem dependencies

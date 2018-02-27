@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WristGoToCollectCube extends Command {
 
-	int collectPosition = 3700;
+	int collectPosition = Robot.wrist.getCollectPosition();
 
 	public WristGoToCollectCube() {
 		// Use requires() here to declare subsystem dependencies

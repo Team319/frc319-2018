@@ -10,13 +10,15 @@ import com.ctre.phoenix.ParamEnum;
 public class BobTalonSRX extends TalonSRX {
 
 	private static final int DEFAULT_TIMEOUT_MS = 0;
+	private static final int DEFAULT_PID_INDEX = 0;
 
 	public BobTalonSRX(int deviceNumber) {
 		super(deviceNumber);
 		this.configNominalOutputForward(0.0);
 		this.configNominalOutputReverse(0.0);
+		this.configPeakOutputForward(1);
+		this.configPeakOutputReverse(-1);
 		this.configMotionProfileTrajectoryPeriod(0);
-
 	}
 
 	public ErrorCode configPIDF(int slotIdx, double P, double I, double D, double F) {
@@ -50,6 +52,18 @@ public class BobTalonSRX extends TalonSRX {
 	public ErrorCode configPIDF(SRXGains gains) {
 		return this.configPIDF(gains.parameterSlot, gains.P, gains.I, gains.D, gains.F, gains.iZone);
 	}
+	
+	public void configMotionParameters(MotionParameters parameters) {
+		this.configMotionAcceleration(parameters.getAcceleration());
+		this.configMotionCruiseVelocity(parameters.getCruiseVelocity());
+		this.setGains(parameters.GetGains());
+	}
+	
+	public void selectMotionParameters(MotionParameters parameters) {
+		this.selectProfileSlot(parameters.GetGains().parameterSlot);
+		this.configMotionAcceleration(parameters.getAcceleration());
+		this.configMotionCruiseVelocity(parameters.getCruiseVelocity());
+	}
 
 	public ErrorCode config_IntegralZone(int slotIdx, int izone) {
 		return super.config_IntegralZone(slotIdx, izone, DEFAULT_TIMEOUT_MS);
@@ -73,6 +87,10 @@ public class BobTalonSRX extends TalonSRX {
 
 	public ErrorCode setGains(SRXGains gains) {
 		return this.configPIDF(gains.parameterSlot, gains.P, gains.I, gains.D, gains.F, gains.iZone);
+	}
+	
+	public ErrorCode configSelectedFeedbackSensor(FeedbackDevice feedbackDevice) {
+		return super.configSelectedFeedbackSensor(feedbackDevice, DEFAULT_PID_INDEX, DEFAULT_TIMEOUT_MS);
 	}
 
 	public ErrorCode configSelectedFeedbackSensor(FeedbackDevice feedbackDevice, int pidIdx) {
@@ -101,6 +119,10 @@ public class BobTalonSRX extends TalonSRX {
 
 	public ErrorCode config_kI(int slotIdx, double value) {
 		return super.config_kI(slotIdx, value, DEFAULT_TIMEOUT_MS);
+	}
+	
+	public ErrorCode setSelectedSensorPosition(int sensorPos) {
+		return super.setSelectedSensorPosition(sensorPos, DEFAULT_PID_INDEX, DEFAULT_TIMEOUT_MS);
 	}
 
 	public ErrorCode setSelectedSensorPosition(int sensorPos, int pidIdx) {
@@ -142,5 +164,16 @@ public class BobTalonSRX extends TalonSRX {
 	public double configGetParameter(ParamEnum param, int ordinal) {
 		return super.configGetParameter(param, ordinal, DEFAULT_TIMEOUT_MS);
 	}
+	
+	public int getSelectedSensorPosition() {
+		return super.getSelectedSensorPosition(DEFAULT_PID_INDEX);
+	}
+	
+	public int getSelectedSensorVelocity() {
+		return super.getSelectedSensorVelocity(DEFAULT_PID_INDEX);
+	}
 
+	public void selectProfileSlot(int slotIdx) {
+		super.selectProfileSlot(slotIdx, DEFAULT_PID_INDEX);
+	}
 }

@@ -8,44 +8,20 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
-import org.usfirst.frc.team319.models.BobController;
-import org.usfirst.frc.team319.paths.BackwardsThreeFeet;
-import org.usfirst.frc.team319.paths.CrossTheLine;
-import org.usfirst.frc.team319.paths.FifteenFeet;
-import org.usfirst.frc.team319.paths.FiveFeetAndTurn;
-import org.usfirst.frc.team319.paths.RightWallToRightSwitch;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
-import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorGoToPosition;
-import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorGoToZero;
-import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorLeftSideSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
-import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStraighten;
 import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainBrakeMode;
-import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainGoToSpeed;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToHomePosition;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorMotionMagicTest;
-import org.usfirst.frc.team319.robot.commands.pneumatics.CloseCollector;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CollectorToggle;
 import org.usfirst.frc.team319.robot.commands.pneumatics.DrivetrainShiftToggle;
-import org.usfirst.frc.team319.robot.commands.pneumatics.OpenCollector;
-import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorCollect;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoHome;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToCollectCube;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToDunk;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToExchange;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToSwitch;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-
-import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
-import org.usfirst.frc.team319.robot.commands.FollowTrajectory_OldWay;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightSideLeftSwitchRightScale;
-import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.DropArmThenSpit;
-import org.usfirst.frc.team319.robot.commands.autotune.AutoTuneDrivetrainLeft;
-import org.usfirst.frc.team319.robot.commands.autotune.AutoTuneVelocity;
-import org.usfirst.frc.team319.robot.commands.autotune.AutoTuneWrist;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -83,7 +59,7 @@ public class OI {
 		// ---------------test buttons-------------------//
 
 		// this.driverController.xButton.whenPressed(new RightSideScaleAuto());
-		this.driverController.xButton.whenPressed(new RightSideLeftSwitchRightScale());
+		// this.driverController.xButton.whenPressed(new RightSideLeftSwitchRightScale());
 		// this.driverController.aButton.whenPressed(new CubeCollectorLeftSideSpit());
 
 	}
