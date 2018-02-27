@@ -175,4 +175,8 @@ public class BobTalonSRX extends TalonSRX {
 	public void selectProfileSlot(int slotIdx) {
 		super.selectProfileSlot(slotIdx, DEFAULT_PID_INDEX);
 	}
+	
+	public int getClosedLoopError() {
+		return super.getClosedLoopError(DEFAULT_PID_INDEX);
+	}
 }

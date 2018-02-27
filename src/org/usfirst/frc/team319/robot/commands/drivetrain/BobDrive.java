@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class BobDrive extends Command {
 
 	BobDriveHelper helper;
+	private double quickTurnThreshold = 0.2;
 
 	public BobDrive() {
 		requires(Robot.drivetrain);
@@ -28,9 +29,9 @@ public class BobDrive extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		boolean quickTurn = Robot.drivetrain.quickTurnController();
 		double moveValue = Robot.oi.driverController.leftStick.getY();
 		double rotateValue = Robot.oi.driverController.rightStick.getX();
+		boolean quickTurn = (moveValue < quickTurnThreshold && moveValue > -quickTurnThreshold);
 		DriveSignal driveSignal = helper.cheesyDrive(-moveValue, rotateValue, quickTurn, false);
 		Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
 	}
