@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WristGoHome extends Command {
 
-	int homePosition = 0;
+	int homePosition = Robot.wrist.getHomePosition();
 
 	public WristGoHome() {
 		// Use requires() here to declare subsystem dependencies

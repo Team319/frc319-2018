@@ -25,43 +25,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class CubeCollector extends Subsystem {
-
-	public final static int COLLECTOR_PROFILE = 0;
+	
 	public final BobTalonSRX collectorLeftMotor = new BobTalonSRX(3); // 11
 	public final BobTalonSRX collectorRightMotor = new BobTalonSRX(4);
 	AnalogInput collectorDistanceSensor = new AnalogInput(0);
-	StringBuilder _sb = new StringBuilder();
-	int loops = 0;
-	private static int _loops = 0;
 
-	private static int _timesInMotionMagic = 0;
 	private static final double cubeCollectedDistanceThreshhold = 1.5;
 	private static final double cubeLostDistanceThreshhold = 1.5;
 
 	public CubeCollector() {
 
-		this.collectorLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, COLLECTOR_PROFILE,
-				10);
-		this.collectorRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
-				COLLECTOR_PROFILE, 10);
-
-		// this.collectorLeftMotor.setSensorPhase(true);
-		// this.collectorRightMotor.setSensorPhase(true);
-
 		this.collectorLeftMotor.setInverted(true);
 		this.collectorRightMotor.setInverted(false);
-
-		// this.collectorSensorLeft.setAutomaticMode(true);
-		// this.collectorSensorRight.setAutomaticMode(true);
 
 		this.collectorLeftMotor.setNeutralMode(NeutralMode.Coast);
 		this.collectorRightMotor.setNeutralMode(NeutralMode.Coast);
 
 	}
 
-	public void initDefaultCommand() {
-		// setDefaultCommand(new CubeCollectorStop());
-	}
+	public void initDefaultCommand() { }
 
 	// set leftmotor speed to negative to combat issues with it running full
 	// speed and not PIDing to the set speed
@@ -90,7 +72,7 @@ public class CubeCollector extends Subsystem {
 	public double getRightCurrent() {
 		return this.collectorRightMotor.getOutputCurrent();
 	}
-
+	
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("IR Sensor", this.getCollectorDistanceSensorValue());

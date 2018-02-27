@@ -3,6 +3,7 @@ package org.usfirst.frc.team319.models;
 public interface IPositionControlledSubsystem {
 
 	public int targetPosition = 0;
+	public int onTargetThreshold = 0;
 
 	public boolean setTargetPosition(int targetPosition);
 

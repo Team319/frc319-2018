@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ElevatorGoToSwitchPosition extends Command {
+	
+	private int switchPosition = Robot.elevator.getSwitchPosition();
 
 	public ElevatorGoToSwitchPosition() {
 		// Use requires() here to declare subsystem dependencies
@@ -16,7 +18,7 @@ public class ElevatorGoToSwitchPosition extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.elevator.setTargetPosition(Robot.elevator.switchPosition);
+		Robot.elevator.setTargetPosition(switchPosition);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -26,7 +28,7 @@ public class ElevatorGoToSwitchPosition extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.elevator.isInPosition(Robot.elevator.switchPosition);
+		return Robot.elevator.isInPosition(switchPosition);
 	}
 
 	// Called once after isFinished returns true
