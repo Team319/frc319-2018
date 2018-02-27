@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Elevator extends Subsystem implements IPositionControlledSubsystem{
 	
 	public final static int homePosition = 0;
+	public final static int switchPosition = 14000;
 	public final static int topOfFirstStagePosition = 24000;
 	public final static int dunkPosition = 33500;
 	

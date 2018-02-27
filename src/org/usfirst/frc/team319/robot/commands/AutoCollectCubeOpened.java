@@ -19,9 +19,11 @@ public class AutoCollectCubeOpened extends CommandGroup {
 
     public AutoCollectCubeOpened() {
 
+    	addParallel(new StartControllerRumble(1.0));
     	addParallel(new WristGoToCollectCube());
     	addParallel(new OpenCollector());
     	addSequential(new CubeCollectorCollect());
+    	addParallel(new StopControllerRumble());
     	addSequential(new CloseCollector());
     	addSequential(new WaitCommand(0.25));
     	addSequential(new HoldCube());

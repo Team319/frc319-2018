@@ -50,11 +50,11 @@ public class CubeCollector extends Subsystem {
 		this.collectorRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, COLLECTOR_PROFILE, 10);
 		
 		
-		this.collectorLeftMotor.setSensorPhase(true);
-		this.collectorRightMotor.setSensorPhase(true);
+		//this.collectorLeftMotor.setSensorPhase(true);
+		//this.collectorRightMotor.setSensorPhase(true);
 		
-		this.collectorLeftMotor.setInverted(false);
-		this.collectorRightMotor.setInverted(true);
+		this.collectorLeftMotor.setInverted(true);
+		this.collectorRightMotor.setInverted(false);
 		
 		//this.collectorSensorLeft.setAutomaticMode(true);
 		//this.collectorSensorRight.setAutomaticMode(true);

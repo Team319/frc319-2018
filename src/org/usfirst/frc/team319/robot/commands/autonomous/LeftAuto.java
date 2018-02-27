@@ -13,10 +13,14 @@ public class LeftAuto extends CommandGroup {
 
     public LeftAuto(GameState gameState) {
     	
-    	if(gameState.mySwitchSide == Side.LEFT) {
-			addSequential(new FollowTrajectory("OneFoot"));
-		}else {
-			addSequential(new FollowTrajectory("CrossTheLine"));
+    	if(gameState.mySwitchSide == Side.LEFT && gameState.scaleSide == Side.LEFT) {
+			addSequential(new LeftSideLeftSwitchLeftScale());
+		}else if(gameState.mySwitchSide == Side.LEFT && gameState.scaleSide == Side.RIGHT){
+			addSequential(new LeftSideLeftSwitchRightScale());
+		}else if(gameState.mySwitchSide == Side.RIGHT && gameState.scaleSide == Side.LEFT) {
+			addSequential(new LeftSideRightSwitchLeftScale());
+		}else if(gameState.mySwitchSide == Side.RIGHT && gameState.scaleSide == Side.RIGHT) {
+			addSequential(new LeftSideRightSwitchRightScale());
 		}
     }
 }

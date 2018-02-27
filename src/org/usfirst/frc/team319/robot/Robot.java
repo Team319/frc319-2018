@@ -72,6 +72,7 @@ public class Robot extends TimedRobot {
         autoChooser = new SendableChooser<String>();
         autoChooser.addDefault("Center Auto", "CenterAuto");
         autoChooser.addObject("Left Auto", "LeftAuto");
+        autoChooser.addObject("Right Auto", "RightAuto");
         autoChooser.addObject("Cross The Line", "CrossTheLine");        
         autoChooser.addObject("Do Nothing", "DoNothing");
 		//autoChooser.addDefault("Default", new DefaultAuto());

@@ -9,10 +9,11 @@ package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.models.BobController;
+import org.usfirst.frc.team319.paths.BackwardsThreeFeet;
 import org.usfirst.frc.team319.paths.CrossTheLine;
 import org.usfirst.frc.team319.paths.FifteenFeet;
 import org.usfirst.frc.team319.paths.FiveFeetAndTurn;
-import org.usfirst.frc.team319.paths.WallToScaleRightSide;
+import org.usfirst.frc.team319.paths.RightWallToRightSwitch;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.AutoTuneDrivetrainLeft;
@@ -21,6 +22,7 @@ import org.usfirst.frc.team319.robot.commands.AutoTuneVelocity;
 import org.usfirst.frc.team319.robot.commands.AutoTuneWrist;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorGoToPosition;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorGoToZero;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorLeftSideSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStraighten;
@@ -45,7 +47,9 @@ import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory_OldWay;
 import org.usfirst.frc.team319.robot.commands.autonomous.AutoDriveForwardThreeFeet;
 import org.usfirst.frc.team319.robot.commands.autonomous.DropArmThenSpit;
-import org.usfirst.frc.team319.robot.commands.autonomous.RightSideScaleAuto;
+import org.usfirst.frc.team319.robot.commands.autonomous.RightSideLeftSwitchRightScale;
+import org.usfirst.frc.team319.robot.commands.autonomous.RightSideRightSwitchRightScale;
+import org.usfirst.frc.team319.robot.commands.autonomous.RightSideRightSwitchLeftScale;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -82,6 +86,9 @@ public class OI {
 	
 		//---------------test buttons-------------------//
 		
-		this.driverController.xButton.whenPressed(new RightSideScaleAuto());
+		//this.driverController.xButton.whenPressed(new RightSideScaleAuto());
+		this.driverController.xButton.whenPressed(new RightSideLeftSwitchRightScale());
+		//this.driverController.aButton.whenPressed(new CubeCollectorLeftSideSpit());
+		
 	}
 }
