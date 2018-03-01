@@ -11,11 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Pneumatics extends Subsystem {
-
-	public boolean isDrivetrainHighGear;
-	public boolean isElevatorHighGear;
-	public boolean isWinchBrakeHighGear;
-	public boolean isCollectorSolenoidExtended;
+	
+	//public boolean isCollectorSolenoidExtended;
 
 	Compressor compressor = new Compressor(0);
 
@@ -38,42 +35,40 @@ public class Pneumatics extends Subsystem {
 
 	public void drivetrainShiftUp() {
 		this.drivetrainShifter.set(DoubleSolenoid.Value.kForward);
-		this.isDrivetrainHighGear = true;
+		Robot.drivetrain.setIsHighGear(true);
 	}
 
 	public void drivetrainShiftDown() {
 		this.drivetrainShifter.set(DoubleSolenoid.Value.kReverse);
-		this.isDrivetrainHighGear = false;
+		Robot.drivetrain.setIsHighGear(false);
 	}
 
 	public void elevatorShiftUp() {
 		this.elevatorShifter.set(DoubleSolenoid.Value.kForward);
-		Robot.elevator.setHighGear(true);
+		Robot.elevator.setIsHighGear(true);
 	}
 
 	public void elevatorShiftDown() {
 		this.elevatorShifter.set(DoubleSolenoid.Value.kReverse);
-		Robot.elevator.setHighGear(false);
+		Robot.elevator.setIsHighGear(false);
 	}
 
 	public void winchBreakShiftUp() {
 		this.winchBrakeShifter.set(DoubleSolenoid.Value.kForward);
-		this.isWinchBrakeHighGear = true;
 	}
 
 	public void winchBreakShiftDown() {
 		this.winchBrakeShifter.set(DoubleSolenoid.Value.kReverse);
-		this.isWinchBrakeHighGear = false;
 	}
 
 	public void openCollector() {
 		this.collectorSolenoid.set(DoubleSolenoid.Value.kForward);
-		this.isCollectorSolenoidExtended = true;
+		Robot.cubeCollector.setIsOpen(true);
 	}
 
 	public void closeCollector() {
 		this.collectorSolenoid.set(DoubleSolenoid.Value.kReverse);
-		this.isCollectorSolenoidExtended = false;
+		Robot.cubeCollector.setIsOpen(false);
 	}
 
 }

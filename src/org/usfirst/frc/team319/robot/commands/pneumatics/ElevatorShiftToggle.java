@@ -16,12 +16,10 @@ public class ElevatorShiftToggle extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		if (Robot.pneumatics.isDrivetrainHighGear == false) {
+		if (Robot.elevator.getIsHighGear() == false) {
 			Robot.pneumatics.elevatorShiftUp();
-			System.out.println("Elevaotr is in High Gear");
-		} else if (Robot.pneumatics.isDrivetrainHighGear == true) {
+		} else if (Robot.elevator.getIsHighGear() == true) {
 			Robot.pneumatics.elevatorShiftDown();
-			System.out.println("Elevator is in Low Gear");
 		}
 	}
 

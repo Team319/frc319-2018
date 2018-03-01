@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Drivetrain extends Subsystem {
+	
+	private boolean isHighGear = false;
 
 	public static final int LOW_GEAR_PROFILE = 0;
 	public static final int HIGH_GEAR_PROFILE = 1;
@@ -121,15 +123,24 @@ public class Drivetrain extends Subsystem {
 		this.leftLead.setNeutralMode(neutralMode);
 		this.rightLead.setNeutralMode(neutralMode);
 	}
+	
+	public boolean isHighGear() {
+		return isHighGear;
+	}
+	
+	public void setIsHighGear(boolean isHighGear) {
+		this.isHighGear = isHighGear;
+	}
 
 	@Override
 	public void periodic() {
+		SmartDashboard.putBoolean("Drivetrain High Gear", isHighGear);
 		SmartDashboard.putNumber("Left Drive Position", getLeftDriveLeadDistance());
 		SmartDashboard.putNumber("Right Drive Position", getRightDriveLeadDistance());
 		SmartDashboard.putNumber("Left Drive Velocity", getLeftDriveLeadVelocity());
 		SmartDashboard.putNumber("Right Drive Velocity", getRightDriveLeadVelocity());
-		SmartDashboard.putNumber("Left Drive Closed Loop Error", getLeftClosedLoopError());
-		SmartDashboard.putNumber("Right Drive Closed Loop Error", getRightClosedLoopError());
+		//SmartDashboard.putNumber("Left Drive Closed Loop Error", getLeftClosedLoopError());
+		//SmartDashboard.putNumber("Right Drive Closed Loop Error", getRightClosedLoopError());
 
 		ArrayList<Double> leftCurrents = leftLead.getOutputCurrents();
 

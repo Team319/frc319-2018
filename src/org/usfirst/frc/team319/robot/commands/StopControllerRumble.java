@@ -19,22 +19,17 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class StopControllerRumble extends Command {
-
-	BobXboxController[] controllers = {Robot.oi.driverController, Robot.oi.operatorController}; 
-
-	public StopControllerRumble() {
-	}
 	
-	public StopControllerRumble(BobXboxController... bobXboxControllers) {
-		this.controllers = bobXboxControllers;
+	private BobXboxController controller;
+	
+	public StopControllerRumble(BobXboxController controller) {
+		this.controller = controller;
 	}
 	
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		for (BobXboxController bobXboxController : controllers) {
-			bobXboxController.setRumble(0, 0);
-		}
+		controller.setRumble(0, 0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

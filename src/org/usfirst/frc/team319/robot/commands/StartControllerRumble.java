@@ -21,36 +21,24 @@ import edu.wpi.first.wpilibj.command.Command;
 public class StartControllerRumble extends Command {
 
 	private double leftRumbleStrength = 0;
-	private double rightRumbleStrength = 0;	
-	BobXboxController[] controllers = {Robot.oi.driverController, Robot.oi.operatorController}; 
+	private double rightRumbleStrength = 0;
+	private BobXboxController controller;
 
-	public StartControllerRumble(double strength) {
+	public StartControllerRumble(BobXboxController controller, double strength) {
 		this.leftRumbleStrength = strength;
 		this.rightRumbleStrength = strength;
+		this.controller = controller;
 	}
 	
-	public StartControllerRumble(double leftStrength, double rightStrength) {
+	public StartControllerRumble(BobXboxController controller, double leftStrength, double rightStrength) {
 		this.leftRumbleStrength = leftStrength;
 		this.rightRumbleStrength = rightStrength;
-	}
-	
-	public StartControllerRumble(double strength, BobXboxController... bobXboxControllers) {
-		this.leftRumbleStrength = strength;
-		this.rightRumbleStrength = strength;
-		this.controllers = bobXboxControllers;
-	}
-	
-	public StartControllerRumble(double leftStrength, double rightStrength, BobXboxController... bobXboxControllers) {
-		this.leftRumbleStrength = leftStrength;
-		this.rightRumbleStrength = rightStrength;
-		this.controllers = bobXboxControllers;
+		this.controller = controller;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		for (BobXboxController bobXboxController : controllers) {
-			bobXboxController.setRumble(leftRumbleStrength, rightRumbleStrength);
-		}
+		controller.setRumble(leftRumbleStrength, rightRumbleStrength);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

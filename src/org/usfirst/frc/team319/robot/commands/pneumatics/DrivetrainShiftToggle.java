@@ -16,12 +16,10 @@ public class DrivetrainShiftToggle extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		if (Robot.pneumatics.isDrivetrainHighGear == false) {
+		if (Robot.drivetrain.isHighGear() == false) {
 			Robot.pneumatics.drivetrainShiftUp();
-			System.out.println("Drivetrain is in High Gear");
-		} else if (Robot.pneumatics.isDrivetrainHighGear == true) {
+		} else if (Robot.drivetrain.isHighGear() == true) {
 			Robot.pneumatics.drivetrainShiftDown();
-			System.out.println("Drivetrain is in Low Gear");
 		}
 	}
 

@@ -5,6 +5,7 @@ import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.SRXGains;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorMotionMagicControl;
 import org.usfirst.frc.team319.robot.commands.elevator.JoystickElevator;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -36,19 +37,20 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	public int upPositionLimit = maxUpTravelPosition;
 	public int downPositionLimit = homePosition;
 	private int targetPosition = 0;
+	private double maxSpeedAchieved = 0;
 
 	private final static int onTargetThreshold = 100;
 
 	private final SRXGains lowGearUpGains = new SRXGains(ELEVATOR_LOW_UP, 0.560, 0.0, 5.600, 0.620, 100);
 	private final SRXGains lowGearDownGains = new SRXGains(ELEVATOR_LOW_DOWN, 0.560, 0.0, 5.600, 0.427, 0);
 
-	private final SRXGains highGearUpGains = new SRXGains(ELEVATOR_HIGH_UP, 0.0, 0.0, 0.0, 0.427, 0);
-	private final SRXGains highGearDownGains = new SRXGains(ELEVATOR_HIGH_DOWN, 0.0, 0.0, 0.0, 0.427, 0);
+	private final SRXGains highGearUpGains = new SRXGains(ELEVATOR_HIGH_UP, 2.8, 0.0, 28.0, 0.172, 0);
+	private final SRXGains highGearDownGains = new SRXGains(ELEVATOR_HIGH_DOWN, 1.46, 0.0, 14.6, 0.172, 0);
 	
 	private MotionParameters lowGearUpMotionParameters = new MotionParameters(2600, 1321, lowGearUpGains);
 	private MotionParameters lowGearDownMotionParameters = new MotionParameters(2600, 1321, lowGearDownGains);
-	private MotionParameters highGearUpMotionParameters = new MotionParameters(0, 0, highGearUpGains);
-	private MotionParameters highGearDownMotionParameters = new MotionParameters(0, 0, highGearDownGains);
+	private MotionParameters highGearUpMotionParameters = new MotionParameters(9400, 4700, highGearUpGains);//4700
+	private MotionParameters highGearDownMotionParameters = new MotionParameters(6000, 3000, highGearDownGains);
 
 	public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(11, new BobVictorSPX(8), new BobVictorSPX(9),
 			new BobVictorSPX(10));
@@ -78,8 +80,8 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 
 	public void initDefaultCommand() {
 		// setDefaultCommand(new ElevatorStop());
-		// setDefaultCommand(new ElevatorMotionMagicControl());
-		setDefaultCommand(new JoystickElevator());
+		setDefaultCommand(new ElevatorMotionMagicControl());
+		//setDefaultCommand(new JoystickElevator());
 	}
 
 	public void setElevator(ControlMode controlMode, double signal) {
@@ -97,12 +99,16 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	public int getCurrentPosition() {
 		return this.elevatorLead.getSelectedSensorPosition();
 	}
+	
+	public double getCurrentDraw() {
+		return this.elevatorLead.getOutputCurrent();
+	}
 
-	public boolean getHighGear() {
+	public boolean getIsHighGear() {
 		return this.isHighGear;
 	}
 
-	public void setHighGear(boolean isHighGear) {
+	public void setIsHighGear(boolean isHighGear) {
 		this.isHighGear = isHighGear;
 	}
 
@@ -159,12 +165,22 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
-		SmartDashboard.putNumber("Elevator Closed Loop Error", this.elevatorLead.getClosedLoopError(0));
+		SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
+		SmartDashboard.putNumber("Elevator Current", this.getCurrentDraw());
+		//SmartDashboard.putNumber("Elevator Closed Loop Error", this.elevatorLead.getClosedLoopError(0));
+		SmartDashboard.putBoolean("Elevator High Gear", isHighGear);
+		SmartDashboard.putNumber("Elevator Max Speed", maxSpeedAchieved);
 	}
 
 	@Override
 	public double getCurrentVelocity() {
-		return this.elevatorLead.getSelectedSensorVelocity();
+		double currentVelocity = this.elevatorLead.getSelectedSensorVelocity();
+		
+		if (currentVelocity > maxSpeedAchieved) {
+			maxSpeedAchieved = currentVelocity;
+		}
+		
+		return currentVelocity; 
 	}
 
 	@Override
