@@ -1,32 +1,17 @@
 package org.usfirst.frc.team319.models;
 
-import org.json.simple.JSONObject;
-
 //Combines left and right motion profiles in one object
 public class SrxTrajectory {
+	public boolean flipped;
 	public SrxMotionProfile leftProfile;
+	public SrxMotionProfile centerProfile;
 	public SrxMotionProfile rightProfile;
+	
+	public SrxTrajectory() { }
 
-	public SrxTrajectory() {
-		this.leftProfile = new SrxMotionProfile();
-		this.rightProfile = new SrxMotionProfile();
-	}
-
-	public SrxTrajectory(SrxMotionProfile left, SrxMotionProfile right) {
+	public SrxTrajectory(SrxMotionProfile left, SrxMotionProfile center, SrxMotionProfile right) {
 		this.leftProfile = left;
+		this.centerProfile = center;
 		this.rightProfile = right;
 	}
-
-	public SrxTrajectory(JSONObject json) {
-		leftProfile = new SrxMotionProfile((JSONObject) json.get("left"));
-		rightProfile = new SrxMotionProfile((JSONObject) json.get("right"));
-	}
-
-	public JSONObject toJson() {
-		JSONObject trajectory = new JSONObject();
-		trajectory.put("left", leftProfile.toJson());
-		trajectory.put("right", rightProfile.toJson());
-		return trajectory;
-	}
-
 }

@@ -35,6 +35,8 @@ public class Drivetrain extends Subsystem {
 	
 	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(6, new BobTalonSRX(7)); // 8
 	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(1, new BobTalonSRX(2)); // 1
+	
+	private PigeonIMU pigeon = new PigeonIMU(0);
 
 	public PigeonIMU pigeon = new PigeonIMU(7);
 	
@@ -136,6 +138,12 @@ public class Drivetrain extends Subsystem {
 	
 	public void setIsHighGear(boolean isHighGear) {
 		this.isHighGear = isHighGear;
+	}
+	
+	public double getAngle() {
+		double[] ypr = new double[3];
+		pigeon.getYawPitchRoll(ypr);
+		return ypr[0];
 	}
 
 	@Override
