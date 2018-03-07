@@ -7,7 +7,6 @@ import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.SrxMotionProfile;
 import org.usfirst.frc.team319.models.SrxTrajectory;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.utils.SrxTrajectoryImporter;
 
 import com.ctre.phoenix.motion.MotionProfileStatus;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
@@ -30,7 +29,6 @@ public class FollowTrajectory extends Command {
 	private boolean isFinished = false;
 
 	private SrxTrajectory trajectoryToFollow = null;
-	private SrxTrajectoryImporter importer = new SrxTrajectoryImporter("/home/lvuser/Autos");
 
 	private MotionProfileStatus rightStatus = new MotionProfileStatus();
 	private MotionProfileStatus leftStatus = new MotionProfileStatus();
@@ -124,18 +122,7 @@ public class FollowTrajectory extends Command {
 
 		leftTalon.set(ControlMode.MotionProfile, setValue.value);
 		rightTalon.set(ControlMode.MotionProfile, setValue.value);
-
-		if (trajectoryToFollow == null) {
-
-			try {
-				this.trajectoryToFollow = importer.importSrxTrajectory(trajectoryName);
-			} catch (IOException | ParseException e) {
-				System.out.println("Failed to import trajectory.");
-				e.printStackTrace();
-				isFinished = true;
-				return;
-			}
-		}
+		
 		bufferNotifier = new Notifier(new BufferLoader());
 		bufferNotifier.startPeriodic(.005);
 	}
