@@ -159,8 +159,6 @@ public class FollowArc extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		loadLeftBuffer.stop();
-		resetTalon(rightTalon, ControlMode.MotionProfile, SetValueMotionProfile.Hold.value);
-		resetTalon(leftTalon, ControlMode.MotionProfile, SetValueMotionProfile.Hold.value);
 	}
 
 	// Called when another command which requires one or more of the same
