@@ -73,13 +73,12 @@ public class FollowArc extends Command {
 				point.velocity = prof.points[lastPointSent][1];
 				point.timeDur = TrajectoryDuration.Trajectory_Duration_10ms;
 				point.auxiliaryPos = (flipped ? -1 : 1) * (prof.points[lastPointSent][3] + startHeading);
-				point.profileSlotSelect0 = 0; 
-				point.profileSlotSelect1 = 1;
+				point.profileSlotSelect0 = distancePidSlot; 
+				point.profileSlotSelect1 = rotationPidSlot;
 				point.zeroPos = false;
 				point.isLastPoint = false;
 				if ((lastPointSent + 1) == prof.numPoints) {
 					point.isLastPoint = true; /** set this to true on the last point */
-					System.out.println("Loaded last trajectory point");
 				}
 
 				talon.pushMotionProfileTrajectory(point);
@@ -160,8 +159,8 @@ public class FollowArc extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		loadLeftBuffer.stop();
-		resetTalon(rightTalon, ControlMode.PercentOutput, 0);
-		resetTalon(leftTalon, ControlMode.PercentOutput, 0);
+		resetTalon(rightTalon, ControlMode.MotionProfile, SetValueMotionProfile.Hold.value);
+		resetTalon(leftTalon, ControlMode.MotionProfile, SetValueMotionProfile.Hold.value);
 	}
 
 	// Called when another command which requires one or more of the same
