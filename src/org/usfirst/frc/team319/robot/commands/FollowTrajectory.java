@@ -2,7 +2,6 @@ package org.usfirst.frc.team319.robot.commands;
 
 import java.io.IOException;
 
-import org.json.simple.parser.ParseException;
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.SrxMotionProfile;
 import org.usfirst.frc.team319.models.SrxTrajectory;

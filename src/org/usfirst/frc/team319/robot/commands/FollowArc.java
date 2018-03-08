@@ -3,6 +3,7 @@ import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.SrxMotionProfile;
 import org.usfirst.frc.team319.models.SrxTrajectory;
 import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
 
 import com.ctre.phoenix.motion.MotionProfileStatus;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
@@ -20,6 +21,9 @@ public class FollowArc extends Command {
 
 	private BobTalonSRX rightTalon = Robot.drivetrain.rightLead;
 	private BobTalonSRX leftTalon = Robot.drivetrain.leftLead;
+	
+	private int distancePidSlot = Drivetrain.HIGH_GEAR_PROFILE;
+	private int rotationPidSlot = Drivetrain.ROTATION_PROFILE;
 
 	private int kMinPointsInTalon = 5;
 	
