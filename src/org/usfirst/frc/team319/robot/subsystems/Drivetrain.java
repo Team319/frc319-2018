@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,20 +27,25 @@ public class Drivetrain extends Subsystem {
 	public static final int LOW_GEAR_PROFILE = 0;
 	public static final int HIGH_GEAR_PROFILE = 1;
 
-	private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 2.400, 0.0, 48.00, 0.400, 0);
-	private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.40, 0.0, 10.00, 0.189, 0);
+	//private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 2.400, 0.0, 48.00, 0.400, 0); practice Bob values
+	//private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.40, 0.0, 10.00, 0.189, 0); practice Bob values
 
+	private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 0.600, 0.0, 12.00, 0.0763, 0); //
+	private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.10, 0.0, 2.50, 0.0341, 0); // d was 2.5
+	
 	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(6, new BobTalonSRX(7)); // 8
 	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(1, new BobTalonSRX(2)); // 1
 
+	public PigeonIMU pigeon = new PigeonIMU(7);
+	
 	public Drivetrain() {
 
 		this.leftLead.setInverted(true);// false
-		this.leftLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
-		this.leftLead.setSensorPhase(true);
+		this.leftLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0);
+		this.leftLead.setSensorPhase(false);
 
 		this.rightLead.setInverted(false);// true
-		this.rightLead.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0);
+		this.rightLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0);
 		this.rightLead.setSensorPhase(false);
 		
 		this.leftLead.enableCurrentLimit(false);

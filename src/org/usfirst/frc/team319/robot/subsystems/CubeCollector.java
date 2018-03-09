@@ -20,7 +20,8 @@ public class CubeCollector extends Subsystem {
 	public final BobTalonSRX collectorRightMotor = new BobTalonSRX(4);
 	AnalogInput collectorDistanceSensor = new AnalogInput(0);
 
-	private static final double cubeCollectedDistanceThreshhold = 1.5;
+	private static final double cubeCollectedOpenThreshhold = 1.5;
+	private double cubeCollectedClosedThreshold = 2.2;
 	private static final double cubeLostDistanceThreshhold = 1.5;
 
 	public CubeCollector() {
@@ -73,7 +74,11 @@ public class CubeCollector extends Subsystem {
 	}
 
 	public boolean isCubeCollected() {
-		return this.getCollectorDistanceSensorValue() > cubeCollectedDistanceThreshhold;
+		if (isOpen) {
+			return this.getCollectorDistanceSensorValue() > cubeCollectedOpenThreshhold;
+		}else {
+			return this.getCollectorDistanceSensorValue() > cubeCollectedClosedThreshold;
+		}
 	}
 
 	public boolean isCubeLost() {

@@ -172,7 +172,7 @@ public class FollowTrajectory extends Command {
 		}
 		boolean leftComplete = leftStatus.activePointValid && leftStatus.isLast;
 		boolean rightComplete = rightStatus.activePointValid && rightStatus.isLast;
-		System.out.println("Complete: " + leftComplete + "," + rightComplete);
+		//System.out.println("Complete: " + leftComplete + "," + rightComplete);
 		boolean trajectoryComplete = leftComplete && rightComplete;
 		if (trajectoryComplete) {
 			System.out.println("Finished Trajectory");

@@ -179,4 +179,8 @@ public class BobTalonSRX extends TalonSRX {
 	public int getClosedLoopError() {
 		return super.getClosedLoopError(DEFAULT_PID_INDEX);
 	}
+	
+	public ErrorCode configClosedloopRamp(double secondsFromNeutralToFull) {
+		return super.configClosedloopRamp(secondsFromNeutralToFull, DEFAULT_TIMEOUT_MS);
+	}
 }

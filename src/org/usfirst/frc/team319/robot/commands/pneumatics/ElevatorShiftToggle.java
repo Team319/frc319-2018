@@ -16,9 +16,9 @@ public class ElevatorShiftToggle extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		if (Robot.elevator.getIsHighGear() == false) {
+		if (Robot.elevator.isHighGear() == false) {
 			Robot.pneumatics.elevatorShiftUp();
-		} else if (Robot.elevator.getIsHighGear() == true) {
+		} else if (Robot.elevator.isHighGear() == true) {
 			Robot.pneumatics.elevatorShiftDown();
 		}
 	}

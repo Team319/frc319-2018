@@ -20,6 +20,6 @@ public class BobTriggers {
 	}
 
 	public double getTwist() {
-		return getLeft() * -getRight();
+		return -getLeft() + getRight();
 	}
 }

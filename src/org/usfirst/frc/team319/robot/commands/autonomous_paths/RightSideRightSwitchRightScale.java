@@ -10,7 +10,7 @@ import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToHomePosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToSwitchPosition;
 import org.usfirst.frc.team319.robot.commands.pneumatics.OpenCollector;
-import org.usfirst.frc.team319.robot.commands.wrist.WristGoToCollectCube;
+import org.usfirst.frc.team319.robot.commands.wrist.WristGoToParallel;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToSwitch;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -26,9 +26,9 @@ public class RightSideRightSwitchRightScale extends CommandGroup {
 		addSequential(new FollowTrajectory(new RightWallToRightScale()));
 		addSequential(new CubeCollectorSpit(-0.75), 0.5);
 		addSequential(new WristGoToSwitch());
-		addParallel(new WristGoToCollectCube());
+		addParallel(new WristGoToParallel());
 		addSequential(new ElevatorGoToHomePosition());
-		addParallel(new WristGoToCollectCube());
+		addParallel(new WristGoToParallel());
 		addParallel(new OpenCollector());
 		addSequential(new FollowTrajectory(new ScaleToSwitchCubeRightSide()));
 		addSequential(new AutoCollectCubeOpened());

@@ -8,6 +8,7 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.models.GameState;
+import org.usfirst.frc.team319.paths.CenterToLeftSwitch;
 import org.usfirst.frc.team319.paths.CrossTheLine;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.CenterAuto;
@@ -76,7 +77,7 @@ public class Robot extends TimedRobot {
 		// autoChooser.addObject("Test", new FollowTrajectory("OneFoot"));
 
 		SmartDashboard.putData("Autonomous Chooser", autoChooser);
-		SmartDashboard.putData("CrossTheLine", new FollowTrajectory(new CrossTheLine()));
+		//SmartDashboard.putData("CrossTheLine", new FollowTrajectory(new CrossTheLine()));
 		// drivetrain = new Drivetrain();
 		// m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -126,6 +127,7 @@ public class Robot extends TimedRobot {
 		 */
 		// SmartDashboard.putData("Auto mode", m_chooser);
 		String selectedAuto = (String) autoChooser.getSelected();
+		System.out.println(selectedAuto);
 		switch (selectedAuto) {
 		case "CenterAuto":
 			autonomousCommand = new CenterAuto(gameState);
@@ -140,7 +142,8 @@ public class Robot extends TimedRobot {
 			autonomousCommand = new DefaultAuto();
 			break;
 		case "CrossTheLine":
-			autonomousCommand = new FollowTrajectory(new CrossTheLine());
+			//autonomousCommand = new FollowTrajectory(new CrossTheLine());
+			autonomousCommand = new FollowTrajectory(new CenterToLeftSwitch());
 			break;
 		default:
 			autonomousCommand = new FollowTrajectory("CrossTheLine");

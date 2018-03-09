@@ -20,14 +20,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 
-	private int maxUpTravelPosition = -1750;
-	private int dunkPosition = -1713;
-	private int homePosition = 0;
-	private int switchPosition = 1000;
-	private int exchangePosition = 3289;
-	private int scalePosition = 3289;
-	private int collectPosition = 3700;
-	private int maxDownTravelPosition = 4000;
+	private int maxUpTravelPosition = -1431;
+	private int dunkPosition = -1394;
+	private int homePosition = 319;
+	private int switchPosition = 1319;
+	private int exchangePosition = 4200;
+	private int scalePosition = 3608;
+	private int autoSwitchPosition = 3344;
+	private int parallelPosition = 4144;
+	private int collectPosition = 4500;
+	private int maxDownTravelPosition = 5100;
 
 	public final static int WRIST_PROFILE_UP = 0;
 	public final static int WRIST_PROFILE_DOWN = 1;
@@ -35,11 +37,11 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 	private int upPositionLimit = homePosition;
 	private int downPositionLimit = maxDownTravelPosition;
 	
-	private int targetPosition = 0;
+	private int targetPosition = homePosition;
 	private final static int onTargetThreshold = 200;
 
-	private SRXGains upGains = new SRXGains(WRIST_PROFILE_UP, 0.800, 0.010, 8.0, 0.799, 100);
-	private SRXGains downGains = new SRXGains(WRIST_PROFILE_DOWN, 0.400, 0.010, 15.0, 0.799, 100);
+	private SRXGains upGains = new SRXGains(WRIST_PROFILE_UP, 0.800, 0.005, 8.0, 0.799, 100);
+	private SRXGains downGains = new SRXGains(WRIST_PROFILE_DOWN, 0.400, 0.005, 15.0, 0.799, 100);
 	
 	private MotionParameters upMotionParameters = new MotionParameters(2000, 1024, upGains);
 	private MotionParameters downMotionParameters = new MotionParameters(5000, 512, downGains);
@@ -184,6 +186,14 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 	
 	public int getScalePosition() {
 		return this.scalePosition;
+	}
+	
+	public int getAutoSwitchPosition() {
+		return this.autoSwitchPosition;
+	}
+	
+	public int getParallelPosition() {
+		return this.parallelPosition;
 	}
 	
 	public int getCollectPosition() {

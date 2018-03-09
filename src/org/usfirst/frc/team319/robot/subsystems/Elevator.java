@@ -22,13 +22,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Elevator extends Subsystem implements IPositionControlledSubsystem {
 
 	private boolean isHighGear = false;
-
+	private boolean isHoldingPosition = false;
+	private boolean atScale = false;
+	
 	private int homePosition = 0;
+	private int collectPosition = 1000;
 	private int switchPosition = 14000;
+	private int autoSwitchPostion = 20000;
 	private int topOfFirstStagePosition = 24000;
 	private int dunkPosition = 33500;
-	private int maxUpTravelPosition = 48000;	
+	private int climbPosition = 48000;
+	private int maxUpTravelPosition = 52000;	
 
+	private int scaleMiddlePosition = 44500;
+	private int scaleBottomPosition = 35000;
+	private int scaleTopPosition = 51000;
+	
 	public final static int ELEVATOR_HIGH_UP = 0;
 	public final static int ELEVATOR_HIGH_DOWN = 1;
 	public final static int ELEVATOR_LOW_UP = 2;
@@ -47,9 +56,9 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	private final SRXGains highGearUpGains = new SRXGains(ELEVATOR_HIGH_UP, 2.8, 0.0, 28.0, 0.172, 0);
 	private final SRXGains highGearDownGains = new SRXGains(ELEVATOR_HIGH_DOWN, 1.46, 0.0, 14.6, 0.172, 0);
 	
-	private MotionParameters lowGearUpMotionParameters = new MotionParameters(2600, 1321, lowGearUpGains);
-	private MotionParameters lowGearDownMotionParameters = new MotionParameters(2600, 1321, lowGearDownGains);
-	private MotionParameters highGearUpMotionParameters = new MotionParameters(9400, 4700, highGearUpGains);//4700
+	private MotionParameters lowGearUpMotionParameters = new MotionParameters(2600, 2000, lowGearUpGains);
+	private MotionParameters lowGearDownMotionParameters = new MotionParameters(2600, 2000, lowGearDownGains);
+	private MotionParameters highGearUpMotionParameters = new MotionParameters(6000, 3000, highGearUpGains);//4700
 	private MotionParameters highGearDownMotionParameters = new MotionParameters(6000, 3000, highGearDownGains);
 
 	public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(11, new BobVictorSPX(8), new BobVictorSPX(9),
@@ -76,12 +85,13 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		this.elevatorLead.configMotionParameters(lowGearUpMotionParameters);
 
 		this.elevatorLead.setNeutralMode(NeutralMode.Brake);
+		this.elevatorLead.configClosedloopRamp(0.25);
 	}
 
 	public void initDefaultCommand() {
 		// setDefaultCommand(new ElevatorStop());
-		setDefaultCommand(new ElevatorMotionMagicControl());
-		//setDefaultCommand(new JoystickElevator());
+		//setDefaultCommand(new ElevatorMotionMagicControl());
+		setDefaultCommand(new JoystickElevator());
 	}
 
 	public void setElevator(ControlMode controlMode, double signal) {
@@ -104,12 +114,20 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		return this.elevatorLead.getOutputCurrent();
 	}
 
-	public boolean getIsHighGear() {
+	public boolean isHighGear() {
 		return this.isHighGear;
 	}
 
-	public void setIsHighGear(boolean isHighGear) {
+	public void setHighGear(boolean isHighGear) {
 		this.isHighGear = isHighGear;
+	}
+	
+	public boolean isHoldingPosition() {
+		return this.isHoldingPosition;
+	}
+
+	public void setIsHoldingPosition(boolean isHoldingPosition) {
+		this.isHoldingPosition = isHoldingPosition;
 	}
 
 	public int getTargetPosition() {
@@ -129,8 +147,16 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		return this.homePosition;
 	}
 	
+	public int getCollectPosition() {
+		return this.collectPosition;
+	}
+	
 	public int getSwitchPosition() {
 		return this.switchPosition;
+	}
+	
+	public int getAutoSwitchPosition() {
+		return this.autoSwitchPostion;
 	}
 	
 	public int getTopOfFirstStagePosition() {
@@ -141,8 +167,33 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		return this.dunkPosition;
 	}
 	
+	public int getClimbPosition() {
+		return this.climbPosition;
+	}
+	
 	public int getMaxUpTravelPosition() {
 		return this.maxUpTravelPosition;
+	}
+	
+	public int getScaleMiddlePosition() {
+		return this.scaleMiddlePosition;
+	}
+	
+	public int getScaleBottomPosition() {
+		return this.scaleBottomPosition;
+	}
+	
+	public int getScaleTopPosition() {
+		return this.scaleTopPosition;
+	}
+	
+	public boolean isAtScale() {
+		return this.atScale;
+	}
+	
+	public void goToScale() {
+		this.targetPosition = scaleMiddlePosition;
+		this.atScale = true;
 	}
 
 	public void manageMotion(double targetPosition) {

@@ -45,12 +45,12 @@ public class Pneumatics extends Subsystem {
 
 	public void elevatorShiftUp() {
 		this.elevatorShifter.set(DoubleSolenoid.Value.kForward);
-		Robot.elevator.setIsHighGear(true);
+		Robot.elevator.setHighGear(true);
 	}
 
 	public void elevatorShiftDown() {
 		this.elevatorShifter.set(DoubleSolenoid.Value.kReverse);
-		Robot.elevator.setIsHighGear(false);
+		Robot.elevator.setHighGear(false);
 	}
 
 	public void winchBreakShiftUp() {

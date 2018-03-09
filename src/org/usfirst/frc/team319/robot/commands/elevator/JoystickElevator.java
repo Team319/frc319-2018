@@ -5,6 +5,7 @@ import org.usfirst.frc.team319.robot.Robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -13,6 +14,7 @@ public class JoystickElevator extends Command {
 
 	public JoystickElevator() {
 		requires(Robot.elevator);
+
 	}
 
 	// Called just before this Command runs the first time
@@ -22,8 +24,16 @@ public class JoystickElevator extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double signal = -Robot.oi.operatorController.leftStick.getY();
-		Robot.elevator.setElevator(ControlMode.PercentOutput, signal);
+
+		if (!Robot.elevator.isHoldingPosition()) {
+			// joystick control
+			double signal = -Robot.oi.operatorController.leftStick.getY();
+			Robot.elevator.setElevator(ControlMode.PercentOutput, signal);
+		} else {
+			// else hold position
+			Robot.elevator.motionMagicControl();
+		}
+
 		// System.out.println("Elevator Velocity" +
 		// Robot.elevator.elevatorLead.getSelectedSensorVelocity(0));
 	}

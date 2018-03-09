@@ -13,7 +13,7 @@ public class RightSideLeftSwitchLeftScale extends CommandGroup {
 
 	public RightSideLeftSwitchLeftScale() {
 
-		addParallel(new GoToSwitchPose());
+		//addParallel(new GoToSwitchPose());
 		addSequential(new FollowTrajectory(new RightWallToLeftSide()));
 
 	}
