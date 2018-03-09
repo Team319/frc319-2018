@@ -277,6 +277,6 @@ public class BobTalonSRX extends TalonSRX {
 	}
 	
 	public ErrorCode configClosedloopRamp(double secondsFromNeutralToFull) {
-		return super.configClosedloopRamp(secondsFromNeutralToFull, DEFAULT_TIMEOUT_MS);
+		return super.configClosedloopRamp(secondsFromNeutralToFull, defaultTimeoutMs);
 	}
 }

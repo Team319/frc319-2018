@@ -1,14 +1,11 @@
 package org.usfirst.frc.team319.robot.commands.autonomous_paths;
-
-import org.usfirst.frc.team319.paths.CenterToLeftSwitchPt4;
-import org.usfirst.frc.team319.paths.CenterToLeftSwitchPt5;
-import org.usfirst.frc.team319.paths.CenterToRightSwitch;
-import org.usfirst.frc.team319.paths.CenterToRightSwitchPt2;
-import org.usfirst.frc.team319.paths.CenterToRightSwitchPt3;
-import org.usfirst.frc.team319.paths.CenterToRightSwitchPt4;
-import org.usfirst.frc.team319.paths.CenterToRightSwitchPt5;
+import org.usfirst.frc.team319.paths.CenterToRightSwitchPt2Path;
+import org.usfirst.frc.team319.paths.CenterToRightSwitchPt3Path;
+import org.usfirst.frc.team319.paths.CenterToRightSwitchPt4Path;
+import org.usfirst.frc.team319.paths.CenterToRightSwitchPt5Path;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
+import org.usfirst.frc.team319.paths.CenterToRightSwitchPath;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.PrintCommand;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPoseNoWait;
@@ -29,19 +26,18 @@ public class DoubleSwitchRight extends CommandGroup {
 
 		addSequential(new PrintCommand("Right"));
 		addParallel(new GoToSwitchPoseNoWait());
-		addSequential(new FollowTrajectory(new CenterToRightSwitch()));
+		addSequential(new FollowTrajectory(new CenterToRightSwitchPath()));
 		addSequential(new CubeCollectorSpit(-0.5), 1.0);
 		addParallel(new ElevatorGoToCollectPosition());
-		addSequential(new FollowTrajectory(new CenterToRightSwitchPt2()));
+		addSequential(new FollowTrajectory(new CenterToRightSwitchPt2Path()));
 		addParallel(new AutoCollectCubeOpened());
-		addSequential(new FollowTrajectory(new CenterToRightSwitchPt3()));
+		addSequential(new FollowTrajectory(new CenterToRightSwitchPt3Path()));
 		addParallel(new CloseCollector());
 		addParallel(new HoldCube());
-		addSequential(new FollowTrajectory(new CenterToRightSwitchPt4()));
+		addSequential(new FollowTrajectory(new CenterToRightSwitchPt4Path()));
 		addParallel(new GoToSwitchPoseNoWait());
-		addSequential(new FollowTrajectory(new CenterToRightSwitchPt5()));
+		addSequential(new FollowTrajectory(new CenterToRightSwitchPt5Path()));
 		//addSequential(new CubeCollectorSpit(-0.5), 1.0);
-		
 		/*
 		 * addSequential(new FollowTrajectory("CenterToRightSwitchPt4"));
 		 * addSequential(new FollowTrajectory("CenterToRightSwitchPt5"));

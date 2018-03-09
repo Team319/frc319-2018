@@ -44,8 +44,7 @@ public class Drivetrain extends Subsystem {
 	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(6, new BobTalonSRX(7)); // 8
 	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(1, new BobTalonSRX(2)); // 1
 
-	public PigeonIMU pigeon = new PigeonIMU(7);
-	
+	private PigeonIMU pigeon = new PigeonIMU(7);
 	public Drivetrain() {
 
 		this.leftLead.enableCurrentLimit(false);
@@ -179,7 +178,7 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("Right Drive Position", getRightDriveLeadDistance());
 		SmartDashboard.putNumber("Left Drive Velocity", getLeftDriveLeadVelocity());
 		SmartDashboard.putNumber("Right Drive Velocity", getRightDriveLeadVelocity());
-		SmartDashboard.putNumber("Drivetrain Angle", rightLead.getSelectedSensorPosition(1));
+		SmartDashboard.putNumber("Drivetrain Angle", getAngle());
 		// SmartDashboard.putNumber("Left Drive Closed Loop Error",
 		// getLeftClosedLoopError());
 		// SmartDashboard.putNumber("Right Drive Closed Loop Error",

@@ -7,15 +7,15 @@
 
 package org.usfirst.frc.team319.robot;
 
+import org.usfirst.frc.team319.arcs.CrossTheLineArc;
 import org.usfirst.frc.team319.controllers.BobXboxController;
-import org.usfirst.frc.team319.paths.CenterToLeftSwitch;
-import org.usfirst.frc.team319.paths.ThreeFeet;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.GoToClimbPose;
 import org.usfirst.frc.team319.robot.commands.GoToScalePose;
 import org.usfirst.frc.team319.robot.commands.TeleopGoToDunkPose;
+import org.usfirst.frc.team319.robot.commands.FollowArc;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainBrakeMode;
@@ -79,8 +79,7 @@ public class OI {
 		// ---------------test buttons-------------------//
 
 		// this.driverController.xButton.whenPressed(new RightSideScaleAuto());
-		// this.driverController.xButton.whenPressed(new RightSideLeftSwitchRightScale());
-		//this.driverController.xButton.whenPressed(new FollowTrajectory(new CenterToLeftSwitch()));
+		this.driverController.xButton.whenPressed(new FollowArc(new CrossTheLineArc()));
 		// this.driverController.aButton.whenPressed(new CubeCollectorLeftSideSpit());
 		
 		// this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());
