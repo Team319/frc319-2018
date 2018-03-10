@@ -3,6 +3,7 @@ package org.usfirst.frc.team319.robot.commands.elevator;
 import org.usfirst.frc.team319.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class JoystickElevator extends Command {
+	
+	private int positionIncrement = 200;
 
 	public JoystickElevator() {
 		requires(Robot.elevator);
@@ -27,7 +30,9 @@ public class JoystickElevator extends Command {
 		if (!Robot.elevator.isHoldingPosition()) {
 			// joystick control
 			double signal = -Robot.oi.operatorController.leftStick.getY();
-			Robot.elevator.setElevator(ControlMode.PercentOutput, signal);
+			Robot.elevator.incrementTargetPosition((int)(signal * positionIncrement));
+			Robot.elevator.motionMagicControl();
+			//Robot.elevator.setElevator(ControlMode.PercentOutput, signal, DemandType.ArbitraryFeedForward, Robot.elevator.getArbitraryFeedForward() );
 		} else {
 			// else hold position
 			Robot.elevator.motionMagicControl();

@@ -72,7 +72,7 @@ public class FollowArc extends Command {
 				point.position = prof.points[lastPointSent][0] + startPosition;
 				point.velocity = prof.points[lastPointSent][1];
 				point.timeDur = TrajectoryDuration.Trajectory_Duration_10ms;
-				point.auxiliaryPos = (flipped ? -1 : 1) * (prof.points[lastPointSent][3] + startHeading);
+				point.auxiliaryPos = (flipped ? -1 : 1) * 10 * (prof.points[lastPointSent][3] + startHeading);
 				point.profileSlotSelect0 = distancePidSlot;
 				point.profileSlotSelect1 = rotationPidSlot;
 				point.zeroPos = false;

@@ -1,11 +1,12 @@
 package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
-import org.usfirst.frc.team319.paths.CenterToRightSwitchPath;
-import org.usfirst.frc.team319.paths.CenterToRightSwitchPt2Path;
-import org.usfirst.frc.team319.paths.CenterToRightSwitchPt3Path;
-import org.usfirst.frc.team319.paths.CenterToRightSwitchPt4Path;
-import org.usfirst.frc.team319.paths.CenterToRightSwitchPt5Path;
+import org.usfirst.frc.team319.arcs.CenterToRightSwitchArc;
+import org.usfirst.frc.team319.arcs.CenterToRightSwitchPt2Arc;
+import org.usfirst.frc.team319.arcs.CenterToRightSwitchPt3Arc;
+import org.usfirst.frc.team319.arcs.CenterToRightSwitchPt4Arc;
+import org.usfirst.frc.team319.arcs.CenterToRightSwitchPt5Arc;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
+import org.usfirst.frc.team319.robot.commands.FollowArc;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.PrintCommand;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPoseNoWait;
@@ -25,17 +26,17 @@ public class DoubleSwitchRight extends CommandGroup {
 
 		addSequential(new PrintCommand("Right"));
 		addParallel(new GoToSwitchPoseNoWait());
-		addSequential(new FollowTrajectory(new CenterToRightSwitchPath()));
+		addSequential(new FollowArc(new CenterToRightSwitchArc()));
 		addSequential(new CubeCollectorSpit(-0.5), 1.0);
 		addParallel(new ElevatorGoToCollectPosition());
-		addSequential(new FollowTrajectory(new CenterToRightSwitchPt2Path()));
+		addSequential(new FollowArc(new CenterToRightSwitchPt2Arc()));
 		addParallel(new AutoCollectCubeOpened());
-		addSequential(new FollowTrajectory(new CenterToRightSwitchPt3Path()));
+		addSequential(new FollowArc(new CenterToRightSwitchPt3Arc()));
 		addParallel(new CloseCollector());
 		addParallel(new HoldCube());
-		addSequential(new FollowTrajectory(new CenterToRightSwitchPt4Path()));
+		addSequential(new FollowArc(new CenterToRightSwitchPt4Arc()));
 		addParallel(new GoToSwitchPoseNoWait());
-		addSequential(new FollowTrajectory(new CenterToRightSwitchPt5Path()));
+		addSequential(new FollowArc(new CenterToRightSwitchPt5Arc()));
 		// addSequential(new CubeCollectorSpit(-0.5), 1.0);
 		/*
 		 * addSequential(new FollowTrajectory("CenterToRightSwitchPt4"));

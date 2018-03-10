@@ -26,14 +26,14 @@ public class Drivetrain extends Subsystem {
 
 	private boolean isHighGear = false;
 
-	public static int LOW_GEAR_PROFILE = 0;
-	public static int HIGH_GEAR_PROFILE = 1;
-	public static int ROTATION_PROFILE = 2;
+	public static int LOW_GEAR_PROFILE = 2;
+	public static int HIGH_GEAR_PROFILE = 0;
+	public static int ROTATION_PROFILE = 1;
 
 	// greyhill gains
 	private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 2.400, 0.0, 48.00, 0.400, 0);
 	private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.40, 0.0, 10.00, 0.189, 0);
-	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 1000.00, 0, 0, 0, 0);
+	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 4.00, 0, 40, 0, 0);
 
 	// Mag Encoder Gains
 	// private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 0.600, 0.0,
@@ -89,7 +89,7 @@ public class Drivetrain extends Subsystem {
 		// configure angle sensor
 		/* Remote 1 will be a pigeon */
 		rightLead.configRemoteSensor1(leftFollower.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
-		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (360.0 / 8192.0)); // Coefficient for
+		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (3600.0 / 8192.0)); // Coefficient for
 																									// Pigeon to
 		
 		rightLead.selectProfileSlot(HIGH_GEAR_PROFILE, rightLead.getPrimaryPidIndex());
@@ -186,16 +186,21 @@ public class Drivetrain extends Subsystem {
 	public double getDistance() {
 		return rightLead.getPrimarySensorPosition();
 	}
+	
+	public double getVelocity() {
+		return rightLead.getPrimarySensorVelocity();
+	}
 
 	@Override
 	public void periodic() {
 		SmartDashboard.putBoolean("Drivetrain High Gear", isHighGear);
-		SmartDashboard.putNumber("Left Drive Position", getLeftDriveLeadDistance());
-		SmartDashboard.putNumber("Right Drive Position", getRightDriveLeadDistance());
-		SmartDashboard.putNumber("Left Drive Velocity", getLeftDriveLeadVelocity());
-		SmartDashboard.putNumber("Right Drive Velocity", getRightDriveLeadVelocity());
+		//SmartDashboard.putNumber("Left Drive Position", getLeftDriveLeadDistance());
+		//SmartDashboard.putNumber("Right Drive Position", getRightDriveLeadDistance());
+		//SmartDashboard.putNumber("Left Drive Velocity", getLeftDriveLeadVelocity());
+		//SmartDashboard.putNumber("Right Drive Velocity", getRightDriveLeadVelocity());
 		SmartDashboard.putNumber("Drivetrain Angle (SRX)", rightLead.getSecondarySensorPosition());
 		SmartDashboard.putNumber("Drivetrain Angle", getAngle());
 		SmartDashboard.putNumber("Drivetrain Angle Error", rightLead.getClosedLoopError(1));
+		SmartDashboard.putNumber("Drivetrain Velocity", getVelocity());
 	}
 }

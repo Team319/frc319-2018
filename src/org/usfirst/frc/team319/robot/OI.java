@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team319.robot;
 
+import org.usfirst.frc.team319.arcs.CenterToLeftSwitchArc;
+import org.usfirst.frc.team319.arcs.CenterToRightSwitchArc;
 import org.usfirst.frc.team319.arcs.CrossTheLineArc;
 import org.usfirst.frc.team319.arcs.FiveFeetAndTurnArc;
 import org.usfirst.frc.team319.controllers.BobXboxController;
@@ -19,6 +21,9 @@ import org.usfirst.frc.team319.robot.commands.TeleopGoToDunkPose;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainBrakeMode;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToCollectPosition;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToDunkPosition;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToScalePosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToSwitchPosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorHoldPositionToggle;
 import org.usfirst.frc.team319.robot.commands.elevator.GoToCollectPose;
@@ -55,8 +60,8 @@ public class OI {
 		// this.driverController.xButton.whenPressed(new FollowTrajectory(new
 		// FiveFeetAndTurn()));
 
-		operatorController = new BobXboxController(1, 0.08, 0.08);
-
+		operatorController = new BobXboxController(1, 0.1, 0.1);
+/*             Old
 		operatorController.leftBumper.whenPressed(new WristGoHome());
 		operatorController.rightBumper.whenPressed(new WristGoToParallel());
 		operatorController.aButton.whenPressed(new WristGoToExchange());
@@ -65,19 +70,34 @@ public class OI {
 		operatorController.yButton.whenPressed(new TeleopGoToDunkPose());
 		operatorController.startButton.whenPressed(new ElevatorShiftToggle());
 		operatorController.rightStickButton.whenPressed(new ElevatorHoldPositionToggle());
-
+*/
+		//new
+		
+		operatorController.leftTriggerButton.whenPressed(new ElevatorGoToScalePosition());
+		operatorController.rightTriggerButton.whenPressed(new ElevatorGoToCollectPosition());
+		operatorController.leftBumper.whenPressed(new WristGoHome());
+		operatorController.rightBumper.whenPressed(new WristGoToParallel());
+		operatorController.aButton.whenPressed(new ElevatorGoToDunkPosition());
+		//operatorController.bButton.whenPressed(new ElevatorGoToScalePosition());
+		operatorController.xButton.whenPressed(new ElevatorGoToSwitchPosition());
+		//operatorController.yButton.whenPressed(new ElevatorGoToScalePosition());
+		
+		
+		
 		operatorController.Dpad.Up.whenPressed(new GoToClimbPose());
-		operatorController.Dpad.Left.whenPressed(new ElevatorGoToSwitchPosition());
-		operatorController.Dpad.Down.whenPressed(new GoToCollectPose());
+		//operatorController.Dpad.Left.whenPressed(new ElevatorGoToSwitchPosition());
+		//operatorController.Dpad.Down.whenPressed(new GoToCollectPose());
 
 		// ---------------test buttons-------------------//
 
 		// this.driverController.xButton.whenPressed(new RightSideScaleAuto());
-		this.driverController.xButton.whenPressed(new FollowArc(new FiveFeetAndTurnArc()));
+		this.driverController.xButton.whenPressed(new FollowArc(new CenterToLeftSwitchArc()));
 		// this.driverController.aButton.whenPressed(new CubeCollectorLeftSideSpit());
 
 		// this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());
 		// this.operatorController.bButton.whenPressed(new ElevatorGoToHomePosition());
+		//this.operatorController.Dpad.Up.whenPressed(new ElevatorGoToDunkPosition());
+		//this.operatorController.Dpad.Down.whenPressed(new ElevatorGoToSwitchPosition());
 
 	}
 }
