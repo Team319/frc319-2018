@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ElevatorGoToScalePosition extends Command {
-	
+
 	private int targetPosition = Robot.elevator.getScaleMiddlePosition();
 
 	public ElevatorGoToScalePosition() {

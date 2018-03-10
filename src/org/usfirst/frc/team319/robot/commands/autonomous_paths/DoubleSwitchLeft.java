@@ -1,22 +1,18 @@
 package org.usfirst.frc.team319.robot.commands.autonomous_paths;
+
+import org.usfirst.frc.team319.paths.CenterToLeftSwitchPath;
 import org.usfirst.frc.team319.paths.CenterToLeftSwitchPt2Path;
 import org.usfirst.frc.team319.paths.CenterToLeftSwitchPt3Path;
 import org.usfirst.frc.team319.paths.CenterToLeftSwitchPt4Path;
 import org.usfirst.frc.team319.paths.CenterToLeftSwitchPt5Path;
-import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
-import org.usfirst.frc.team319.paths.CenterToLeftSwitchPath;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.PrintCommand;
-import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPose;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPoseNoWait;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.HoldCube;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToCollectPosition;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToSwitchPosition;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CloseCollector;
-import org.usfirst.frc.team319.robot.commands.wrist.WristGoToParallel;
-import org.usfirst.frc.team319.robot.commands.wrist.WristGoToSwitch;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -40,7 +36,7 @@ public class DoubleSwitchLeft extends CommandGroup {
 		addSequential(new FollowTrajectory(new CenterToLeftSwitchPt4Path()));
 		addParallel(new GoToSwitchPoseNoWait());
 		addSequential(new FollowTrajectory(new CenterToLeftSwitchPt5Path()));
-		//addSequential(new CubeCollectorSpit(-0.5), 1.0);
+		// addSequential(new CubeCollectorSpit(-0.5), 1.0);
 
 		/*
 		 * addSequential(new FollowTrajectory("CenterToLeftSwitchPt4"));

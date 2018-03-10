@@ -12,10 +12,10 @@ public class BobTalonSRX extends TalonSRX {
 
 	private int defaultTimeoutMs = 0;
 	private int defaultPidIndex = 0;
-	
+
 	private int primaryPidIndex = 0;
 	private int secondaryPidIndex = 1;
-	
+
 	private FeedbackDevice primaryFeedbackDevice;
 	private FeedbackDevice secondaryFeedbackDevice;
 
@@ -27,39 +27,39 @@ public class BobTalonSRX extends TalonSRX {
 		this.configPeakOutputReverse(-1);
 		this.configMotionProfileTrajectoryPeriod(0);
 	}
-	
+
 	public int getPrimaryPidIndex() {
 		return primaryPidIndex;
 	}
-	
+
 	public int getSecondaryPidIndex() {
 		return secondaryPidIndex;
 	}
-	
+
 	public int getDefaultTimeoutMs() {
 		return this.defaultTimeoutMs;
 	}
-	
+
 	public int getDefaultPidIndex() {
 		return this.defaultPidIndex;
 	}
-	
+
 	public void setDefaultTimeoutMs(int timeoutMs) {
 		this.defaultTimeoutMs = timeoutMs;
 	}
-	
+
 	public void setDefaultPidIndex(int pidIndex) {
 		this.defaultPidIndex = pidIndex;
 	}
-	
+
 	public FeedbackDevice getPrimaryFeedbackDevice() {
 		return this.primaryFeedbackDevice;
 	}
-	
+
 	public FeedbackDevice getSecondaryFeedbackDevice() {
 		return this.secondaryFeedbackDevice;
 	}
-	
+
 	// ------------- HELPER METHODS -------- //
 
 	public ErrorCode configPIDF(int slotIdx, double P, double I, double D, double F) {
@@ -93,13 +93,13 @@ public class BobTalonSRX extends TalonSRX {
 	public ErrorCode configPIDF(SRXGains gains) {
 		return this.configPIDF(gains.parameterSlot, gains.P, gains.I, gains.D, gains.F, gains.iZone);
 	}
-	
+
 	public void configMotionParameters(MotionParameters parameters) {
 		this.configMotionAcceleration(parameters.getAcceleration());
 		this.configMotionCruiseVelocity(parameters.getCruiseVelocity());
 		this.setGains(parameters.getGains());
 	}
-	
+
 	public void selectMotionParameters(MotionParameters parameters) {
 		this.selectProfileSlot(parameters.getGains().parameterSlot);
 		this.configMotionAcceleration(parameters.getAcceleration());
@@ -109,48 +109,64 @@ public class BobTalonSRX extends TalonSRX {
 	public ErrorCode setGains(SRXGains gains) {
 		return this.configPIDF(gains.parameterSlot, gains.P, gains.I, gains.D, gains.F, gains.iZone);
 	}
-	
+
 	public void configPrimaryFeedbackDevice(FeedbackDevice feedbackDevice) {
 		this.configSelectedFeedbackSensor(feedbackDevice, primaryPidIndex);
 		this.primaryFeedbackDevice = feedbackDevice;
 	}
-	
+
 	public void configPrimaryFeedbackCoefficient(double coefficient) {
 		this.configSelectedFeedbackCoefficient(coefficient, primaryPidIndex);
 	}
-	
+
 	public void configPrimaryFeedbackDevice(FeedbackDevice feedbackDevice, double coefficient) {
 		this.configPrimaryFeedbackDevice(feedbackDevice);
 		this.configPrimaryFeedbackCoefficient(coefficient);
 	}
-	
+
 	public void configSecondaryFeedbackDevice(FeedbackDevice feedbackDevice) {
 		this.configSelectedFeedbackSensor(feedbackDevice, this.secondaryPidIndex);
 		this.secondaryFeedbackDevice = feedbackDevice;
 	}
-	
+
 	public void configSecondaryFeedbackCoefficient(double coefficient) {
 		this.configSelectedFeedbackCoefficient(coefficient, secondaryPidIndex);
 	}
-	
+
 	public void configSecondaryFeedbackDevice(FeedbackDevice feedbackDevice, double coefficient) {
 		this.configSecondaryFeedbackDevice(feedbackDevice);
 		this.configSecondaryFeedbackCoefficient(coefficient);
 	}
-	
+
 	public void configSensorSum(FeedbackDevice feedbackDevice0, FeedbackDevice feedbackDevice1) {
 		this.configSensorTerm(SensorTerm.Sum0, feedbackDevice0);
 		this.configSensorTerm(SensorTerm.Sum1, feedbackDevice1);
 	}
-	
+
 	public void configRemoteSensor0(int remoteDeviceId, RemoteSensorSource remoteSensorSource) {
 		this.configRemoteFeedbackFilter(remoteDeviceId, remoteSensorSource, 0);
 	}
-	
+
 	public void configRemoteSensor1(int remoteDeviceId, RemoteSensorSource remoteSensorSource) {
 		this.configRemoteFeedbackFilter(remoteDeviceId, remoteSensorSource, 1);
 	}
-	// ----------- ADDING DEFAULT VALUES ---------  // 
+	
+	public int getPrimarySensorPosition() {
+		return this.getSelectedSensorPosition(primaryPidIndex);
+	}
+	
+	public int getSecondarySensorPosition() {
+		return this.getSelectedSensorPosition(secondaryPidIndex);
+	}
+	
+	public int getPrimarySensorVelocity() {
+		return this.getSelectedSensorVelocity(primaryPidIndex);
+	}
+	
+	public int getSecondarySensorVelocity() {
+		return this.getSelectedSensorVelocity(secondaryPidIndex);
+	}
+	// ----------- ADDING DEFAULT VALUES --------- //
 
 	public ErrorCode config_IntegralZone(int slotIdx, int izone) {
 		return super.config_IntegralZone(slotIdx, izone, defaultTimeoutMs);
@@ -171,7 +187,7 @@ public class BobTalonSRX extends TalonSRX {
 	public ErrorCode configPeakOutputReverse(double percentOut) {
 		return super.configPeakOutputReverse(percentOut, defaultTimeoutMs);
 	}
-	
+
 	public ErrorCode configSelectedFeedbackSensor(FeedbackDevice feedbackDevice) {
 		return super.configSelectedFeedbackSensor(feedbackDevice, defaultPidIndex, defaultTimeoutMs);
 	}
@@ -203,7 +219,7 @@ public class BobTalonSRX extends TalonSRX {
 	public ErrorCode config_kI(int slotIdx, double value) {
 		return super.config_kI(slotIdx, value, defaultTimeoutMs);
 	}
-	
+
 	public ErrorCode setSelectedSensorPosition(int sensorPos) {
 		return super.setSelectedSensorPosition(sensorPos, defaultPidIndex, defaultTimeoutMs);
 	}
@@ -247,11 +263,11 @@ public class BobTalonSRX extends TalonSRX {
 	public double configGetParameter(ParamEnum param, int ordinal) {
 		return super.configGetParameter(param, ordinal, defaultTimeoutMs);
 	}
-	
+
 	public int getSelectedSensorPosition() {
 		return super.getSelectedSensorPosition(defaultPidIndex);
 	}
-	
+
 	public int getSelectedSensorVelocity() {
 		return super.getSelectedSensorVelocity(defaultPidIndex);
 	}
@@ -259,23 +275,24 @@ public class BobTalonSRX extends TalonSRX {
 	public void selectProfileSlot(int slotIdx) {
 		super.selectProfileSlot(slotIdx, defaultPidIndex);
 	}
-	
+
 	public int getClosedLoopError() {
 		return super.getClosedLoopError(defaultPidIndex);
 	}
-	
-	public ErrorCode configRemoteFeedbackFilter(int deviceID, RemoteSensorSource remoteSensorSource, int remoteOrdinal) {
+
+	public ErrorCode configRemoteFeedbackFilter(int deviceID, RemoteSensorSource remoteSensorSource,
+			int remoteOrdinal) {
 		return super.configRemoteFeedbackFilter(deviceID, remoteSensorSource, remoteOrdinal, defaultPidIndex);
 	}
-	
+
 	public ErrorCode configSensorTerm(SensorTerm sensorTerm, FeedbackDevice feedbackDevice) {
 		return super.configSensorTerm(sensorTerm, feedbackDevice, defaultTimeoutMs);
 	}
-	
+
 	public ErrorCode configSelectedFeedbackCoefficient(double coefficient, int pidIdx) {
 		return super.configSelectedFeedbackCoefficient(coefficient, pidIdx, defaultTimeoutMs);
 	}
-	
+
 	public ErrorCode configClosedloopRamp(double secondsFromNeutralToFull) {
 		return super.configClosedloopRamp(secondsFromNeutralToFull, defaultTimeoutMs);
 	}

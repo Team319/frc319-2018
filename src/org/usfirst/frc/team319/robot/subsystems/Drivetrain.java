@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
-import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
@@ -34,24 +33,30 @@ public class Drivetrain extends Subsystem {
 	// greyhill gains
 	private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 2.400, 0.0, 48.00, 0.400, 0);
 	private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.40, 0.0, 10.00, 0.189, 0);
-	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0, 0, 0, 0, 0);
-	
-	// Mag Encoder Gains
-	//private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 0.600, 0.0, 12.00, 0.0763, 0); //
-	//private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.10, 0.0, 2.50, 0.0341, 0); // d was 2.5
-	//private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0, 0, 0, 0, 0);
-	
-	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(6, new BobTalonSRX(7)); // 8
-	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(1, new BobTalonSRX(2)); // 1
+	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 1000.00, 0, 0, 0, 0);
 
-	private PigeonIMU pigeon = new PigeonIMU(7);
+	// Mag Encoder Gains
+	// private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 0.600, 0.0,
+	// 12.00, 0.0763, 0); //
+	// private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.10, 0.0,
+	// 2.50, 0.0341, 0); // d was 2.5
+	// private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0, 0, 0, 0,
+	// 0);
+
+	private BobTalonSRX leftFollower = new BobTalonSRX(7);
+	private BobTalonSRX rightFollower = new BobTalonSRX(2);
+	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(6, leftFollower); // 8
+	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(1, rightFollower); // 1
+
+	private PigeonIMU pigeon = new PigeonIMU(leftFollower);
+
 	public Drivetrain() {
 
 		this.leftLead.enableCurrentLimit(false);
 		this.leftLead.configContinuousCurrentLimit(60);
 		this.rightLead.enableCurrentLimit(false);
 		this.rightLead.configContinuousCurrentLimit(60);
-		
+
 		leftLead.setInverted(true);// false
 		leftLead.configPrimaryFeedbackDevice(FeedbackDevice.QuadEncoder);
 		leftLead.setSensorPhase(true);
@@ -73,18 +78,25 @@ public class Drivetrain extends Subsystem {
 		configGains(highGearGains);
 		configGains(lowGearGains);
 		configGains(rotationGains);
-		
+
 		// configure distance sensor
 		/* Remote 0 will be the other side's Talon */
 		rightLead.configRemoteSensor0(leftLead.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor);
 		rightLead.configSensorSum(FeedbackDevice.RemoteSensor0, FeedbackDevice.QuadEncoder);
-		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5); //distances from left and right are summed, so average them
-		
+		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5); // distances from left and right are
+																				// summed, so average them
+
 		// configure angle sensor
 		/* Remote 1 will be a pigeon */
-		rightLead.configRemoteSensor1(pigeon.getDeviceID(), RemoteSensorSource.Pigeon_Yaw);
-		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, 3600/8192); // Coefficient for Pigeon to convert to 360
-
+		rightLead.configRemoteSensor1(leftFollower.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
+		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (360.0 / 8192.0)); // Coefficient for
+																									// Pigeon to
+		
+		rightLead.selectProfileSlot(HIGH_GEAR_PROFILE, rightLead.getPrimaryPidIndex());
+		rightLead.selectProfileSlot(ROTATION_PROFILE, rightLead.getSecondaryPidIndex());
+		leftLead.selectProfileSlot(HIGH_GEAR_PROFILE, leftLead.getPrimaryPidIndex());
+		
+		// convert to 360
 		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
 		rightLead.configAuxPIDPolarity(false, 0);
 	}
@@ -171,6 +183,10 @@ public class Drivetrain extends Subsystem {
 		return ypr[0];
 	}
 
+	public double getDistance() {
+		return rightLead.getPrimarySensorPosition();
+	}
+
 	@Override
 	public void periodic() {
 		SmartDashboard.putBoolean("Drivetrain High Gear", isHighGear);
@@ -178,18 +194,8 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("Right Drive Position", getRightDriveLeadDistance());
 		SmartDashboard.putNumber("Left Drive Velocity", getLeftDriveLeadVelocity());
 		SmartDashboard.putNumber("Right Drive Velocity", getRightDriveLeadVelocity());
+		SmartDashboard.putNumber("Drivetrain Angle (SRX)", rightLead.getSecondarySensorPosition());
 		SmartDashboard.putNumber("Drivetrain Angle", getAngle());
-		// SmartDashboard.putNumber("Left Drive Closed Loop Error",
-		// getLeftClosedLoopError());
-		// SmartDashboard.putNumber("Right Drive Closed Loop Error",
-		// getRightClosedLoopError());
-
-		ArrayList<Double> leftCurrents = leftLead.getOutputCurrents();
-
-		int i = 0;
-		for (Double current : leftCurrents) {
-			SmartDashboard.putNumber("LeftMotorCurrent" + i, current);
-			i++;
-		}
+		SmartDashboard.putNumber("Drivetrain Angle Error", rightLead.getClosedLoopError(1));
 	}
 }

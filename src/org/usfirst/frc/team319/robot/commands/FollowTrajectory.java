@@ -1,7 +1,5 @@
 package org.usfirst.frc.team319.robot.commands;
 
-import java.io.IOException;
-
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.SrxMotionProfile;
 import org.usfirst.frc.team319.models.SrxTrajectory;
@@ -121,7 +119,7 @@ public class FollowTrajectory extends Command {
 
 		leftTalon.set(ControlMode.MotionProfile, setValue.value);
 		rightTalon.set(ControlMode.MotionProfile, setValue.value);
-		
+
 		bufferNotifier = new Notifier(new BufferLoader());
 		bufferNotifier.startPeriodic(.005);
 	}
@@ -158,7 +156,7 @@ public class FollowTrajectory extends Command {
 		}
 		boolean leftComplete = leftStatus.activePointValid && leftStatus.isLast;
 		boolean rightComplete = rightStatus.activePointValid && rightStatus.isLast;
-		//System.out.println("Complete: " + leftComplete + "," + rightComplete);
+		// System.out.println("Complete: " + leftComplete + "," + rightComplete);
 		boolean trajectoryComplete = leftComplete && rightComplete;
 		if (trajectoryComplete) {
 			System.out.println("Finished Trajectory");

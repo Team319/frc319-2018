@@ -5,7 +5,6 @@ import org.usfirst.frc.team319.arcs.RightWallToRightScaleArc;
 import org.usfirst.frc.team319.arcs.ScaleToSwitchCubeRightSideArc;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
-import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToDunkPose;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToHomePosition;

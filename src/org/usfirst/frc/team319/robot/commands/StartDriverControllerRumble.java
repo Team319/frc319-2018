@@ -10,7 +10,6 @@
 
 package org.usfirst.frc.team319.robot.commands;
 
-import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,7 +26,7 @@ public class StartDriverControllerRumble extends Command {
 		this.leftRumbleStrength = strength;
 		this.rightRumbleStrength = strength;
 	}
-	
+
 	public StartDriverControllerRumble(double leftStrength, double rightStrength) {
 		this.leftRumbleStrength = leftStrength;
 		this.rightRumbleStrength = rightStrength;

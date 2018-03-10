@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Pneumatics extends Subsystem {
-	
-	//public boolean isCollectorSolenoidExtended;
+
+	// public boolean isCollectorSolenoidExtended;
 
 	Compressor compressor = new Compressor(0);
 

@@ -10,7 +10,6 @@ package org.usfirst.frc.team319.robot;
 import org.usfirst.frc.team319.arcs.CrossTheLineArc;
 import org.usfirst.frc.team319.models.GameState;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
-import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.CenterAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.DefaultAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftAuto;

@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class CubeCollector extends Subsystem {
-	
+
 	private boolean isOpen = false;
-	
+
 	public final BobTalonSRX collectorLeftMotor = new BobTalonSRX(3); // 11
 	public final BobTalonSRX collectorRightMotor = new BobTalonSRX(4);
 	AnalogInput collectorDistanceSensor = new AnalogInput(0);
@@ -34,7 +34,8 @@ public class CubeCollector extends Subsystem {
 
 	}
 
-	public void initDefaultCommand() { }
+	public void initDefaultCommand() {
+	}
 
 	// set leftmotor speed to negative to combat issues with it running full
 	// speed and not PIDing to the set speed
@@ -63,7 +64,7 @@ public class CubeCollector extends Subsystem {
 	public double getRightCurrent() {
 		return this.collectorRightMotor.getOutputCurrent();
 	}
-	
+
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("IR Sensor", this.getCollectorDistanceSensorValue());
@@ -76,7 +77,7 @@ public class CubeCollector extends Subsystem {
 	public boolean isCubeCollected() {
 		if (isOpen) {
 			return this.getCollectorDistanceSensorValue() > cubeCollectedOpenThreshhold;
-		}else {
+		} else {
 			return this.getCollectorDistanceSensorValue() > cubeCollectedClosedThreshold;
 		}
 	}
@@ -84,11 +85,11 @@ public class CubeCollector extends Subsystem {
 	public boolean isCubeLost() {
 		return this.getCollectorDistanceSensorValue() < cubeLostDistanceThreshhold;
 	}
-	
+
 	public boolean isOpen() {
 		return isOpen;
 	}
-	
+
 	public void setIsOpen(boolean isOpen) {
 		this.isOpen = isOpen;
 	}

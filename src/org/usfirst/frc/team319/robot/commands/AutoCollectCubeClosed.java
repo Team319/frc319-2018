@@ -1,13 +1,9 @@
 package org.usfirst.frc.team319.robot.commands;
 
-import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorCollect;
 import org.usfirst.frc.team319.robot.commands.cubecollector.HoldCube;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToCollectPosition;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CloseCollector;
-import org.usfirst.frc.team319.robot.commands.wrist.WristGoToParallel;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToCollectCube;
-import org.usfirst.frc.team319.robot.commands.wrist.WristGoToExchange;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToSwitch;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

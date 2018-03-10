@@ -10,7 +10,6 @@
 
 package org.usfirst.frc.team319.robot.commands;
 
-import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -19,11 +18,9 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class StopDriverControllerRumble extends Command {
-	
-	
+
 	public StopDriverControllerRumble() {
 	}
-	
 
 	// Called just before this Command runs the first time
 	protected void initialize() {

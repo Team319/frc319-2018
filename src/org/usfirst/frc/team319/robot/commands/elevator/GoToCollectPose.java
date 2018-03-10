@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class GoToCollectPose extends CommandGroup {
 
-    public GoToCollectPose() {
-        
-    	addSequential(new ElevatorShiftDown());
-    	addSequential(new ElevatorGoToCollectPosition());
-    }
+	public GoToCollectPose() {
+
+		addSequential(new ElevatorShiftDown());
+		addSequential(new ElevatorGoToCollectPosition());
+	}
 }

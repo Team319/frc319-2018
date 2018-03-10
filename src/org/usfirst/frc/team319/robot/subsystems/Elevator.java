@@ -5,7 +5,6 @@ import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.SRXGains;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorMotionMagicControl;
 import org.usfirst.frc.team319.robot.commands.elevator.JoystickElevator;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -24,7 +23,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	private boolean isHighGear = false;
 	private boolean isHoldingPosition = false;
 	private boolean atScale = false;
-	
+
 	private int homePosition = 0;
 	private int collectPosition = 1000;
 	private int switchPosition = 14000;
@@ -32,12 +31,12 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	private int topOfFirstStagePosition = 24000;
 	private int dunkPosition = 33500;
 	private int climbPosition = 48000;
-	private int maxUpTravelPosition = 52000;	
+	private int maxUpTravelPosition = 52000;
 
 	private int scaleMiddlePosition = 44500;
 	private int scaleBottomPosition = 35000;
 	private int scaleTopPosition = 51000;
-	
+
 	public final static int ELEVATOR_HIGH_UP = 0;
 	public final static int ELEVATOR_HIGH_DOWN = 1;
 	public final static int ELEVATOR_LOW_UP = 2;
@@ -55,10 +54,10 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 
 	private final SRXGains highGearUpGains = new SRXGains(ELEVATOR_HIGH_UP, 2.8, 0.0, 28.0, 0.172, 0);
 	private final SRXGains highGearDownGains = new SRXGains(ELEVATOR_HIGH_DOWN, 1.46, 0.0, 14.6, 0.172, 0);
-	
+
 	private MotionParameters lowGearUpMotionParameters = new MotionParameters(2600, 2000, lowGearUpGains);
 	private MotionParameters lowGearDownMotionParameters = new MotionParameters(2600, 2000, lowGearDownGains);
-	private MotionParameters highGearUpMotionParameters = new MotionParameters(6000, 3000, highGearUpGains);//4700
+	private MotionParameters highGearUpMotionParameters = new MotionParameters(6000, 3000, highGearUpGains);// 4700
 	private MotionParameters highGearDownMotionParameters = new MotionParameters(6000, 3000, highGearDownGains);
 
 	public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(11, new BobVictorSPX(8), new BobVictorSPX(9),
@@ -78,7 +77,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 
 		this.elevatorLead.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
 		this.elevatorLead.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
-		
+
 		this.elevatorLead.configMotionParameters(highGearUpMotionParameters);
 		this.elevatorLead.configMotionParameters(highGearDownMotionParameters);
 		this.elevatorLead.configMotionParameters(lowGearDownMotionParameters);
@@ -90,7 +89,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 
 	public void initDefaultCommand() {
 		// setDefaultCommand(new ElevatorStop());
-		//setDefaultCommand(new ElevatorMotionMagicControl());
+		// setDefaultCommand(new ElevatorMotionMagicControl());
 		setDefaultCommand(new JoystickElevator());
 	}
 
@@ -109,7 +108,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	public int getCurrentPosition() {
 		return this.elevatorLead.getSelectedSensorPosition();
 	}
-	
+
 	public double getCurrentDraw() {
 		return this.elevatorLead.getOutputCurrent();
 	}
@@ -121,7 +120,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	public void setHighGear(boolean isHighGear) {
 		this.isHighGear = isHighGear;
 	}
-	
+
 	public boolean isHoldingPosition() {
 		return this.isHoldingPosition;
 	}
@@ -142,55 +141,55 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 			return true;
 		}
 	}
-	
+
 	public int getHomePosition() {
 		return this.homePosition;
 	}
-	
+
 	public int getCollectPosition() {
 		return this.collectPosition;
 	}
-	
+
 	public int getSwitchPosition() {
 		return this.switchPosition;
 	}
-	
+
 	public int getAutoSwitchPosition() {
 		return this.autoSwitchPostion;
 	}
-	
+
 	public int getTopOfFirstStagePosition() {
 		return this.topOfFirstStagePosition;
 	}
-	
+
 	public int getDunkPosition() {
 		return this.dunkPosition;
 	}
-	
+
 	public int getClimbPosition() {
 		return this.climbPosition;
 	}
-	
+
 	public int getMaxUpTravelPosition() {
 		return this.maxUpTravelPosition;
 	}
-	
+
 	public int getScaleMiddlePosition() {
 		return this.scaleMiddlePosition;
 	}
-	
+
 	public int getScaleBottomPosition() {
 		return this.scaleBottomPosition;
 	}
-	
+
 	public int getScaleTopPosition() {
 		return this.scaleTopPosition;
 	}
-	
+
 	public boolean isAtScale() {
 		return this.atScale;
 	}
-	
+
 	public void goToScale() {
 		this.targetPosition = scaleMiddlePosition;
 		this.atScale = true;
@@ -218,7 +217,8 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
 		SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
 		SmartDashboard.putNumber("Elevator Current", this.getCurrentDraw());
-		//SmartDashboard.putNumber("Elevator Closed Loop Error", this.elevatorLead.getClosedLoopError(0));
+		// SmartDashboard.putNumber("Elevator Closed Loop Error",
+		// this.elevatorLead.getClosedLoopError(0));
 		SmartDashboard.putBoolean("Elevator High Gear", isHighGear);
 		SmartDashboard.putNumber("Elevator Max Speed", maxSpeedAchieved);
 	}
@@ -226,12 +226,12 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	@Override
 	public double getCurrentVelocity() {
 		double currentVelocity = this.elevatorLead.getSelectedSensorVelocity();
-		
+
 		if (currentVelocity > maxSpeedAchieved) {
 			maxSpeedAchieved = currentVelocity;
 		}
-		
-		return currentVelocity; 
+
+		return currentVelocity;
 	}
 
 	@Override

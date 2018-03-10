@@ -33,16 +33,16 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 
 	public final static int WRIST_PROFILE_UP = 0;
 	public final static int WRIST_PROFILE_DOWN = 1;
-	
+
 	private int upPositionLimit = homePosition;
 	private int downPositionLimit = maxDownTravelPosition;
-	
+
 	private int targetPosition = homePosition;
 	private final static int onTargetThreshold = 200;
 
 	private SRXGains upGains = new SRXGains(WRIST_PROFILE_UP, 0.800, 0.005, 8.0, 0.799, 100);
 	private SRXGains downGains = new SRXGains(WRIST_PROFILE_DOWN, 0.400, 0.005, 15.0, 0.799, 100);
-	
+
 	private MotionParameters upMotionParameters = new MotionParameters(2000, 1024, upGains);
 	private MotionParameters downMotionParameters = new MotionParameters(5000, 512, downGains);
 
@@ -62,9 +62,9 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 
 		this.wristMotor.configForwardSoftLimitEnable(true);
 		this.wristMotor.configReverseSoftLimitEnable(true);
-		
+
 		this.wristMotor.setNeutralMode(NeutralMode.Brake);
-		
+
 		wristMotor.configMotionParameters(upMotionParameters);
 		wristMotor.configMotionParameters(downMotionParameters);
 	}
@@ -163,43 +163,43 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 	public int getCurrentPosition() {
 		return this.wristMotor.getSelectedSensorPosition();
 	}
-	
+
 	public int getMaxUpTravelPosition() {
 		return this.maxUpTravelPosition;
 	}
-	
+
 	public int getDunkPosition() {
 		return this.dunkPosition;
 	}
-	
+
 	public int getHomePosition() {
 		return this.homePosition;
 	}
-	
+
 	public int getSwitchPosition() {
 		return this.switchPosition;
 	}
-	
+
 	public int getExchangePosition() {
 		return this.exchangePosition;
 	}
-	
+
 	public int getScalePosition() {
 		return this.scalePosition;
 	}
-	
+
 	public int getAutoSwitchPosition() {
 		return this.autoSwitchPosition;
 	}
-	
+
 	public int getParallelPosition() {
 		return this.parallelPosition;
 	}
-	
+
 	public int getCollectPosition() {
 		return this.collectPosition;
 	}
-	
+
 	public int getMaxDownTravelPosition() {
 		return this.maxDownTravelPosition;
 	}

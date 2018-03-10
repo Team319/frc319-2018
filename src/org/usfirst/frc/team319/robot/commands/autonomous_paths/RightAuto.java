@@ -18,7 +18,7 @@ public class RightAuto extends CommandGroup {
 		addSequential(new CloseCollector());
 		addSequential(new DrivetrainShiftUp());
 		addSequential(new PrintCommand("Right Auto Command Called"));
-		
+
 		if (gameState.mySwitchSide == Side.LEFT && gameState.scaleSide == Side.LEFT) {
 			addParallel(new PrintCommand("Left Left Auto"));
 			addSequential(new RightSideLeftSwitchLeftScale());
