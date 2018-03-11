@@ -3,6 +3,7 @@ package org.usfirst.frc.team319.models;
 //Combines left and right motion profiles in one object
 public class SrxTrajectory {
 	public boolean flipped;
+	public boolean highGear;
 	public SrxMotionProfile leftProfile;
 	public SrxMotionProfile centerProfile;
 	public SrxMotionProfile rightProfile;

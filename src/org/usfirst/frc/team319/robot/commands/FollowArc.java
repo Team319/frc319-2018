@@ -98,6 +98,12 @@ public class FollowArc extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		
+		if (trajectoryToFollow.highGear) {
+			Robot.pneumatics.drivetrainShiftUp();
+		}else {
+			Robot.pneumatics.drivetrainShiftDown();
+		}
 
 		setUpTalon(leftTalon);
 		setUpTalon(rightTalon);
