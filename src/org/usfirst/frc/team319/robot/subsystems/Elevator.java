@@ -225,15 +225,6 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		return this.arbitraryFeedForward;
 	}
 
-	public boolean isAtScale() {
-		return this.atScale;
-	}
-
-	public void goToScale() {
-		this.targetPosition = scaleMiddlePosition;
-		this.atScale = true;
-	}
-
 	public void manageMotion(double targetPosition) {
 		double currentPosition = getCurrentPosition();
 		if (currentPosition < targetPosition) {
