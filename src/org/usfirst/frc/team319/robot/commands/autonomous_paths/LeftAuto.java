@@ -4,6 +4,7 @@ import org.usfirst.frc.team319.models.GameState;
 import org.usfirst.frc.team319.models.GameState.Side;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CloseCollector;
 import org.usfirst.frc.team319.robot.commands.pneumatics.DrivetrainShiftUp;
+import org.usfirst.frc.team319.robot.commands.pneumatics.ElevatorShiftUp;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -14,7 +15,8 @@ public class LeftAuto extends CommandGroup {
 
 	public LeftAuto(GameState gameState) {
 
-		addSequential(new CloseCollector());
+		addParallel(new CloseCollector());
+		addParallel(new ElevatorShiftUp());
 		addSequential(new DrivetrainShiftUp());
 
 		if (gameState.mySwitchSide == Side.LEFT && gameState.scaleSide == Side.LEFT) {

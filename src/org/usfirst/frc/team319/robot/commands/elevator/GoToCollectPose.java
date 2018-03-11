@@ -11,7 +11,7 @@ public class GoToCollectPose extends CommandGroup {
 
 	public GoToCollectPose() {
 
-		addSequential(new ElevatorShiftDown());
+		//addSequential(new ElevatorShiftDown());
 		addSequential(new ElevatorGoToCollectPosition());
 	}
 }

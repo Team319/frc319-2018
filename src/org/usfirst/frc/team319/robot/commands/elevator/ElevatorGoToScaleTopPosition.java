@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands.wrist;
+package org.usfirst.frc.team319.robot.commands.elevator;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -7,33 +7,28 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class JoystickWrist extends Command {
+public class ElevatorGoToScaleTopPosition extends Command {
 
-	private int positionIncrement = 50;
+	private int targetPosition = Robot.elevator.getScaleTopPosition();
 
-	public JoystickWrist() {
-		requires(Robot.wrist);
-
+	public ElevatorGoToScaleTopPosition() {
+		// Use requires() here to declare subsystem dependencies
+		requires(Robot.elevator);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-
+		Robot.elevator.setTargetPosition(targetPosition);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-
-		// joystick control
-		double signal = Robot.oi.operatorController.rightStick.getY();
-		Robot.wrist.incrementTargetPosition((int) (signal * positionIncrement));
-		Robot.wrist.motionMagicControl();
-
+		Robot.elevator.motionMagicControl();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		return Robot.elevator.isInPosition(targetPosition);
 	}
 
 	// Called once after isFinished returns true

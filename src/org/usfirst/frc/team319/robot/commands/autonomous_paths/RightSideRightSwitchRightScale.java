@@ -25,7 +25,7 @@ public class RightSideRightSwitchRightScale extends CommandGroup {
 		addParallel(new GoToDunkPose());
 		addSequential(new FollowArc(new RightWallToRightScaleArc()));
 		addSequential(new CubeCollectorSpit(-0.75), 0.5);
-		addSequential(new WristGoToSwitch());
+		/*addSequential(new WristGoToSwitch());
 		addParallel(new WristGoToParallel());
 		addSequential(new ElevatorGoToHomePosition());
 		addParallel(new WristGoToParallel());
@@ -35,5 +35,6 @@ public class RightSideRightSwitchRightScale extends CommandGroup {
 		addSequential(new ElevatorGoToSwitchPosition());
 		addSequential(new FollowArc(new OneFootArc()));
 		addSequential(new CubeCollectorSpit(-1.0), 0.5);
+		*/
 	}
 }

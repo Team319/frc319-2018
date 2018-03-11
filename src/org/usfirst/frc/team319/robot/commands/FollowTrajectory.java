@@ -52,9 +52,9 @@ public class FollowTrajectory extends Command {
 			leftTalon.processMotionProfileBuffer();
 			rightTalon.processMotionProfileBuffer();
 			leftLastPointSent = manageBuffer(leftTalon, trajectoryToFollow.leftProfile,
-					Robot.drivetrain.LOW_GEAR_PROFILE, leftLastPointSent);
+					Robot.drivetrain.HIGH_GEAR_PROFILE, leftLastPointSent);
 			rightLastPointSent = manageBuffer(rightTalon, trajectoryToFollow.rightProfile,
-					Robot.drivetrain.LOW_GEAR_PROFILE, rightLastPointSent);
+					Robot.drivetrain.HIGH_GEAR_PROFILE, rightLastPointSent);
 		}
 
 		private int manageBuffer(BobTalonSRX talon, SrxMotionProfile prof, int pidfSlot, int lastPointSent) {

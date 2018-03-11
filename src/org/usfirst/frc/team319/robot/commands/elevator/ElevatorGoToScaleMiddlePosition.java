@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ElevatorGoToScalePosition extends Command {
+public class ElevatorGoToScaleMiddlePosition extends Command {
 
 	private int targetPosition = Robot.elevator.getScaleMiddlePosition();
 
-	public ElevatorGoToScalePosition() {
+	public ElevatorGoToScaleMiddlePosition() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.elevator);
 	}

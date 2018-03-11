@@ -7,33 +7,35 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class JoystickWrist extends Command {
+public class PreventWristCollision extends Command {
 
-	private int positionIncrement = 50;
+	boolean isSafe = false;
+	private int safePosition = Robot.wrist.getHomePosition();
 
-	public JoystickWrist() {
+	public PreventWristCollision() {
+		// Use requires() here to declare subsystem dependencies
 		requires(Robot.wrist);
-
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-
+		if (Robot.wrist.getCurrentPosition() < safePosition) {
+			Robot.wrist.setTargetPosition(safePosition);
+		} else {
+			isSafe = true;
+		}
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-
-		// joystick control
-		double signal = Robot.oi.operatorController.rightStick.getY();
-		Robot.wrist.incrementTargetPosition((int) (signal * positionIncrement));
-		Robot.wrist.motionMagicControl();
-
+		if (!isSafe) {
+			Robot.wrist.manageMotion(safePosition);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		return isSafe || Robot.wrist.isInPosition(safePosition);
 	}
 
 	// Called once after isFinished returns true

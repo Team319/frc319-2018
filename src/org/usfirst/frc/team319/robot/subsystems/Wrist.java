@@ -5,6 +5,7 @@ import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.robot.commands.wrist.JoystickWrist;
 import org.usfirst.frc.team319.robot.commands.wrist.WristMotionMagicControl;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -73,8 +74,8 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new WristMotionMagicTest()); //WristStop
 		// setDefaultCommand(new WristMaintainPosition());
-		// setDefaultCommand(new WristJoystick());
-		setDefaultCommand(new WristMotionMagicControl());
+		setDefaultCommand(new JoystickWrist());
+		//setDefaultCommand(new WristMotionMagicControl());
 	}
 
 	public void wristMove(ControlMode controlMode, double targetPosition) {
@@ -145,15 +146,27 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 	public int getTargetPosition() {
 		return this.targetPosition;
 	}
-
+	
 	public boolean setTargetPosition(int position) {
 		manageLimits();
-		if (position < upPositionLimit || position > downPositionLimit) {
+		if (!isValidPosition(position)) {
 			return false;
 		} else {
 			this.targetPosition = position;
 			return true;
 		}
+	}
+	
+	public void incrementTargetPosition(int increment) {
+		int currentTargetPosition = this.targetPosition;
+		int newTargetPosition = currentTargetPosition + increment;
+		if (isValidPosition(newTargetPosition)) {
+			this.targetPosition = newTargetPosition;
+		}
+	}
+	
+	public boolean isValidPosition(int position) {
+		return (position >= upPositionLimit && position <= downPositionLimit);
 	}
 
 	public int getUpwardLimit() {

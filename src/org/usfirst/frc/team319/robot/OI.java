@@ -10,20 +10,28 @@ package org.usfirst.frc.team319.robot;
 import org.usfirst.frc.team319.arcs.CenterToLeftSwitchArc;
 import org.usfirst.frc.team319.arcs.CenterToRightSwitchArc;
 import org.usfirst.frc.team319.arcs.CrossTheLineArc;
+import org.usfirst.frc.team319.arcs.FifteenFeetReverseArc;
 import org.usfirst.frc.team319.arcs.FiveFeetAndTurnArc;
+import org.usfirst.frc.team319.arcs.RightWallToLeftScaleArc;
+import org.usfirst.frc.team319.arcs.RightWallToRightScaleArc;
 import org.usfirst.frc.team319.controllers.BobXboxController;
+import org.usfirst.frc.team319.paths.FifteenFeetReversePath;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
+import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.GoToClimbPose;
 import org.usfirst.frc.team319.robot.commands.GoToScalePose;
 import org.usfirst.frc.team319.robot.commands.TeleopGoToDunkPose;
+import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPose;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainBrakeMode;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToCollectPosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToDunkPosition;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToScalePosition;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToScaleBottomPosition;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToScaleMiddlePosition;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToScaleTopPosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToSwitchPosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorHoldPositionToggle;
 import org.usfirst.frc.team319.robot.commands.elevator.GoToCollectPose;
@@ -57,30 +65,19 @@ public class OI {
 		driverController.startButton.whenPressed(new DrivetrainBrakeMode());
 		driverController.leftStickButton.whenPressed(new DrivetrainShiftToggle());
 
-		// this.driverController.xButton.whenPressed(new FollowTrajectory(new
-		// FiveFeetAndTurn()));
+	
 
 		operatorController = new BobXboxController(1, 0.1, 0.1);
-/*             Old
-		operatorController.leftBumper.whenPressed(new WristGoHome());
-		operatorController.rightBumper.whenPressed(new WristGoToParallel());
-		operatorController.aButton.whenPressed(new WristGoToExchange());
-		operatorController.bButton.whenPressed(new GoToScalePose());
-		operatorController.xButton.whenPressed(new WristGoToSwitch());
-		operatorController.yButton.whenPressed(new TeleopGoToDunkPose());
-		operatorController.startButton.whenPressed(new ElevatorShiftToggle());
-		operatorController.rightStickButton.whenPressed(new ElevatorHoldPositionToggle());
-*/
-		//new
 		
-		operatorController.leftTriggerButton.whenPressed(new ElevatorGoToScalePosition());
-		operatorController.rightTriggerButton.whenPressed(new ElevatorGoToCollectPosition());
+		operatorController.leftTriggerButton.whenPressed(new ElevatorGoToScaleMiddlePosition());
+		operatorController.rightTriggerButton.whenPressed(new GoToCollectPose());
 		operatorController.leftBumper.whenPressed(new WristGoHome());
-		operatorController.rightBumper.whenPressed(new WristGoToParallel());
-		operatorController.aButton.whenPressed(new ElevatorGoToDunkPosition());
-		//operatorController.bButton.whenPressed(new ElevatorGoToScalePosition());
-		operatorController.xButton.whenPressed(new ElevatorGoToSwitchPosition());
-		//operatorController.yButton.whenPressed(new ElevatorGoToScalePosition());
+		operatorController.rightBumper.whenPressed(new WristGoToExchange());
+		operatorController.aButton.whenPressed(new TeleopGoToDunkPose());
+		operatorController.bButton.whenPressed(new ElevatorGoToScaleBottomPosition());
+		operatorController.xButton.whenPressed(new GoToSwitchPose(0.0));
+		operatorController.yButton.whenPressed(new ElevatorGoToScaleTopPosition());
+		operatorController.startButton.whenPressed(new ElevatorShiftToggle());
 		
 		
 		
@@ -88,10 +85,12 @@ public class OI {
 		//operatorController.Dpad.Left.whenPressed(new ElevatorGoToSwitchPosition());
 		//operatorController.Dpad.Down.whenPressed(new GoToCollectPose());
 
+		
+		
 		// ---------------test buttons-------------------//
 
 		// this.driverController.xButton.whenPressed(new RightSideScaleAuto());
-		this.driverController.xButton.whenPressed(new FollowArc(new CenterToLeftSwitchArc()));
+		this.driverController.xButton.whenPressed(new FollowArc(new RightWallToRightScaleArc()));
 		// this.driverController.aButton.whenPressed(new CubeCollectorLeftSideSpit());
 
 		// this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());

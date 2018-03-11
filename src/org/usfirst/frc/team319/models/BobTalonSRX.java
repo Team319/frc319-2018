@@ -300,4 +300,8 @@ public class BobTalonSRX extends TalonSRX {
 	public ErrorCode configVoltageCompSaturation(double voltage) {
 		return super.configVoltageCompSaturation(voltage, defaultTimeoutMs);
 	}
+	
+	public ErrorCode configMaxIntegralAccumulator(int slotIdx, double iaccum) {
+		return super.configMaxIntegralAccumulator(slotIdx, iaccum, defaultTimeoutMs);
+	}
 }
