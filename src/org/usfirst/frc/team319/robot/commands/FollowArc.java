@@ -180,6 +180,7 @@ public class FollowArc extends Command {
 	private void resetTalon(TalonSRX talon, ControlMode controlMode, double setValue) {
 		talon.clearMotionProfileTrajectories();
 		talon.clearMotionProfileHasUnderrun(10);
+		talon.changeMotionControlFramePeriod(10);
 		talon.set(controlMode, setValue);
 	}
 }

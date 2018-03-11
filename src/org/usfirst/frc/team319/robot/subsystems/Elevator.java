@@ -47,7 +47,6 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	public int upPositionLimit = maxUpTravelPosition;
 	public int downPositionLimit = homePosition;
 	private int targetPosition = 0;
-	private double maxSpeedAchieved = 0;
 	private double arbitraryFeedForward = 0.0;
 
 	private final static int onTargetThreshold = 100;
@@ -257,20 +256,15 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
 		SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
 		SmartDashboard.putNumber("Elevator Current", this.getCurrentDraw());
-		SmartDashboard.putNumber("Elevator Closed Loop Error",this.elevatorLead.getClosedLoopError(0));
+		//SmartDashboard.putNumber("Elevator Closed Loop Error",this.elevatorLead.getClosedLoopError(0));
 		SmartDashboard.putBoolean("Elevator High Gear", isHighGear);
-		SmartDashboard.putNumber("Elevator Max Speed", maxSpeedAchieved);
-		SmartDashboard.putNumber("Elevator Power", this.elevatorLead.getMotorOutputPercent());
+		//SmartDashboard.putNumber("Elevator Max Speed", maxSpeedAchieved);
+		//SmartDashboard.putNumber("Elevator Power", this.elevatorLead.getMotorOutputPercent());
 	}
 
 	@Override
 	public double getCurrentVelocity() {
 		double currentVelocity = this.elevatorLead.getSelectedSensorVelocity();
-
-		if (currentVelocity > maxSpeedAchieved) {
-			maxSpeedAchieved = currentVelocity;
-		}
-
 		return currentVelocity;
 	}
 
