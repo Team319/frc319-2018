@@ -35,7 +35,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	private int climbPosition = 48000;
 	private int maxUpTravelPosition = 52000;
 
-	private int scaleMiddlePosition = 44500;
+	private int scaleMiddlePosition = 38500;
 	private int scaleBottomPosition = 35000;
 	private int scaleTopPosition = 51000;
 
@@ -54,8 +54,8 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	private final SRXGains lowGearUpGains = new SRXGains(ELEVATOR_LOW_UP, 0.560, 0.0, 5.600, 0.620, 100);
 	private final SRXGains lowGearDownGains = new SRXGains(ELEVATOR_LOW_DOWN, 0.560, 0.0, 5.600, 0.427, 0);
 
-	private final SRXGains highGearUpGains = new SRXGains(ELEVATOR_HIGH_UP, 0.02, 0.001, 0.2, 0.172, 300);
-	private final SRXGains highGearDownGains = new SRXGains(ELEVATOR_HIGH_DOWN, 0.12, 0.001, 0.0, 0.172, 300);
+	private final SRXGains highGearUpGains = new SRXGains(ELEVATOR_HIGH_UP, 0.02, 0.001, 4.0, 0.172, 300);
+	private final SRXGains highGearDownGains = new SRXGains(ELEVATOR_HIGH_DOWN, 0.200, 0.001, 0.0, 0.172, 300);
 
 	private MotionParameters lowGearUpMotionParameters = new MotionParameters(2600, 2000, lowGearUpGains);
 	private MotionParameters lowGearDownMotionParameters = new MotionParameters(2600, 2000, lowGearDownGains);

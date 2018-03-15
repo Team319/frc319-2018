@@ -102,7 +102,8 @@ public class FollowArc extends Command {
 		if (trajectoryToFollow.highGear) {
 			Robot.pneumatics.drivetrainShiftUp();
 		}else {
-			Robot.pneumatics.drivetrainShiftDown();
+			//Robot.pneumatics.drivetrainShiftDown();
+			Robot.pneumatics.drivetrainShiftUp();
 		}
 
 		setUpTalon(leftTalon);

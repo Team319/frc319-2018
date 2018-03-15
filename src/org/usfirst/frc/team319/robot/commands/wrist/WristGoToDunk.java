@@ -48,6 +48,7 @@ public class WristGoToDunk extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		System.out.println("Wrist is in Dunk Position");
 	}
 
 	// Called when another command which requires one or more of the same

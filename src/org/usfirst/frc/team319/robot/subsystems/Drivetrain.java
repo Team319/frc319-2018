@@ -105,7 +105,7 @@ public class Drivetrain extends Subsystem {
 	public void drive(ControlMode controlMode, double left, double right) {
 		this.leftLead.set(controlMode, left);
 		this.rightLead.set(controlMode, right);
-	}
+	} 
 
 	public void drive(ControlMode controlMode, DriveSignal driveSignal) {
 		this.drive(controlMode, driveSignal.getLeft(), driveSignal.getRight());

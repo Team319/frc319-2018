@@ -23,9 +23,11 @@ import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.GoToClimbPose;
 import org.usfirst.frc.team319.robot.commands.GoToScalePose;
 import org.usfirst.frc.team319.robot.commands.TeleopGoToDunkPose;
+import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightSideLeftScale;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPose;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStopCollectorAndRumble;
 import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainBrakeMode;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToCollectPosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToDunkPosition;
@@ -61,7 +63,7 @@ public class OI {
 		driverController.leftBumper.whenPressed(new AutoCollectCubeClosed());
 		driverController.rightTriggerButton.whenPressed(new CollectorToggle());
 		driverController.leftTriggerButton.whileHeld(new CubeCollectorSpit());
-		driverController.bButton.whenPressed(new CubeCollectorStop());
+		driverController.bButton.whenPressed(new CubeCollectorStopCollectorAndRumble());
 		driverController.startButton.whenPressed(new DrivetrainBrakeMode());
 		driverController.leftStickButton.whenPressed(new DrivetrainShiftToggle());
 
@@ -90,7 +92,6 @@ public class OI {
 		// ---------------test buttons-------------------//
 
 		// this.driverController.xButton.whenPressed(new RightSideScaleAuto());
-		this.driverController.xButton.whenPressed(new FollowArc(new RightWallToRightScaleArc()));
 		// this.driverController.aButton.whenPressed(new CubeCollectorLeftSideSpit());
 
 		// this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());

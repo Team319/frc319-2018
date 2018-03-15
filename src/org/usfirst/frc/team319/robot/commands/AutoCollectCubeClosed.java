@@ -23,7 +23,7 @@ public class AutoCollectCubeClosed extends CommandGroup {
 		addSequential(new CubeCollectorCollect());
 		addParallel(new StopDriverControllerRumble());
 		addParallel(new StopOperatorControllerRumble());
-		addSequential(new WaitCommand(0.3));
+		addSequential(new WaitCommand(0.2));
 		addSequential(new HoldCube());
 		addSequential(new WristGoToSwitch());
 

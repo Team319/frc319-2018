@@ -18,10 +18,14 @@ public class CenterAuto extends CommandGroup {
 		addSequential(new DrivetrainShiftUp());
 		
 
-		if (gameState.mySwitchSide == Side.LEFT) {
+		if (gameState.mySwitchSide == Side.LEFT && gameState.scaleSide == Side.LEFT) {
 			addSequential(new DoubleSwitchLeft());
-		} else {
+		} else if(gameState.mySwitchSide == Side.LEFT && gameState.scaleSide == Side.RIGHT){
+			addSequential(new DoubleSwitchLeft());
+		}else if (gameState.mySwitchSide == Side.RIGHT && gameState.scaleSide == Side.LEFT) {
 			addSequential(new DoubleSwitchRight());
+		}else if(gameState.mySwitchSide == Side.RIGHT && gameState.scaleSide == Side.RIGHT){
+			addSequential(new DoubleSwitchRight());
+			}
 		}
 	}
-}

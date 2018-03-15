@@ -20,14 +20,10 @@ public class RightAuto extends CommandGroup {
 		addSequential(new ElevatorShiftUp());
 		addSequential(new DrivetrainShiftUp());
 
-		if (gameState.mySwitchSide == Side.LEFT && gameState.scaleSide == Side.LEFT) {
-			addSequential(new RightSideLeftSwitchLeftScale());
-		} else if (gameState.mySwitchSide == Side.LEFT && gameState.scaleSide == Side.RIGHT) {
-			addSequential(new RightSideLeftSwitchRightScale());
-		} else if (gameState.mySwitchSide == Side.RIGHT && gameState.scaleSide == Side.LEFT) {
-			addSequential(new RightSideRightSwitchLeftScale());
-		} else if (gameState.mySwitchSide == Side.RIGHT && gameState.scaleSide == Side.RIGHT) {
-			addSequential(new RightSideRightSwitchRightScale());
-		}
+		if (gameState.scaleSide == Side.LEFT) {
+			addSequential(new RightSideLeftScale());
+		} else if (gameState.scaleSide == Side.RIGHT) {
+			addSequential(new RightSideRightScale());
+		} 
 	}
 }
