@@ -1,6 +1,7 @@
 package org.usfirst.frc.team319.robot.commands;
 
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorCollect;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorWaitForCubeInRange;
 import org.usfirst.frc.team319.robot.commands.cubecollector.HoldCube;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CloseCollector;
 import org.usfirst.frc.team319.robot.commands.pneumatics.OpenCollector;
@@ -21,10 +22,12 @@ public class AutoCollectCubeOpened extends CommandGroup {
 		addParallel(new StartOperatorControllerRumble(1.0));
 		addParallel(new WristGoToCollectCube());
 		addParallel(new OpenCollector());
+		addSequential(new CubeCollectorWaitForCubeInRange());
+		addSequential(new CloseCollector());
 		addSequential(new CubeCollectorCollect());
 		addParallel(new StopDriverControllerRumble());
 		addParallel(new StopOperatorControllerRumble());
-		addSequential(new CloseCollector());
+		//addSequential(new CloseCollector());
 		addSequential(new WaitCommand(0.2));
 		addSequential(new HoldCube());
 		addSequential(new WristGoToSwitch());

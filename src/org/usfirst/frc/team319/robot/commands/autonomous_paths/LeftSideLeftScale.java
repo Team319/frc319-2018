@@ -22,7 +22,7 @@ public class LeftSideLeftScale extends CommandGroup {
 
 	public LeftSideLeftScale() {
 
-		addParallel(new GoToDunkPose());
+		addParallel(new GoToDunkPose(1.0));
 		addSequential(new FollowArc(new LeftWallToLeftScaleArc()));
 		addSequential(new CubeCollectorSpit(-0.75), 0.5);
 		addSequential(new WristGoToSwitch());

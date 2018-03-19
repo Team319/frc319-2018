@@ -14,6 +14,7 @@ import org.usfirst.frc.team319.arcs.FifteenFeetReverseArc;
 import org.usfirst.frc.team319.arcs.FiveFeetAndTurnArc;
 import org.usfirst.frc.team319.arcs.RightWallToLeftScaleArc;
 import org.usfirst.frc.team319.arcs.RightWallToRightScaleArc;
+import org.usfirst.frc.team319.arcs.TuningTestAutoArc;
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.paths.FifteenFeetReversePath;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
@@ -23,6 +24,7 @@ import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.GoToClimbPose;
 import org.usfirst.frc.team319.robot.commands.GoToScalePose;
 import org.usfirst.frc.team319.robot.commands.TeleopGoToDunkPose;
+import org.usfirst.frc.team319.robot.commands.autonomous_paths.DoubleSwitchLeft;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightSideLeftScale;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPose;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
@@ -57,7 +59,7 @@ public class OI {
 
 		driverController = new BobXboxController(0, 0.10, 0.08);
 
-		driverController.leftTriggerButton.configureThreshold(0.1);
+		driverController.leftTriggerButton.configureThreshold(0.075);
 
 		driverController.rightBumper.whenPressed(new AutoCollectCubeOpened());
 		driverController.leftBumper.whenPressed(new AutoCollectCubeClosed());
@@ -69,7 +71,7 @@ public class OI {
 
 	
 
-		operatorController = new BobXboxController(1, 0.1, 0.1);
+		operatorController = new BobXboxController(1, 0.1, 0.125);
 		
 		operatorController.leftTriggerButton.whenPressed(new ElevatorGoToScaleMiddlePosition());
 		operatorController.rightTriggerButton.whenPressed(new GoToCollectPose());
@@ -91,8 +93,8 @@ public class OI {
 		
 		// ---------------test buttons-------------------//
 
-		// this.driverController.xButton.whenPressed(new RightSideScaleAuto());
-		// this.driverController.aButton.whenPressed(new CubeCollectorLeftSideSpit());
+		//this.driverController.xButton.whenPressed(new DoubleSwitchLeft());
+		//this.driverController.xButton.whenPressed(new FollowArc(new TuningTestAutoArc()));
 
 		// this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());
 		// this.operatorController.bButton.whenPressed(new ElevatorGoToHomePosition());

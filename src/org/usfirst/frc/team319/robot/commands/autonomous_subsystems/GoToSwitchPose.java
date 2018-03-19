@@ -12,16 +12,12 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class GoToSwitchPose extends CommandGroup {
 	
-	private double secondsToWait = 0.0;
-	
 	public GoToSwitchPose() {		
 		this(1.0);
 	}
 
 	public GoToSwitchPose(double secondsToWait) {
-		this.secondsToWait = secondsToWait;
-
-		if (this.secondsToWait > 0.0) {
+		if (secondsToWait > 0.0) {
 			addSequential(new WaitCommand(secondsToWait));
 		}
 		addSequential(new PreventWristCollision());

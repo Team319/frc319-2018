@@ -24,6 +24,7 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 	private int maxUpTravelPosition = -1431;
 	private int dunkPosition = -1394;
 	private int homePosition = 319;
+	private int safePosition = 150;
 	private int switchPosition = 1319;
 	private int exchangePosition = 4200;
 	private int scalePosition = 3608;
@@ -39,12 +40,12 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 	private int downPositionLimit = maxDownTravelPosition;
 
 	private int targetPosition = homePosition;
-	private final static int onTargetThreshold = 200;
+	private final static int onTargetThreshold = 100;
 
-	private SRXGains upGains = new SRXGains(WRIST_PROFILE_UP, 0.800, 0.005, 8.0, 0.799, 100);
-	private SRXGains downGains = new SRXGains(WRIST_PROFILE_DOWN, 0.400, 0.005, 15.0, 0.799, 100);
+	private SRXGains upGains = new SRXGains(WRIST_PROFILE_UP, 1.00, 0.005, 16.0, 0.799, 150);
+	private SRXGains downGains = new SRXGains(WRIST_PROFILE_DOWN, 0.400, 0.005, 15.0, 0.799, 150);
 
-	private MotionParameters upMotionParameters = new MotionParameters(2000, 1024, upGains);
+	private MotionParameters upMotionParameters = new MotionParameters(5000, 1024, upGains);
 	private MotionParameters downMotionParameters = new MotionParameters(5000, 512, downGains);
 
 	public final BobTalonSRX wristMotor = new BobTalonSRX(5);
@@ -184,6 +185,10 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 	public int getDunkPosition() {
 		return this.dunkPosition;
 	}
+	
+	public int getSafePosition() {
+		return this.safePosition;
+	}
 
 	public int getHomePosition() {
 		return this.homePosition;
@@ -221,6 +226,7 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 	public void periodic() {
 		SmartDashboard.putNumber("Wrist Position", this.getCurrentPosition());
 		SmartDashboard.putNumber("Wrist Velocity", this.getCurrentVelocity());
+		SmartDashboard.putNumber("Wrist Closed Loop Error", this.wristMotor.getClosedLoopError());
 	}
 
 	@Override

@@ -31,6 +31,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	private int switchPosition = 14000;
 	private int autoSwitchPostion = 20000;
 	private int topOfFirstStagePosition = 24000;
+	private int minimumDunkHeight = 26500;
 	private int dunkPosition = 33500;
 	private int climbPosition = 48000;
 	private int maxUpTravelPosition = 52000;
@@ -59,14 +60,14 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 
 	private MotionParameters lowGearUpMotionParameters = new MotionParameters(2600, 2000, lowGearUpGains);
 	private MotionParameters lowGearDownMotionParameters = new MotionParameters(2600, 2000, lowGearDownGains);
-	private MotionParameters highGearUpMotionParameters = new MotionParameters(6000, 4000, highGearUpGains);// 4700
+	private MotionParameters highGearUpMotionParameters = new MotionParameters(11000, 4000, highGearUpGains);// 4700
 	private MotionParameters highGearDownMotionParameters = new MotionParameters(6000, 3000, highGearDownGains);
 
 	public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(11, new BobVictorSPX(8), new BobVictorSPX(9),
 			new BobVictorSPX(10));
 
 	public Elevator() {
-		
+
 		this.elevatorLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
 		this.elevatorLead.configForwardSoftLimitEnable(true);
@@ -88,12 +89,12 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 
 		this.elevatorLead.setNeutralMode(NeutralMode.Brake);
 		this.elevatorLead.configClosedloopRamp(0.25);
-		
+
 		this.elevatorLead.configVoltageCompSaturation(11.0);
 		this.elevatorLead.enableVoltageCompensation(true);
-		
+
 		this.elevatorLead.configPeakOutputReverse(-1.0);
-	
+
 	}
 
 	public void initDefaultCommand() {
@@ -108,7 +109,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		}
 		elevatorLead.set(controlMode, signal);
 	}
-	
+
 	public void setElevator(ControlMode controlMode, double signal, DemandType demandType, double demand) {
 		if (controlMode == ControlMode.MotionMagic) {
 			this.manageMotion(signal);
@@ -137,7 +138,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		if (isHighGear) {
 			this.elevatorLead.configPeakOutputReverse(-0.25);
 			this.arbitraryFeedForward = 0.1;
-		}else {
+		} else {
 			this.elevatorLead.configPeakOutputReverse(-1.0);
 			this.arbitraryFeedForward = 0.0;
 		}
@@ -164,17 +165,22 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 			return true;
 		}
 	}
-	
+
+	public void forceSetTargetPosition(int position) {
+		this.targetPosition = position;
+	}
+
 	public void incrementTargetPosition(int increment) {
 		int currentTargetPosition = this.targetPosition;
 		int newTargetPosition = currentTargetPosition + increment;
-		if (isValidPosition(newTargetPosition)) {
+		if (isValidPosition(newTargetPosition) && isWristSafe(newTargetPosition)) {
 			this.targetPosition = newTargetPosition;
 		}
 	}
-	
+
 	public boolean isValidPosition(int position) {
-		return (position <= upPositionLimit && position >= downPositionLimit);
+		boolean withinBounds = position <= upPositionLimit && position >= downPositionLimit;
+		return withinBounds;
 	}
 
 	public int getHomePosition() {
@@ -195,6 +201,10 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 
 	public int getTopOfFirstStagePosition() {
 		return this.topOfFirstStagePosition;
+	}
+
+	public int getMinimumDunkPosition() {
+		return this.minimumDunkHeight;
 	}
 
 	public int getDunkPosition() {
@@ -220,7 +230,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	public int getScaleTopPosition() {
 		return this.scaleTopPosition;
 	}
-	
+
 	public double getArbitraryFeedForward() {
 		return this.arbitraryFeedForward;
 	}
@@ -242,15 +252,27 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		}
 	}
 
+	public boolean isWristSafe(double targetElevatorPosition) {
+		boolean atRisk = Robot.wrist.getCurrentPosition() < Robot.wrist.getSafePosition();
+		System.out.println("is wrist at risk: " + atRisk);
+		if (atRisk && targetElevatorPosition < minimumDunkHeight && getCurrentPosition() > topOfFirstStagePosition) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
 		SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
 		SmartDashboard.putNumber("Elevator Current", this.getCurrentDraw());
-		//SmartDashboard.putNumber("Elevator Closed Loop Error",this.elevatorLead.getClosedLoopError(0));
+		// SmartDashboard.putNumber("Elevator Closed Loop
+		// Error",this.elevatorLead.getClosedLoopError(0));
 		SmartDashboard.putBoolean("Elevator High Gear", isHighGear);
-		//SmartDashboard.putNumber("Elevator Max Speed", maxSpeedAchieved);
-		//SmartDashboard.putNumber("Elevator Power", this.elevatorLead.getMotorOutputPercent());
+		// SmartDashboard.putNumber("Elevator Max Speed", maxSpeedAchieved);
+		// SmartDashboard.putNumber("Elevator Power",
+		// this.elevatorLead.getMotorOutputPercent());
 	}
 
 	@Override

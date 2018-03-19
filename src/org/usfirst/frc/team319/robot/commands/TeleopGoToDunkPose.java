@@ -13,7 +13,7 @@ public class TeleopGoToDunkPose extends CommandGroup {
 
 	public TeleopGoToDunkPose() {
 
-		addSequential(new WristGoToSwitch());
+		addParallel(new WristGoToSwitch());
 		addSequential(new ElevatorGoToDunkPosition());
 		addSequential(new WristGoToDunk());
 

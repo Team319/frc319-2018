@@ -41,7 +41,7 @@ public class Drivetrain extends Subsystem {
 	// Mag Encoder Gains
 	private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 0.600, 0.0, 12.00, 0.0763, 0); //
 	private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.60, 0.0, 2.50, 0.05115, 0); // d was 2.5
-	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 3.0, 0.005, 300.0, 0, 20);
+	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 2.5, 0.005, 25.0, 0.0, 20); // i was 0.005, izone was 20
 
 	private BobTalonSRX leftFollower = new BobTalonSRX(7);
 	private BobTalonSRX rightFollower = new BobTalonSRX(2);

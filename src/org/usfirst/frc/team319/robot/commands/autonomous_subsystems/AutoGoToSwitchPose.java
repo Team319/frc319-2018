@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class GoToSwitchPoseNoWait extends CommandGroup {
+public class AutoGoToSwitchPose extends CommandGroup {
 
-	public GoToSwitchPoseNoWait() {
+	public AutoGoToSwitchPose() {
 
 		addParallel(new WristGoToAutoSwitchPosition());
 		addSequential(new ElevatorGoToAutoSwitchPosition());

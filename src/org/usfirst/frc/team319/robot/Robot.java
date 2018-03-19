@@ -14,6 +14,7 @@ import org.usfirst.frc.team319.robot.commands.autonomous_paths.CenterAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.DefaultAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightAuto;
+import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightScaleNullZoneAuto;
 import org.usfirst.frc.team319.robot.subsystems.CubeCollector;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team319.robot.subsystems.Elevator;
@@ -69,6 +70,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("Right Auto", "RightAuto");
 		autoChooser.addObject("Cross The Line", "CrossTheLine");
 		autoChooser.addObject("Do Nothing", "DoNothing");
+		autoChooser.addObject("Right Null Zone", "RightScaleNullZoneAuto");
 		// autoChooser.addDefault("Default", new DefaultAuto());
 		// autoChooser.addObject("Center", new CenterToSwitchAuto());
 		// autoChooser.addObject("Left", new LeftAutoTest());
@@ -96,10 +98,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		this.cubeCollector.setCubeCollector(ControlMode.PercentOutput, 0);
-		this.elevator.setTargetPosition(elevator.getCurrentPosition());
+		this.elevator.forceSetTargetPosition(elevator.getCurrentPosition());
 		this.wrist.setTargetPosition(wrist.getCurrentPosition());
 		this.gameState = new GameState(DriverStation.getInstance().getGameSpecificMessage());
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Driver Left Trigger", this.oi.driverController.triggers.getLeft());
+		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.leftStick.getY());
+
 	}
 
 	/**
@@ -143,6 +148,9 @@ public class Robot extends TimedRobot {
 		case "CrossTheLine":
 			autonomousCommand = new FollowArc(new CrossTheLineArc());
 			break;
+		case "RightScaleNullZoneAuto":
+			autonomousCommand = new RightScaleNullZoneAuto(gameState);
+			break;
 		default:
 			autonomousCommand = new FollowArc(new CrossTheLineArc());
 			break;
@@ -183,11 +191,11 @@ public class Robot extends TimedRobot {
 
 		// System.out.println("Wrist Error " +
 		// this.wrist.wristMotor.getClosedLoopError(0));
-		SmartDashboard.putNumber("Dpad value: ", this.oi.driverController.getPOV());
+		/*SmartDashboard.putNumber("Dpad value: ", this.oi.driverController.getPOV());
 		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.leftStick.getY());
 		SmartDashboard.putNumber("Operator Right Stick Y", this.oi.operatorController.rightStick.getY());
 		SmartDashboard.putNumber("Driver Left Stick Y", this.oi.driverController.leftStick.getY());
-		SmartDashboard.putNumber("Driver Right Stick X", this.oi.driverController.rightStick.getX());
+		*/
 
 	}
 

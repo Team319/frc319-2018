@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class JoystickElevator extends Command {
-	
+
 	private int positionIncrement = 200;
 
 	public JoystickElevator() {
@@ -27,16 +27,13 @@ public class JoystickElevator extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 
-		if (!Robot.elevator.isHoldingPosition()) {
-			// joystick control
-			double signal = -Robot.oi.operatorController.leftStick.getY();
-			Robot.elevator.incrementTargetPosition((int)(signal * positionIncrement));
-			Robot.elevator.motionMagicControl();
-			//Robot.elevator.setElevator(ControlMode.PercentOutput, signal, DemandType.ArbitraryFeedForward, Robot.elevator.getArbitraryFeedForward() );
-		} else {
-			// else hold position
-			Robot.elevator.motionMagicControl();
-		}
+		// joystick control
+		double signal = -Robot.oi.operatorController.leftStick.getY();
+		Robot.elevator.incrementTargetPosition((int) (signal * positionIncrement));
+
+		Robot.elevator.motionMagicControl();
+		// Robot.elevator.setElevator(ControlMode.PercentOutput, signal,
+		// DemandType.ArbitraryFeedForward, Robot.elevator.getArbitraryFeedForward() );
 
 		// System.out.println("Elevator Velocity" +
 		// Robot.elevator.elevatorLead.getSelectedSensorVelocity(0));
