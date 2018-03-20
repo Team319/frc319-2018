@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ElevatorGoToSwitchPosition extends Command {
-	
+
 	private int switchPosition = Robot.elevator.getSwitchPosition();
 
 	public ElevatorGoToSwitchPosition() {

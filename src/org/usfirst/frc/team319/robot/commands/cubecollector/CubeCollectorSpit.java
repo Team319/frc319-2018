@@ -27,12 +27,14 @@ public class CubeCollectorSpit extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		System.out.println("Cube collector is spitting");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (joystickControl) {
-			targetSpeed = -Robot.oi.driverController.triggers.getLeft();
+			double spitPower = Robot.oi.driverController.triggers.getLeft();
+			targetSpeed = -(spitPower * spitPower);
 			Robot.cubeCollector.setCubeCollector(ControlMode.PercentOutput, targetSpeed);
 		} else {
 			Robot.cubeCollector.setCubeCollector(ControlMode.PercentOutput, targetSpeed);

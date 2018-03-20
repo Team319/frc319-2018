@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ElevatorGoToCollectPosition extends Command {
-	
+
 	private int targetPosition = Robot.elevator.getCollectPosition();
 
 	public ElevatorGoToCollectPosition() {
@@ -18,7 +18,7 @@ public class ElevatorGoToCollectPosition extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.elevator.setTargetPosition(targetPosition);
+		Robot.elevator.forceSetTargetPosition(targetPosition);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

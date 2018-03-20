@@ -41,7 +41,7 @@ public class BobAxisButton extends Button {
 	static enum ThresholdType {
 		LESS_THAN, GREATER_THAN, EXACT, POV;
 	}
-	
+
 	public void configureThreshold(double threshold) {
 		this.targetVal = threshold;
 	}

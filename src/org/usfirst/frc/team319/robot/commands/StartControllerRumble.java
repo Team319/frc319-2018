@@ -11,7 +11,6 @@
 package org.usfirst.frc.team319.robot.commands;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
-import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -29,7 +28,7 @@ public class StartControllerRumble extends Command {
 		this.rightRumbleStrength = strength;
 		this.controller = controller;
 	}
-	
+
 	public StartControllerRumble(BobXboxController controller, double leftStrength, double rightStrength) {
 		this.leftRumbleStrength = leftStrength;
 		this.rightRumbleStrength = rightStrength;

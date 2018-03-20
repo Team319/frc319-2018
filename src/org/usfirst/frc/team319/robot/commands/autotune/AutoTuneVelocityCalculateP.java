@@ -1,8 +1,8 @@
 package org.usfirst.frc.team319.robot.commands.autotune;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
-import org.usfirst.frc.team319.utils.BobCircularBuffer;
 import org.usfirst.frc.team319.utils.HelperFunctions;
+import org.usfirst.frc.team319.utils.BobCircularBuffer;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 

@@ -9,9 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class JoystickWrist extends Command {
 
+	private int positionIncrement = 50;
+
 	public JoystickWrist() {
-		// Use requires() here to declare subsystem dependencies
 		requires(Robot.wrist);
+
 	}
 
 	// Called just before this Command runs the first time
@@ -21,8 +23,12 @@ public class JoystickWrist extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double signal = -Robot.oi.operatorController.leftStick.getY();
-		Robot.wrist.motionMagicPositionControl(signal);
+
+		// joystick control
+		double signal = Robot.oi.operatorController.rightStick.getY();
+		Robot.wrist.incrementTargetPosition((int) (signal * positionIncrement));
+		Robot.wrist.motionMagicControl();
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

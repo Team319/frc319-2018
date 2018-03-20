@@ -12,10 +12,13 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class GoToDunkPose extends CommandGroup {
 
-	public GoToDunkPose() {
+	public GoToDunkPose(double secondsToWait) {
 
-		addSequential(new WaitCommand(1.0));
-		addSequential(new WristGoToSwitch());
+		if (secondsToWait > 0.0) {
+			addSequential(new WaitCommand(secondsToWait));
+		}
+		
+		addParallel(new WristGoToSwitch());
 		addSequential(new ElevatorGoToDunkPosition());
 		addSequential(new WristGoToDunk());
 

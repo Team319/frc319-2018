@@ -11,7 +11,6 @@
 package org.usfirst.frc.team319.robot.commands;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
-import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -19,13 +18,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class StopControllerRumble extends Command {
-	
+
 	private BobXboxController controller;
-	
+
 	public StopControllerRumble(BobXboxController controller) {
 		this.controller = controller;
 	}
-	
 
 	// Called just before this Command runs the first time
 	protected void initialize() {

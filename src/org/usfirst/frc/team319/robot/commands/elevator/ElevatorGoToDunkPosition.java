@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ElevatorGoToDunkPosition extends Command {
-	
+
 	private int dunkPosition = Robot.elevator.getDunkPosition();
 
 	public ElevatorGoToDunkPosition() {

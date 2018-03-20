@@ -1,13 +1,9 @@
 package org.usfirst.frc.team319.robot.commands;
 
-import java.io.IOException;
-
-import org.json.simple.parser.ParseException;
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.SrxMotionProfile;
 import org.usfirst.frc.team319.models.SrxTrajectory;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.utils.SrxTrajectoryImporter;
 
 import com.ctre.phoenix.motion.MotionProfileStatus;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
@@ -30,7 +26,6 @@ public class FollowTrajectory extends Command {
 	private boolean isFinished = false;
 
 	private SrxTrajectory trajectoryToFollow = null;
-	private SrxTrajectoryImporter importer = new SrxTrajectoryImporter("/home/lvuser/Autos");
 
 	private MotionProfileStatus rightStatus = new MotionProfileStatus();
 	private MotionProfileStatus leftStatus = new MotionProfileStatus();
@@ -57,9 +52,9 @@ public class FollowTrajectory extends Command {
 			leftTalon.processMotionProfileBuffer();
 			rightTalon.processMotionProfileBuffer();
 			leftLastPointSent = manageBuffer(leftTalon, trajectoryToFollow.leftProfile,
-					Robot.drivetrain.LOW_GEAR_PROFILE, leftLastPointSent);
+					Robot.drivetrain.HIGH_GEAR_PROFILE, leftLastPointSent);
 			rightLastPointSent = manageBuffer(rightTalon, trajectoryToFollow.rightProfile,
-					Robot.drivetrain.LOW_GEAR_PROFILE, rightLastPointSent);
+					Robot.drivetrain.HIGH_GEAR_PROFILE, rightLastPointSent);
 		}
 
 		private int manageBuffer(BobTalonSRX talon, SrxMotionProfile prof, int pidfSlot, int lastPointSent) {
@@ -125,17 +120,6 @@ public class FollowTrajectory extends Command {
 		leftTalon.set(ControlMode.MotionProfile, setValue.value);
 		rightTalon.set(ControlMode.MotionProfile, setValue.value);
 
-		if (trajectoryToFollow == null) {
-
-			try {
-				this.trajectoryToFollow = importer.importSrxTrajectory(trajectoryName);
-			} catch (IOException | ParseException e) {
-				System.out.println("Failed to import trajectory.");
-				e.printStackTrace();
-				isFinished = true;
-				return;
-			}
-		}
 		bufferNotifier = new Notifier(new BufferLoader());
 		bufferNotifier.startPeriodic(.005);
 	}
@@ -172,7 +156,7 @@ public class FollowTrajectory extends Command {
 		}
 		boolean leftComplete = leftStatus.activePointValid && leftStatus.isLast;
 		boolean rightComplete = rightStatus.activePointValid && rightStatus.isLast;
-		//System.out.println("Complete: " + leftComplete + "," + rightComplete);
+		// System.out.println("Complete: " + leftComplete + "," + rightComplete);
 		boolean trajectoryComplete = leftComplete && rightComplete;
 		if (trajectoryComplete) {
 			System.out.println("Finished Trajectory");
