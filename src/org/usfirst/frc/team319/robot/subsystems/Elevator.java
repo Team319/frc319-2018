@@ -60,8 +60,10 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 
 	private MotionParameters lowGearUpMotionParameters = new MotionParameters(2600, 2000, lowGearUpGains);
 	private MotionParameters lowGearDownMotionParameters = new MotionParameters(2600, 2000, lowGearDownGains);
-	private MotionParameters highGearUpMotionParameters = new MotionParameters(11000, 4000, highGearUpGains);// 4700
-	private MotionParameters highGearDownMotionParameters = new MotionParameters(6000, 3000, highGearDownGains);
+	private MotionParameters highGearUpMotionParameters = new MotionParameters(11000, 5000, highGearUpGains);// 4700
+	private MotionParameters highGearDownMotionParameters = new MotionParameters(11000, 4000, highGearDownGains);
+	
+	private double highGearPeakOutputReverse = -0.5;
 
 	public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(11, new BobVictorSPX(8), new BobVictorSPX(9),
 			new BobVictorSPX(10));
@@ -136,7 +138,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 
 	public void setHighGear(boolean isHighGear) {
 		if (isHighGear) {
-			this.elevatorLead.configPeakOutputReverse(-0.25);
+			this.elevatorLead.configPeakOutputReverse(highGearPeakOutputReverse);
 			this.arbitraryFeedForward = 0.1;
 		} else {
 			this.elevatorLead.configPeakOutputReverse(-1.0);

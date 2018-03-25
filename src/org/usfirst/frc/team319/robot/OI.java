@@ -14,6 +14,7 @@ import org.usfirst.frc.team319.arcs.FifteenFeetReverseArc;
 import org.usfirst.frc.team319.arcs.FiveFeetAndTurnArc;
 import org.usfirst.frc.team319.arcs.RightWallToLeftScaleArc;
 import org.usfirst.frc.team319.arcs.RightWallToRightScaleArc;
+import org.usfirst.frc.team319.arcs.StraightForwardTuningArc;
 import org.usfirst.frc.team319.arcs.TuningTestAutoArc;
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.paths.FifteenFeetReversePath;
@@ -94,7 +95,7 @@ public class OI {
 		// ---------------test buttons-------------------//
 
 		//this.driverController.xButton.whenPressed(new DoubleSwitchLeft());
-		//this.driverController.xButton.whenPressed(new FollowArc(new TuningTestAutoArc()));
+		this.driverController.xButton.whenPressed(new FollowArc(new RightWallToRightScaleArc()));
 
 		// this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());
 		// this.operatorController.bButton.whenPressed(new ElevatorGoToHomePosition());

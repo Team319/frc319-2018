@@ -41,7 +41,7 @@ public class Drivetrain extends Subsystem {
 	// Mag Encoder Gains
 	private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 0.600, 0.0, 12.00, 0.0763, 0); //
 	private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.60, 0.0, 2.50, 0.05115, 0); // d was 2.5
-	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 2.5, 0.005, 25.0, 0.0, 20); // i was 0.005, izone was 20
+	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 1.5, 0.00, 750.0, 0.0, 0); // i was 0.005, izone was 20
 
 	private BobTalonSRX leftFollower = new BobTalonSRX(7);
 	private BobTalonSRX rightFollower = new BobTalonSRX(2);
@@ -57,7 +57,7 @@ public class Drivetrain extends Subsystem {
 		leftLead.setSensorPhase(false);
 
 		rightLead.setInverted(false);// true
-		leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
+		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
 		rightLead.setSensorPhase(false);
 
 		leftLead.enableCurrentLimit(false);
@@ -193,11 +193,11 @@ public class Drivetrain extends Subsystem {
 		// SmartDashboard.putNumber("Right Drive Velocity",
 		// getRightDriveLeadVelocity());]
 		SmartDashboard.putNumber("Drivetrain Angle", getAngle());
-		//SmartDashboard.putNumber("Angle Error", rightLead.getClosedLoopError(1));
+		SmartDashboard.putNumber("Angle Error", rightLead.getClosedLoopError(1));
 		SmartDashboard.putNumber("Drivetrain Velocity", getVelocity());
 		SmartDashboard.putNumber("Drivetrain Distance", getDistance());
-		//SmartDashboard.putNumber("Left Lead Current", leftLead.getOutputCurrent());
-		//SmartDashboard.putNumber("Left Follower Current", leftFollower.getOutputCurrent());
+		SmartDashboard.putNumber("Left Lead Current", leftLead.getOutputCurrent());
+		SmartDashboard.putNumber("Left Follower Current", leftFollower.getOutputCurrent());
 		//SmartDashboard.putNumber("Right Lead Current", rightLead.getOutputCurrent());
 		//SmartDashboard.putNumber("Right Follower Current", rightFollower.getOutputCurrent());
 		//SmartDashboard.putNumber("Integral Accumulator", rightLead.getIntegralAccumulator(1));

@@ -2,10 +2,18 @@ package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
 import org.usfirst.frc.team319.arcs.LeftWallToLeftSwitchArc;
 import org.usfirst.frc.team319.arcs.LeftWallToLeftSwitchPt2Arc;
+import org.usfirst.frc.team319.arcs.LeftWallToRightScaleArc;
+import org.usfirst.frc.team319.arcs.ScaleToSwitchCubeRightSideArc;
+import org.usfirst.frc.team319.arcs.SwitchCubeToScaleRightSideArc;
+import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
+import org.usfirst.frc.team319.robot.commands.GoToCollectPose;
+import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToDunkPose;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPose;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
+import org.usfirst.frc.team319.robot.commands.pneumatics.CloseCollector;
+import org.usfirst.frc.team319.robot.commands.wrist.WristGoToSwitch;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -16,10 +24,21 @@ public class LeftSideRightScale extends CommandGroup {
 
 	public LeftSideRightScale() {
 
-		addParallel(new GoToSwitchPose());
-		addSequential(new FollowArc(new LeftWallToLeftSwitchArc()));
-		addSequential(new FollowArc(new LeftWallToLeftSwitchPt2Arc()));
-		addSequential(new CubeCollectorSpit(-1.0));
+		
+		addSequential(new FollowArc(new LeftWallToRightScaleArc()));
+		addSequential(new GoToDunkPose(0.0));
+		addSequential(new CubeCollectorSpit(-0.75), 0.5);
+		addSequential(new WristGoToSwitch());
+		addSequential(new GoToCollectPose());
+		addParallel(new AutoCollectCubeOpened());
+		addSequential(new FollowArc(new ScaleToSwitchCubeRightSideArc()));
+		addSequential(new CloseCollector());
+		addParallel(new GoToDunkPose(0.0));
+		addSequential(new FollowArc(new SwitchCubeToScaleRightSideArc()));
+		addSequential(new GoToDunkPose(0.0));
+		addSequential(new CubeCollectorSpit(-0.75), 0.5);
+		addSequential(new WristGoToSwitch());
+		addSequential(new GoToCollectPose());
 
 	}
 }
