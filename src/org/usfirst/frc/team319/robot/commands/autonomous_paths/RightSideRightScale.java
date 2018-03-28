@@ -31,10 +31,11 @@ public class RightSideRightScale extends CommandGroup {
 
 	public RightSideRightScale() {
 
+		addSequential(new PrintCommand("Right wall to right scale"));
 		addSequential(new FollowArc(new RightWallToRightScaleArc()));
 		addSequential(new GoToDunkPose(0.0));
 		addSequential(new CubeCollectorSpit(-0.75), 0.5);
-		addSequential(new GoToCollectPose());
+		addSequential(new GoToCollectPose(0.0));
 		addParallel(new AutoCollectCubeOpened());
 		addSequential(new FollowArc(new ScaleToSwitchCubeRightSideArc()));
 		/*

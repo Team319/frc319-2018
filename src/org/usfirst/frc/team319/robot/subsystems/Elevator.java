@@ -50,8 +50,8 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	private int targetPosition = 0;
 	private double arbitraryFeedForward = 0.0;
 
-	private final static int onTargetThreshold = 100;
-
+	private final static int onTargetThreshold = 500; // changed to 500 from 100 for testing on practice field
+	
 	private final SRXGains lowGearUpGains = new SRXGains(ELEVATOR_LOW_UP, 0.560, 0.0, 5.600, 0.620, 100);
 	private final SRXGains lowGearDownGains = new SRXGains(ELEVATOR_LOW_DOWN, 0.560, 0.0, 5.600, 0.427, 0);
 

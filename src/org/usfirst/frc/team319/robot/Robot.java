@@ -13,6 +13,7 @@ import org.usfirst.frc.team319.robot.commands.FollowArc;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.CenterAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.DefaultAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftAuto;
+import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftScaleNullZoneAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightScaleNullZoneAuto;
 import org.usfirst.frc.team319.robot.subsystems.CubeCollector;
@@ -71,6 +72,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("Cross The Line", "CrossTheLine");
 		autoChooser.addObject("Do Nothing", "DoNothing");
 		autoChooser.addObject("Right Null Zone", "RightScaleNullZoneAuto");
+		autoChooser.addObject("Left Null Zone", "LeftScaleNullZoneAuto");
 		// autoChooser.addDefault("Default", new DefaultAuto());
 		// autoChooser.addObject("Center", new CenterToSwitchAuto());
 		// autoChooser.addObject("Left", new LeftAutoTest());
@@ -150,6 +152,9 @@ public class Robot extends TimedRobot {
 			break;
 		case "RightScaleNullZoneAuto":
 			autonomousCommand = new RightScaleNullZoneAuto(gameState);
+			break;
+		case "LeftScaleNullZoneAuto":
+			autonomousCommand = new LeftScaleNullZoneAuto(gameState);
 			break;
 		default:
 			autonomousCommand = new FollowArc(new CrossTheLineArc());

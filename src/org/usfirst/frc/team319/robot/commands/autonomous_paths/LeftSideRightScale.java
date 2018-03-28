@@ -29,7 +29,7 @@ public class LeftSideRightScale extends CommandGroup {
 		addSequential(new GoToDunkPose(0.0));
 		addSequential(new CubeCollectorSpit(-0.75), 0.5);
 		addSequential(new WristGoToSwitch());
-		addSequential(new GoToCollectPose());
+		addSequential(new GoToCollectPose(0.0));
 		addParallel(new AutoCollectCubeOpened());
 		addSequential(new FollowArc(new ScaleToSwitchCubeRightSideArc()));
 		addSequential(new CloseCollector());
@@ -38,7 +38,7 @@ public class LeftSideRightScale extends CommandGroup {
 		addSequential(new GoToDunkPose(0.0));
 		addSequential(new CubeCollectorSpit(-0.75), 0.5);
 		addSequential(new WristGoToSwitch());
-		addSequential(new GoToCollectPose());
+		addSequential(new GoToCollectPose(0.0));
 
 	}
 }

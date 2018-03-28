@@ -8,6 +8,8 @@ import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToDunkPose;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
+import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
+import org.usfirst.frc.team319.robot.commands.cubecollector.HoldCube;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToCollectPosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToHomePosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToSwitchPosition;
@@ -26,19 +28,18 @@ public class LeftSideLeftScale extends CommandGroup {
 
 	public LeftSideLeftScale() {
 
-		addParallel(new GoToDunkPose(1.0));
+		addParallel(new GoToDunkPose(1.5));
 		addSequential(new FollowArc(new LeftWallToLeftScaleArc()));
 		addSequential(new CubeCollectorSpit(-0.75), 0.5);
 		addSequential(new WristGoToSwitch());
-		addParallel(new WristGoToParallel());
 		addSequential(new ElevatorGoToCollectPosition());
 		addParallel(new AutoCollectCubeOpened());
 		addSequential(new FollowArc(new ScaleToSwitchCubeLeftSideArc()));
 		addSequential(new CloseCollector());
-		addParallel(new GoToDunkPose(0.0));
+		addSequential(new HoldCube());
 		addSequential(new FollowArc(new SwitchCubeToScaleLeftSideArc()));
 		addSequential(new GoToDunkPose(0.0));
-		addSequential(new CubeCollectorSpit(-0.75));
+		addSequential(new CubeCollectorSpit(-0.75), 0.5);
 		addSequential(new WristGoToSwitch());
 		addSequential(new GoToCollectPose());
 	}

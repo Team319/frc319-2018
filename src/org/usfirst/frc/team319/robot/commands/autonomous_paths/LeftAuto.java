@@ -15,8 +15,8 @@ public class LeftAuto extends CommandGroup {
 
 	public LeftAuto(GameState gameState) {
 
-		addParallel(new CloseCollector());
-		addParallel(new ElevatorShiftUp());
+		addSequential(new CloseCollector());
+		addSequential(new ElevatorShiftUp());
 		addSequential(new DrivetrainShiftUp());
 
 		if (gameState.scaleSide == Side.LEFT) {

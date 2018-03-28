@@ -1,7 +1,10 @@
 package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
-import org.usfirst.frc.team319.arcs.CenterToLeftScaleArc;
-import org.usfirst.frc.team319.arcs.CenterToRightScaleArc;
+import org.usfirst.frc.team319.arcs.CenterToLeftScalePt1Arc;
+import org.usfirst.frc.team319.arcs.CenterToLeftScalePt2Arc;
+import org.usfirst.frc.team319.arcs.CenterToRightScalePt1Arc;
+import org.usfirst.frc.team319.arcs.CenterToRightScalePt2Arc;
+import org.usfirst.frc.team319.arcs.CenterToRightScaleReverseArc;
 import org.usfirst.frc.team319.arcs.CenterToRightSwitchArc;
 import org.usfirst.frc.team319.arcs.CenterToRightSwitchPt2Arc;
 import org.usfirst.frc.team319.arcs.CenterToRightSwitchPt3Arc;
@@ -13,8 +16,10 @@ import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
+import org.usfirst.frc.team319.robot.commands.GoToCollectPose;
 import org.usfirst.frc.team319.robot.commands.PrintCommand;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.AutoGoToSwitchPose;
+import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToDunkPose;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.HoldCube;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToCollectPosition;
@@ -33,19 +38,20 @@ public class DoubleSwitchRight extends CommandGroup {
 		addSequential(new PrintCommand("Right"));
 		addParallel(new AutoGoToSwitchPose());
 		addSequential(new FollowArc(new CenterToRightSwitchArc()));
-		addSequential(new CubeCollectorSpit(-0.5), 1.0);
+		addSequential(new CubeCollectorSpit(-0.5), 0.2);
+		addParallel(new GoToCollectPose(1.0));
 		addSequential(new FollowArc(new CenterToRightSwitchPt2Arc()));
-		addSequential(new ElevatorGoToCollectPosition());
 		addParallel(new AutoCollectCubeOpened());
 		addSequential(new FollowArc(new CenterToRightSwitchPt3Arc()));
 		addParallel(new CloseCollector());
 		addSequential(new AutoCollectCubeClosed());
-		addSequential(new FollowArc(new CenterToRightSwitchPt4Arc()));
 		
 		if (gamestate.scaleSide == Side.LEFT) {
-			addSequential(new FollowArc(new CenterToLeftScaleArc()));
-		}else {
-			addSequential(new FollowArc(new CenterToRightScaleArc()));
+			addSequential(new FollowArc(new CenterToLeftScalePt1Arc()));
+			addSequential(new FollowArc(new CenterToLeftScalePt2Arc()));		
+			}else {
+			addSequential(new FollowArc(new CenterToRightScalePt1Arc()));
+			addSequential(new FollowArc(new CenterToRightScalePt2Arc()));
 		}
 		/*addParallel(new CloseCollector());
 		addParallel(new HoldCube());
