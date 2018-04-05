@@ -24,7 +24,7 @@ public class CubeCollector extends Subsystem {
 	AnalogInput collectorDistanceSensor = new AnalogInput(0);
 
 	private static final double cubeCollectedOpenThreshhold = 1.5;
-	private double cubeCollectedClosedThreshold = 2.2;
+	private double cubeCollectedClosedThreshold = 2.0;
 	private static final double cubeLostDistanceThreshhold = 1.5;
 	private static final double cubeCloseThreshold = 1.0;
 

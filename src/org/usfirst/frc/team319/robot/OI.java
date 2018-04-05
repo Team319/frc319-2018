@@ -12,6 +12,7 @@ import org.usfirst.frc.team319.arcs.CenterToRightSwitchArc;
 import org.usfirst.frc.team319.arcs.CrossTheLineArc;
 import org.usfirst.frc.team319.arcs.FifteenFeetReverseArc;
 import org.usfirst.frc.team319.arcs.FiveFeetAndTurnArc;
+import org.usfirst.frc.team319.arcs.LeftSwitchToFirstCubePt2Arc;
 import org.usfirst.frc.team319.arcs.LeftWallToLeftScaleNullZoneArc;
 import org.usfirst.frc.team319.arcs.RightWallToLeftScaleArc;
 import org.usfirst.frc.team319.arcs.RightWallToRightScaleArc;
@@ -24,10 +25,14 @@ import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
 import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.GoToClimbPose;
+import org.usfirst.frc.team319.robot.commands.GoToScaleBottomPose;
+import org.usfirst.frc.team319.robot.commands.GoToScaleMiddlePose;
 import org.usfirst.frc.team319.robot.commands.GoToScalePose;
+import org.usfirst.frc.team319.robot.commands.GoToScaleTopPose;
 import org.usfirst.frc.team319.robot.commands.TeleopGoToDunkPose;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.DoubleSwitchLeft;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightSideLeftScale;
+import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToDunkPose;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPose;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
@@ -63,8 +68,8 @@ public class OI {
 
 		driverController.leftTriggerButton.configureThreshold(0.075);
 
-		driverController.rightBumper.whenPressed(new AutoCollectCubeOpened());
-		driverController.leftBumper.whenPressed(new AutoCollectCubeClosed());
+		driverController.rightBumper.whenPressed(new AutoCollectCubeOpened(true));
+		driverController.leftBumper.whenPressed(new AutoCollectCubeClosed(true));
 		driverController.rightTriggerButton.whenPressed(new CollectorToggle());
 		driverController.leftTriggerButton.whileHeld(new CubeCollectorSpit());
 		driverController.bButton.whenPressed(new CubeCollectorStopCollectorAndRumble());
@@ -75,14 +80,14 @@ public class OI {
 
 		operatorController = new BobXboxController(1, 0.1, 0.125);
 		
-		operatorController.leftTriggerButton.whenPressed(new ElevatorGoToScaleMiddlePosition());
+		operatorController.leftTriggerButton.whenPressed(new GoToScaleMiddlePose());
 		operatorController.rightTriggerButton.whenPressed(new GoToCollectPose());
 		operatorController.leftBumper.whenPressed(new WristGoHome());
 		operatorController.rightBumper.whenPressed(new WristGoToExchange());
-		operatorController.aButton.whenPressed(new TeleopGoToDunkPose());
-		operatorController.bButton.whenPressed(new ElevatorGoToScaleBottomPosition());
+		operatorController.aButton.whenPressed(new GoToDunkPose(0.0));
+		operatorController.bButton.whenPressed(new GoToScaleBottomPose());
 		operatorController.xButton.whenPressed(new GoToSwitchPose(0.0));
-		operatorController.yButton.whenPressed(new ElevatorGoToScaleTopPosition());
+		operatorController.yButton.whenPressed(new GoToScaleTopPose());
 		operatorController.startButton.whenPressed(new ElevatorShiftToggle());
 		
 		
@@ -96,7 +101,7 @@ public class OI {
 		// ---------------test buttons-------------------//
 
 		//this.driverController.xButton.whenPressed(new DoubleSwitchLeft());
-		this.driverController.xButton.whenPressed(new FollowArc(new LeftWallToLeftScaleNullZoneArc()));
+		this.driverController.xButton.whenPressed(new FollowArc(new LeftSwitchToFirstCubePt2Arc()));
 
 		// this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());
 		// this.operatorController.bButton.whenPressed(new ElevatorGoToHomePosition());

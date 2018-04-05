@@ -41,10 +41,10 @@ public class DoubleSwitchRight extends CommandGroup {
 		addSequential(new CubeCollectorSpit(-0.5), 0.2);
 		addParallel(new GoToCollectPose(1.0));
 		addSequential(new FollowArc(new CenterToRightSwitchPt2Arc()));
-		addParallel(new AutoCollectCubeOpened());
+		addParallel(new AutoCollectCubeOpened(true));
 		addSequential(new FollowArc(new CenterToRightSwitchPt3Arc()));
 		addParallel(new CloseCollector());
-		addSequential(new AutoCollectCubeClosed());
+		addSequential(new AutoCollectCubeClosed(true));
 		
 		if (gamestate.scaleSide == Side.LEFT) {
 			addSequential(new FollowArc(new CenterToLeftScalePt1Arc()));

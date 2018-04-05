@@ -31,7 +31,7 @@ public class LeftSideRightSwitchLeftScale extends CommandGroup {
 		addParallel(new WristGoToParallel());
 		addParallel(new OpenCollector());
 		addSequential(new FollowArc(new ScaleToSwitchCubeLeftSideArc()));
-		addSequential(new AutoCollectCubeOpened());
+		addSequential(new AutoCollectCubeOpened(true));
 		addParallel(new GoToDunkPose(0.0));
 		addSequential(new FollowArc(new BackwardsThreeFeetArc()));
 		addSequential(new CubeCollectorSpit(-1.0), 0.5);

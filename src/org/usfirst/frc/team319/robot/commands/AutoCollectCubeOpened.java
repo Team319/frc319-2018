@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class AutoCollectCubeOpened extends CommandGroup {
 
-	public AutoCollectCubeOpened() {
+	public AutoCollectCubeOpened(boolean liftWristAfterCubeCollected) {
 
 		addParallel(new StartDriverControllerRumble(1.0));
 		addParallel(new StartOperatorControllerRumble(1.0));
@@ -30,7 +30,10 @@ public class AutoCollectCubeOpened extends CommandGroup {
 		//addSequential(new CloseCollector());
 		addSequential(new WaitCommand(0.2));
 		addSequential(new HoldCube());
-		addSequential(new WristGoToSwitch());
+		
+		if (liftWristAfterCubeCollected) {
+			addSequential(new WristGoToSwitch());
+		}
 
 	}
 }

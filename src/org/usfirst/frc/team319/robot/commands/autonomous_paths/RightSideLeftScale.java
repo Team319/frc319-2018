@@ -28,7 +28,7 @@ public class RightSideLeftScale extends CommandGroup {
 		addSequential(new TeleopGoToDunkPose());
 		addSequential(new CubeCollectorSpit(-0.75), 0.5);
 		addSequential(new GoToCollectPose(0.0));
-		addParallel(new AutoCollectCubeOpened());
+		addParallel(new AutoCollectCubeOpened(true));
 		addSequential(new FollowArc(new ScaleToSwitchCubeLeftSideArc()));
 		addSequential(new WristGoToSwitch());
 		addParallel(new GoToDunkPose(0.0));

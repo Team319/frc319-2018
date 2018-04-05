@@ -11,11 +11,13 @@ import org.usfirst.frc.team319.arcs.CrossTheLineArc;
 import org.usfirst.frc.team319.models.GameState;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.CenterAuto;
+import org.usfirst.frc.team319.robot.commands.autonomous_paths.CenterThreeCubeAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.DefaultAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftScaleNullZoneAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightScaleNullZoneAuto;
+import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainBrakeMode;
 import org.usfirst.frc.team319.robot.subsystems.CubeCollector;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team319.robot.subsystems.Elevator;
@@ -23,6 +25,7 @@ import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team319.robot.subsystems.Wrist;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -67,6 +70,7 @@ public class Robot extends TimedRobot {
 
 		autoChooser = new SendableChooser<String>();
 		autoChooser.addDefault("Center Auto", "CenterAuto");
+		autoChooser.addObject("Center 2.5 Cube", "CenterThreeCubeAuto");
 		autoChooser.addObject("Left Auto", "LeftAuto");
 		autoChooser.addObject("Right Auto", "RightAuto");
 		autoChooser.addObject("Cross The Line", "CrossTheLine");
@@ -132,11 +136,17 @@ public class Robot extends TimedRobot {
 		 * ExampleCommand(); break; }
 		 */
 		// SmartDashboard.putData("Auto mode", m_chooser);
+		
+		drivetrain.setNeutralMode(NeutralMode.Brake);
+		
 		String selectedAuto = (String) autoChooser.getSelected();
 		System.out.println(selectedAuto);
 		switch (selectedAuto) {
 		case "CenterAuto":
 			autonomousCommand = new CenterAuto(gameState);
+			break;
+		case "CenterThreeCubeAuto":
+			autonomousCommand = new CenterThreeCubeAuto(gameState);
 			break;
 		case "LeftAuto":
 			autonomousCommand = new LeftAuto(gameState);
@@ -185,6 +195,9 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		
+		drivetrain.setNeutralMode(NeutralMode.Coast);
+		
 	}
 
 	/**
