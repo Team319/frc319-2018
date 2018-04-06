@@ -1,7 +1,10 @@
 package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
+import java.util.List;
+
 import org.usfirst.frc.team319.arcs.CenterToLeftSwitchArc;
 import org.usfirst.frc.team319.arcs.CenterToRightScaleArc;
+import org.usfirst.frc.team319.arcs.CenterToRightScaleReverseArcStatic;
 import org.usfirst.frc.team319.arcs.CenterToRightSwitchArc;
 import org.usfirst.frc.team319.arcs.FirstCubeToLeftSwitchPt1Arc;
 import org.usfirst.frc.team319.arcs.FirstCubeToLeftSwitchPt2Arc;
@@ -24,8 +27,10 @@ import org.usfirst.frc.team319.arcs.RightSwitchToSecondCubePt2Arc;
 import org.usfirst.frc.team319.arcs.TripleCubeCenterToRightSwitchArc;
 import org.usfirst.frc.team319.models.GameState;
 import org.usfirst.frc.team319.models.GameState.Side;
+import org.usfirst.frc.team319.models.Arc;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
+import org.usfirst.frc.team319.robot.commands.FollowStaticArc;
 import org.usfirst.frc.team319.robot.commands.GoToCollectPose;
 import org.usfirst.frc.team319.robot.commands.GoToCollectSecondLevelCubePose;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPose;
@@ -41,6 +46,7 @@ public class RightSwitchTripleCube extends CommandGroup {
     public RightSwitchTripleCube(GameState gameState) {
        
     	addParallel(new GoToSwitchPose(0.0));
+    	addSequential(new FollowStaticArc(CenterToRightScaleReverseArcStatic.profilePoints));
     	addSequential(new FollowArc(new TripleCubeCenterToRightSwitchArc()));
     	addParallel(new CubeCollectorSpit(-.75), 0.2);
     	addSequential(new FollowArc(new RightSwitchToFirstCubePt1Arc()));
