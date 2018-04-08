@@ -41,7 +41,7 @@ public class Drivetrain extends Subsystem {
 	// Mag Encoder Gains
 	private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 0.600, 0.0, 12.00, 0.0763, 0); //
 	private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.60, 0.0, 2.50, 0.05115, 0); // d was 2.5
-	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 2.5, 0.00, 25.0, 0.0, 0); // i was 0.005, izone was 20
+	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 1.8, 0.00, 50.0, 0.0, 0); // i was 0.005, izone was 20
 
 	private BobTalonSRX leftFollower = new BobTalonSRX(7);
 	private BobTalonSRX rightFollower = new BobTalonSRX(2);
@@ -181,6 +181,10 @@ public class Drivetrain extends Subsystem {
 
 	public double getVelocity() {
 		return rightLead.getPrimarySensorVelocity();
+	}
+	
+	public void resetPigeon() {
+		this.pigeon.setYaw(0.0, 0);
 	}
 
 	@Override

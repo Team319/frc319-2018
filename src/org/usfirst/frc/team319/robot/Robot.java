@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team319.robot;
 
-import org.usfirst.frc.team319.arcs.CenterToRightScaleReverseArcStatic;
 import org.usfirst.frc.team319.arcs.CrossTheLineArc;
 import org.usfirst.frc.team319.models.Arc;
 import org.usfirst.frc.team319.models.GameState;
@@ -100,6 +99,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
+		
+		drivetrain.setNeutralMode(NeutralMode.Coast);
 
 	}
 
@@ -112,7 +113,8 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Driver Left Trigger", this.oi.driverController.triggers.getLeft());
 		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.leftStick.getY());
-
+		
+		
 	}
 
 	/**
@@ -140,6 +142,7 @@ public class Robot extends TimedRobot {
 		// SmartDashboard.putData("Auto mode", m_chooser);
 		
 		drivetrain.setNeutralMode(NeutralMode.Brake);
+		drivetrain.resetPigeon();
 		
 		String selectedAuto = (String) autoChooser.getSelected();
 		System.out.println(selectedAuto);

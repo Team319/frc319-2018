@@ -21,9 +21,17 @@ public class CenterThreeCubeAuto extends CommandGroup {
 		
 
 		if (gameState.mySwitchSide == Side.LEFT) {
-			addSequential(new LeftSwitchTripleCube(gameState));
+			if (gameState.scaleSide == Side.LEFT) {
+				addSequential(new DoubleSwitchLeft(gameState));
+			}else {
+				addSequential(new LeftSwitchTripleCube(gameState));
+			}
 		} else {
-			addSequential(new RightSwitchTripleCube(gameState));
+			if (gameState.scaleSide == Side.LEFT) {
+				addSequential(new RightSwitchTripleCube(gameState));
+			}else {
+				addSequential(new DoubleSwitchRight(gameState));
+			}
 		
 		}
 	}

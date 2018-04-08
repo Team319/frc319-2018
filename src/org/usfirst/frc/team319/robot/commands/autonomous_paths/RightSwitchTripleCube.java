@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.usfirst.frc.team319.arcs.CenterToLeftSwitchArc;
 import org.usfirst.frc.team319.arcs.CenterToRightScaleArc;
-import org.usfirst.frc.team319.arcs.CenterToRightScaleReverseArcStatic;
 import org.usfirst.frc.team319.arcs.CenterToRightSwitchArc;
 import org.usfirst.frc.team319.arcs.FirstCubeToLeftSwitchPt1Arc;
 import org.usfirst.frc.team319.arcs.FirstCubeToLeftSwitchPt2Arc;
@@ -12,13 +11,11 @@ import org.usfirst.frc.team319.arcs.FirstCubeToRightSwitchPt1Arc;
 import org.usfirst.frc.team319.arcs.FirstCubeToRightSwitchPt2Arc;
 import org.usfirst.frc.team319.arcs.LeftSecondCubeToLeftScaleArc;
 import org.usfirst.frc.team319.arcs.LeftSecondCubeToRightScalePt1Arc;
-import org.usfirst.frc.team319.arcs.LeftSecondCubeToRightScalePt2Arc;
 import org.usfirst.frc.team319.arcs.LeftSwitchToFirstCubePt1Arc;
 import org.usfirst.frc.team319.arcs.LeftSwitchToFirstCubePt2Arc;
 import org.usfirst.frc.team319.arcs.LeftSwitchToSecondCubePt1Arc;
 import org.usfirst.frc.team319.arcs.LeftSwitchToSecondCubePt2Arc;
 import org.usfirst.frc.team319.arcs.RightSecondCubeToLeftScalePt1Arc;
-import org.usfirst.frc.team319.arcs.RightSecondCubeToLeftScalePt2Arc;
 import org.usfirst.frc.team319.arcs.RightSecondCubeToRightScaleArc;
 import org.usfirst.frc.team319.arcs.RightSwitchToFirstCubePt1Arc;
 import org.usfirst.frc.team319.arcs.RightSwitchToFirstCubePt2Arc;
@@ -46,7 +43,6 @@ public class RightSwitchTripleCube extends CommandGroup {
     public RightSwitchTripleCube(GameState gameState) {
        
     	addParallel(new GoToSwitchPose(0.0));
-    	addSequential(new FollowStaticArc(CenterToRightScaleReverseArcStatic.profilePoints));
     	addSequential(new FollowArc(new TripleCubeCenterToRightSwitchArc()));
     	addParallel(new CubeCollectorSpit(-.75), 0.2);
     	addSequential(new FollowArc(new RightSwitchToFirstCubePt1Arc()));
@@ -63,8 +59,7 @@ public class RightSwitchTripleCube extends CommandGroup {
     	addSequential(new FollowArc(new RightSwitchToSecondCubePt2Arc()));
 
     	if (gameState.scaleSide == Side.LEFT) {
-			addSequential(new FollowArc(new RightSecondCubeToLeftScalePt1Arc()));
-			addSequential(new FollowArc(new RightSecondCubeToLeftScalePt2Arc()));
+			
 		}else {
 			addSequential(new FollowArc(new RightSecondCubeToRightScaleArc()));
 		}

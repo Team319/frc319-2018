@@ -1,6 +1,5 @@
 package org.usfirst.frc.team319.robot.commands;
 
-import org.usfirst.frc.team319.arcs.CenterToRightScaleReverseArcStatic;
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.Arc;
 import org.usfirst.frc.team319.models.SrxMotionProfile;
