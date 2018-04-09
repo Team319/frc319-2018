@@ -6,6 +6,7 @@ import org.usfirst.frc.team319.robot.commands.pneumatics.CompressorRun;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -13,13 +14,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Pneumatics extends Subsystem {
 
 	// public boolean isCollectorSolenoidExtended;
-
+	public boolean isForkliftDeployed = false;
+	
 	Compressor compressor = new Compressor(0);
 
 	DoubleSolenoid elevatorShifter = new DoubleSolenoid(0, 1);
 	DoubleSolenoid drivetrainShifter = new DoubleSolenoid(2, 3);
 	DoubleSolenoid collectorSolenoid = new DoubleSolenoid(5, 4);
-	DoubleSolenoid winchBrakeShifter = new DoubleSolenoid(6, 7);
+	DoubleSolenoid forkliftsolenoid = new DoubleSolenoid(6, 7);
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -53,12 +55,14 @@ public class Pneumatics extends Subsystem {
 		Robot.elevator.setHighGear(false);
 	}
 
-	public void winchBreakShiftUp() {
-		this.winchBrakeShifter.set(DoubleSolenoid.Value.kForward);
+	public void forkliftDeploy() {
+		this.forkliftsolenoid.set(DoubleSolenoid.Value.kForward);
+		this.isForkliftDeployed = true;
 	}
 
-	public void winchBreakShiftDown() {
-		this.winchBrakeShifter.set(DoubleSolenoid.Value.kReverse);
+	public void forkliftRetract() {
+		this.forkliftsolenoid.set(DoubleSolenoid.Value.kReverse);
+		this.isForkliftDeployed = false;
 	}
 
 	public void openCollector() {
@@ -69,6 +73,12 @@ public class Pneumatics extends Subsystem {
 	public void closeCollector() {
 		this.collectorSolenoid.set(DoubleSolenoid.Value.kReverse);
 		Robot.cubeCollector.setIsOpen(false);
+	}
+	
+	@Override
+	public void periodic() {
+		
+		SmartDashboard.putBoolean("isForkliftDeployed", isForkliftDeployed);	
 	}
 
 }

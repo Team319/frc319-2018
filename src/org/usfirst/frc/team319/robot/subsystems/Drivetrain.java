@@ -29,6 +29,7 @@ public class Drivetrain extends Subsystem {
 	public static int LOW_GEAR_PROFILE = 2;
 	public static int HIGH_GEAR_PROFILE = 0;
 	public static int ROTATION_PROFILE = 1;
+	public static int ROTATION_PROFILE_CROSS_THE_FIELD = 1;
 
 	// greyhill gains
 	// private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 2.400, 0.0,
@@ -41,7 +42,12 @@ public class Drivetrain extends Subsystem {
 	// Mag Encoder Gains
 	private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 0.600, 0.0, 12.00, 0.0763, 0); //
 	private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.60, 0.0, 2.50, 0.05115, 0); // d was 2.5
-	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 1.8, 0.00, 50.0, 0.0, 0); // i was 0.005, izone was 20
+	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 1.8, 0.00, 50.0, 0.0, 0); // Switch and near scale
+																								// rotation gains
+	private SRXGains rotationGainsCrossField = new SRXGains(ROTATION_PROFILE_CROSS_THE_FIELD, 1.6, 0.00, 50.0, 0.0, 0); // opposite
+																														// switch
+																														// rotation
+																														// gains
 
 	private BobTalonSRX leftFollower = new BobTalonSRX(7);
 	private BobTalonSRX rightFollower = new BobTalonSRX(2);
@@ -105,10 +111,18 @@ public class Drivetrain extends Subsystem {
 	public void drive(ControlMode controlMode, double left, double right) {
 		this.leftLead.set(controlMode, left);
 		this.rightLead.set(controlMode, right);
-	} 
+	}
 
 	public void drive(ControlMode controlMode, DriveSignal driveSignal) {
 		this.drive(controlMode, driveSignal.getLeft(), driveSignal.getRight());
+	}
+
+	public void setCrossTheFieldRotationSRXGains() {
+		rightLead.selectProfileSlot(ROTATION_PROFILE_CROSS_THE_FIELD);
+	}
+
+	public void setDefaultRotationSRXGains() {
+		rightLead.selectProfileSlot(ROTATION_PROFILE);
 	}
 
 	public double getLeftDriveLeadDistance() {
@@ -182,7 +196,7 @@ public class Drivetrain extends Subsystem {
 	public double getVelocity() {
 		return rightLead.getPrimarySensorVelocity();
 	}
-	
+
 	public void resetPigeon() {
 		this.pigeon.setYaw(0.0, 0);
 	}
@@ -202,8 +216,10 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("Drivetrain Distance", getDistance());
 		SmartDashboard.putNumber("Left Lead Current", leftLead.getOutputCurrent());
 		SmartDashboard.putNumber("Left Follower Current", leftFollower.getOutputCurrent());
-		//SmartDashboard.putNumber("Right Lead Current", rightLead.getOutputCurrent());
-		//SmartDashboard.putNumber("Right Follower Current", rightFollower.getOutputCurrent());
-		//SmartDashboard.putNumber("Integral Accumulator", rightLead.getIntegralAccumulator(1));
+		// SmartDashboard.putNumber("Right Lead Current", rightLead.getOutputCurrent());
+		// SmartDashboard.putNumber("Right Follower Current",
+		// rightFollower.getOutputCurrent());
+		// SmartDashboard.putNumber("Integral Accumulator",
+		// rightLead.getIntegralAccumulator(1));
 	}
 }

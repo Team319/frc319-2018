@@ -7,53 +7,28 @@
 
 package org.usfirst.frc.team319.robot;
 
-import org.usfirst.frc.team319.arcs.CenterToLeftSwitchArc;
-import org.usfirst.frc.team319.arcs.CenterToRightSwitchArc;
-import org.usfirst.frc.team319.arcs.CrossTheLineArc;
-import org.usfirst.frc.team319.arcs.FifteenFeetReverseArc;
-import org.usfirst.frc.team319.arcs.FiveFeetAndTurnArc;
 import org.usfirst.frc.team319.arcs.LeftSwitchToFirstCubePt2Arc;
-import org.usfirst.frc.team319.arcs.LeftWallToLeftScaleNullZoneArc;
-import org.usfirst.frc.team319.arcs.RightWallToLeftScaleArc;
-import org.usfirst.frc.team319.arcs.RightWallToRightScaleArc;
-import org.usfirst.frc.team319.arcs.StraightForwardTuningArc;
-import org.usfirst.frc.team319.arcs.TuningTestAutoArc;
 import org.usfirst.frc.team319.controllers.BobXboxController;
-import org.usfirst.frc.team319.paths.FifteenFeetReversePath;
-import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosedCurrentSensing;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
-import org.usfirst.frc.team319.robot.commands.FollowTrajectory;
 import org.usfirst.frc.team319.robot.commands.GoToClimbPose;
 import org.usfirst.frc.team319.robot.commands.GoToScaleBottomPose;
 import org.usfirst.frc.team319.robot.commands.GoToScaleMiddlePose;
-import org.usfirst.frc.team319.robot.commands.GoToScalePose;
 import org.usfirst.frc.team319.robot.commands.GoToScaleTopPose;
-import org.usfirst.frc.team319.robot.commands.TeleopGoToDunkPose;
-import org.usfirst.frc.team319.robot.commands.autonomous_paths.DoubleSwitchLeft;
-import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightSideLeftScale;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToDunkPose;
 import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPose;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
-import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStopCollectorAndRumble;
 import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainBrakeMode;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToCollectPosition;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToDunkPosition;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToScaleBottomPosition;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToScaleMiddlePosition;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToScaleTopPosition;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToSwitchPosition;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorHoldPositionToggle;
 import org.usfirst.frc.team319.robot.commands.elevator.GoToCollectPose;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CollectorToggle;
+import org.usfirst.frc.team319.robot.commands.pneumatics.DeployForkliftThenRetract;
 import org.usfirst.frc.team319.robot.commands.pneumatics.DrivetrainShiftToggle;
 import org.usfirst.frc.team319.robot.commands.pneumatics.ElevatorShiftToggle;
+import org.usfirst.frc.team319.robot.commands.pneumatics.ForkliftDeploy;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoHome;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToExchange;
-import org.usfirst.frc.team319.robot.commands.wrist.WristGoToParallel;
-import org.usfirst.frc.team319.robot.commands.wrist.WristGoToSwitch;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -76,7 +51,7 @@ public class OI {
 		driverController.bButton.whenPressed(new CubeCollectorStopCollectorAndRumble());
 		driverController.startButton.whenPressed(new DrivetrainBrakeMode());
 		driverController.leftStickButton.whenPressed(new DrivetrainShiftToggle());
-
+		
 	
 
 		operatorController = new BobXboxController(1, 0.1, 0.125);
@@ -92,7 +67,7 @@ public class OI {
 		operatorController.startButton.whenPressed(new ElevatorShiftToggle());
 		
 		
-		
+		operatorController.Dpad.Down.whenPressed(new DeployForkliftThenRetract());
 		operatorController.Dpad.Up.whenPressed(new GoToClimbPose());
 		//operatorController.Dpad.Left.whenPressed(new ElevatorGoToSwitchPosition());
 		//operatorController.Dpad.Down.whenPressed(new GoToCollectPose());

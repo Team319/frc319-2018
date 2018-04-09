@@ -4,7 +4,6 @@ import org.usfirst.frc.team319.arcs.CenterToLeftSwitchArc;
 import org.usfirst.frc.team319.arcs.FirstCubeToLeftSwitchPt1Arc;
 import org.usfirst.frc.team319.arcs.FirstCubeToLeftSwitchPt2Arc;
 import org.usfirst.frc.team319.arcs.LeftSecondCubeToLeftScaleArc;
-import org.usfirst.frc.team319.arcs.LeftSecondCubeToRightScalePt1Arc;
 import org.usfirst.frc.team319.arcs.LeftSwitchToFirstCubePt1Arc;
 import org.usfirst.frc.team319.arcs.LeftSwitchToFirstCubePt2Arc;
 import org.usfirst.frc.team319.arcs.LeftSwitchToRightScaleArc;

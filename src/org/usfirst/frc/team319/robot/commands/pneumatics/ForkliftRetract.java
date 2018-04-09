@@ -7,17 +7,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class WinchBrakeShiftUp extends Command {
+public class ForkliftRetract extends Command {
 
-	public WinchBrakeShiftUp() {
+	public ForkliftRetract() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.pneumatics);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.pneumatics.winchBreakShiftUp();
-		System.out.println("Winch Brake Engaged");
+		Robot.pneumatics.forkliftRetract();
+		System.out.println("Forklift Retracted");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
