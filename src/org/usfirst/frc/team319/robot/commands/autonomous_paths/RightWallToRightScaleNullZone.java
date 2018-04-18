@@ -17,8 +17,8 @@ public class RightWallToRightScaleNullZone extends CommandGroup {
     public RightWallToRightScaleNullZone() {
       
     	addSequential(new FollowArc(new RightWallToRightScaleNullZoneArc()));
-    	addSequential(new TeleopGoToDunkPose());
-    	addSequential(new CubeCollectorSpit(-0.75), 0.5);
+    	addSequential(new GoToDunkPose(0.0));
+    	addSequential(new CubeCollectorSpit(-1.0), 0.5);
     	addSequential(new GoToCollectPose());
     	
     	

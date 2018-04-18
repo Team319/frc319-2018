@@ -29,7 +29,12 @@ public class Drivetrain extends Subsystem {
 	public static int LOW_GEAR_PROFILE = 2;
 	public static int HIGH_GEAR_PROFILE = 0;
 	public static int ROTATION_PROFILE = 1;
-	public static int ROTATION_PROFILE_CROSS_THE_FIELD = 1;
+	
+	public double rotationP = 1.8;
+	public double rotationI = 0.0;
+	public double rotationD = 50.0;
+	public double rotationF = 0.0;
+	public int rotationIZone = 0;
 
 	// greyhill gains
 	// private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 2.400, 0.0,
@@ -42,9 +47,8 @@ public class Drivetrain extends Subsystem {
 	// Mag Encoder Gains
 	private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 0.600, 0.0, 12.00, 0.0763, 0); //
 	private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.60, 0.0, 2.50, 0.05115, 0); // d was 2.5
-	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 1.8, 0.00, 50.0, 0.0, 0); // Switch and near scale
+	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, rotationP, rotationI, rotationD, rotationF, rotationIZone); // Switch and near scale
 																								// rotation gains
-	private SRXGains rotationGainsCrossField = new SRXGains(ROTATION_PROFILE_CROSS_THE_FIELD, 1.6, 0.00, 50.0, 0.0, 0); // opposite
 																														// switch
 																														// rotation
 																														// gains
@@ -117,12 +121,12 @@ public class Drivetrain extends Subsystem {
 		this.drive(controlMode, driveSignal.getLeft(), driveSignal.getRight());
 	}
 
-	public void setCrossTheFieldRotationSRXGains() {
-		rightLead.selectProfileSlot(ROTATION_PROFILE_CROSS_THE_FIELD);
+	public void setCrossTheFieldPValue() {
+		rotationP = 1.6;
 	}
 
 	public void setDefaultRotationSRXGains() {
-		rightLead.selectProfileSlot(ROTATION_PROFILE);
+		rotationP = 1.8;
 	}
 
 	public double getLeftDriveLeadDistance() {

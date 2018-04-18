@@ -9,6 +9,7 @@ package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.arcs.LeftSwitchToFirstCubePt2Arc;
 import org.usfirst.frc.team319.controllers.BobXboxController;
+import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosedCurrentSensing;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
@@ -45,7 +46,7 @@ public class OI {
 		driverController.leftTriggerButton.configureThreshold(0.075);
 
 		driverController.rightBumper.whenPressed(new AutoCollectCubeOpened(true));
-		driverController.leftBumper.whenPressed(new AutoCollectCubeClosedCurrentSensing(true));
+		driverController.leftBumper.whenPressed(new AutoCollectCubeClosed(true));
 		driverController.rightTriggerButton.whenPressed(new CollectorToggle());
 		driverController.leftTriggerButton.whileHeld(new CubeCollectorSpit());
 		driverController.bButton.whenPressed(new CubeCollectorStopCollectorAndRumble());

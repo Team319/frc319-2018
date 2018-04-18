@@ -15,6 +15,7 @@ import org.usfirst.frc.team319.robot.commands.autonomous_paths.CenterAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.CenterThreeCubeAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.DefaultAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftAuto;
+import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftOnlyAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftScaleNullZoneAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightScaleNullZoneAuto;
@@ -73,6 +74,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addDefault("Center Auto", "CenterAuto");
 		autoChooser.addObject("Center 2.5 Cube", "CenterThreeCubeAuto");
 		autoChooser.addObject("Left Auto", "LeftAuto");
+		autoChooser.addObject("Left Only Auto", "LeftOnlyAuto");
 		autoChooser.addObject("Right Auto", "RightAuto");
 		autoChooser.addObject("Cross The Line", "CrossTheLine");
 		autoChooser.addObject("Do Nothing", "DoNothing");
@@ -155,6 +157,9 @@ public class Robot extends TimedRobot {
 			break;
 		case "LeftAuto":
 			autonomousCommand = new LeftAuto(gameState);
+			break;
+		case "LeftOnlyAuto":
+			autonomousCommand = new LeftOnlyAuto(gameState);
 			break;
 		case "RightAuto":
 			autonomousCommand = new RightAuto(gameState);

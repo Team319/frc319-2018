@@ -30,7 +30,7 @@ public class LeftSideRightScale extends CommandGroup {
 		addParallel(new GoToSwitchPose(5.0));
 		addSequential(new FollowArc(new LeftWallToRightScaleArc()));
 		addSequential(new GoToDunkPose(0.0));
-		addSequential(new CubeCollectorSpit(-0.75), 0.3);
+		addSequential(new CubeCollectorSpit(-0.75), 0.2);
 		addSequential(new GoToCollectPose(0.0));
 		addParallel(new AutoCollectCubeOpened(true));
 		addSequential(new FollowArc(new ScaleToSwitchCubeRightSideArc()));

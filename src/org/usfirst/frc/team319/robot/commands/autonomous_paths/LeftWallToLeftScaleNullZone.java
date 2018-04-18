@@ -19,7 +19,7 @@ public class LeftWallToLeftScaleNullZone extends CommandGroup {
       
     	addSequential(new FollowArc(new LeftWallToLeftScaleNullZoneArc()));
     	addSequential(new GoToDunkPose(0.0));
-    	addSequential(new CubeCollectorSpit(-0.75), 0.5);
+    	addSequential(new CubeCollectorSpit(-1.0), 0.5);
     	addSequential(new GoToCollectPose());
     	
     	
