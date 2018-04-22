@@ -25,7 +25,7 @@ public class RightScaleNullZoneAuto extends CommandGroup {
 			addSequential(new RightWallToRightScaleNullZone());
 		}else if(gamestate.scaleSide == Side.LEFT && gamestate.mySwitchSide == Side.RIGHT) {
 			addSequential(new RightWallToRightSwitchAuto());
-		}else if(gamestate.scaleSide == Side.LEFT && gamestate.mySwitchSide == Side.RIGHT) {
+		}else if(gamestate.scaleSide == Side.RIGHT && gamestate.mySwitchSide == Side.RIGHT) {
 			addSequential(new RightWallToLeftSideAuto());
 		}
     	

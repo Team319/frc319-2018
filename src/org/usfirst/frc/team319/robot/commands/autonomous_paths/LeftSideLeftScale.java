@@ -1,5 +1,6 @@
 package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
+import org.usfirst.frc.team319.arcs.LeftScaleToSecondSwitchCubeArc;
 import org.usfirst.frc.team319.arcs.LeftWallToLeftScaleArc;
 import org.usfirst.frc.team319.arcs.OneFootArc;
 import org.usfirst.frc.team319.arcs.ScaleToSwitchCubeLeftSideArc;
@@ -37,10 +38,12 @@ public class LeftSideLeftScale extends CommandGroup {
 		addSequential(new FollowArc(new ScaleToSwitchCubeLeftSideArc()));
 		addSequential(new CloseCollector());
 		addSequential(new HoldCube());
+		addParallel(new GoToDunkPose(0.3));
 		addSequential(new FollowArc(new SwitchCubeToScaleLeftSideArc()));
-		addSequential(new GoToDunkPose(0.0));
 		addSequential(new CubeCollectorSpit(-0.5), 0.3);
-		addSequential(new GoToCollectPose());
+		addSequential(new GoToCollectPose());		
+		addParallel(new AutoCollectCubeOpened(true));
+		addSequential(new FollowArc(new LeftScaleToSecondSwitchCubeArc()));
 	
 	}
 }

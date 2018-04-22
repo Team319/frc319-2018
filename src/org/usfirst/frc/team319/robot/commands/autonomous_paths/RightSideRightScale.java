@@ -3,6 +3,7 @@ package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 import org.usfirst.frc.team319.arcs.BackwardsThreeFeetArc;
 import org.usfirst.frc.team319.arcs.LeftWallToLeftScaleArc;
 import org.usfirst.frc.team319.arcs.OneFootArc;
+import org.usfirst.frc.team319.arcs.RightScaleToSecondSwitchCubeArc;
 import org.usfirst.frc.team319.arcs.RightWallToRightScaleArc;
 import org.usfirst.frc.team319.arcs.ScaleToSwitchCubeLeftSideArc;
 import org.usfirst.frc.team319.arcs.ScaleToSwitchCubeRightSideArc;
@@ -48,6 +49,8 @@ public class RightSideRightScale extends CommandGroup {
 		addSequential(new GoToDunkPose(0.0));
 		addSequential(new CubeCollectorSpit(-0.5), 0.3);
 		addSequential(new GoToCollectPose(0.0));
+		addParallel(new AutoCollectCubeOpened(true));
+		addSequential(new FollowArc(new RightScaleToSecondSwitchCubeArc()));
 		
 	}
 }

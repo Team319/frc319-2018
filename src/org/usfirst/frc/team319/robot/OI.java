@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team319.robot;
 
+import org.usfirst.frc.team319.arcs.BackwardsThreeFeetArc;
+import org.usfirst.frc.team319.arcs.BackwardsTwoFeetArc;
+import org.usfirst.frc.team319.arcs.LeftScaleToSecondSwitchCubeArc;
 import org.usfirst.frc.team319.arcs.LeftSwitchToFirstCubePt2Arc;
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
@@ -78,7 +81,7 @@ public class OI {
 		// ---------------test buttons-------------------//
 
 		//this.driverController.xButton.whenPressed(new DoubleSwitchLeft());
-		this.driverController.xButton.whenPressed(new FollowArc(new LeftSwitchToFirstCubePt2Arc()));
+		//this.driverController.xButton.whenPressed(new FollowArc(new LeftScaleToSecondSwitchCubeArc()));
 
 		// this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());
 		// this.operatorController.bButton.whenPressed(new ElevatorGoToHomePosition());

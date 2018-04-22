@@ -14,6 +14,7 @@ import org.usfirst.frc.team319.robot.commands.autonomous_subsystems.GoToSwitchPo
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.drivetrain.SetCrossTheFieldRotationSRXGains;
 import org.usfirst.frc.team319.robot.commands.drivetrain.SetDefaultRotationSRXGains;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToSwitchPositionTimeout;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CloseCollector;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToSwitch;
 
@@ -27,7 +28,7 @@ public class LeftSideRightScale extends CommandGroup {
 	public LeftSideRightScale() {
 
 		addSequential(new SetCrossTheFieldRotationSRXGains());
-		addParallel(new GoToSwitchPose(5.0));
+		addParallel(new ElevatorGoToSwitchPositionTimeout(5.0));
 		addSequential(new FollowArc(new LeftWallToRightScaleArc()));
 		addSequential(new GoToDunkPose(0.0));
 		addSequential(new CubeCollectorSpit(-0.75), 0.2);
