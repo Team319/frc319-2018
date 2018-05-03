@@ -26,6 +26,7 @@ import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStopCollectorAndRumble;
 import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainBrakeMode;
 import org.usfirst.frc.team319.robot.commands.elevator.GoToCollectPose;
+import org.usfirst.frc.team319.robot.commands.elevator.StopElevatorInPlace;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CollectorToggle;
 import org.usfirst.frc.team319.robot.commands.pneumatics.DeployForkliftThenRetract;
 import org.usfirst.frc.team319.robot.commands.pneumatics.DrivetrainShiftToggle;
@@ -69,6 +70,7 @@ public class OI {
 		operatorController.xButton.whenPressed(new GoToSwitchPose(0.0));
 		operatorController.yButton.whenPressed(new GoToScaleTopPose());
 		operatorController.startButton.whenPressed(new ElevatorShiftToggle());
+		operatorController.leftStickButton.whenPressed(new StopElevatorInPlace());
 		
 		
 		operatorController.Dpad.Down.whenPressed(new DeployForkliftThenRetract());

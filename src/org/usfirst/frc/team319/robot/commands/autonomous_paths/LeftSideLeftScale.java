@@ -21,6 +21,7 @@ import org.usfirst.frc.team319.robot.commands.wrist.WristGoToParallel;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToSwitch;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
@@ -40,7 +41,8 @@ public class LeftSideLeftScale extends CommandGroup {
 		addSequential(new HoldCube());
 		addParallel(new GoToDunkPose(0.3));
 		addSequential(new FollowArc(new SwitchCubeToScaleLeftSideArc()));
-		addSequential(new CubeCollectorSpit(-0.5), 0.3);
+		addSequential(new WaitCommand(0.3));
+		addSequential(new CubeCollectorSpit(-0.5), 0.5);
 		addSequential(new GoToCollectPose());		
 		addParallel(new AutoCollectCubeOpened(true));
 		addSequential(new FollowArc(new LeftScaleToSecondSwitchCubeArc()));

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
 import org.usfirst.frc.team319.arcs.CrossTheLineArc;
+import org.usfirst.frc.team319.arcs.CrossTheLineReverseArc;
 import org.usfirst.frc.team319.models.GameState;
 import org.usfirst.frc.team319.models.GameState.Side;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
@@ -25,8 +26,10 @@ public class RightScaleNullZoneAuto extends CommandGroup {
 			addSequential(new RightWallToRightScaleNullZone());
 		}else if(gamestate.scaleSide == Side.LEFT && gamestate.mySwitchSide == Side.RIGHT) {
 			addSequential(new RightWallToRightSwitchAuto());
-		}else if(gamestate.scaleSide == Side.RIGHT && gamestate.mySwitchSide == Side.RIGHT) {
+		}else if(gamestate.scaleSide == Side.LEFT && gamestate.mySwitchSide == Side.LEFT) {
 			addSequential(new RightWallToLeftSideAuto());
+		}else {
+			addSequential(new FollowArc(new CrossTheLineReverseArc()));
 		}
     	
     }

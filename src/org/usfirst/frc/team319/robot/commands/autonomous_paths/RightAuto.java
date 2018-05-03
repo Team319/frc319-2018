@@ -1,7 +1,9 @@
 package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
+import org.usfirst.frc.team319.arcs.CrossTheLineArc;
 import org.usfirst.frc.team319.models.GameState;
 import org.usfirst.frc.team319.models.GameState.Side;
+import org.usfirst.frc.team319.robot.commands.FollowArc;
 import org.usfirst.frc.team319.robot.commands.PrintCommand;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CloseCollector;
 import org.usfirst.frc.team319.robot.commands.pneumatics.DrivetrainShiftUp;
@@ -24,6 +26,8 @@ public class RightAuto extends CommandGroup {
 			addSequential(new RightSideLeftScale());
 		} else if (gameState.scaleSide == Side.RIGHT) {
 			addSequential(new RightSideRightScale());
-		} 
+		} else {
+			addSequential(new FollowArc(new CrossTheLineArc()));
+		}
 	}
 }

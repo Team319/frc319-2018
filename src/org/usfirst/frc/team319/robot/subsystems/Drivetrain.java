@@ -31,11 +31,11 @@ public class Drivetrain extends Subsystem {
 	public static int ROTATION_PROFILE = 1;
 	
 	public double rotationP = 1.8;
-	public double rotationI = 0.0;
+	public double rotationI = 0.001; // .001 
 	public double rotationD = 50.0;
 	public double rotationF = 0.0;
-	public int rotationIZone = 0;
-
+	public int rotationIZone = 20; // 20
+	
 	// greyhill gains
 	// private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 2.400, 0.0,
 	// 48.00, 0.400, 0);
@@ -220,9 +220,9 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("Drivetrain Distance", getDistance());
 		SmartDashboard.putNumber("Left Lead Current", leftLead.getOutputCurrent());
 		SmartDashboard.putNumber("Left Follower Current", leftFollower.getOutputCurrent());
-		// SmartDashboard.putNumber("Right Lead Current", rightLead.getOutputCurrent());
-		// SmartDashboard.putNumber("Right Follower Current",
-		// rightFollower.getOutputCurrent());
+		 SmartDashboard.putNumber("Right Lead Current", rightLead.getOutputCurrent());
+		 SmartDashboard.putNumber("Right Follower Current",
+		 rightFollower.getOutputCurrent());
 		// SmartDashboard.putNumber("Integral Accumulator",
 		// rightLead.getIntegralAccumulator(1));
 	}

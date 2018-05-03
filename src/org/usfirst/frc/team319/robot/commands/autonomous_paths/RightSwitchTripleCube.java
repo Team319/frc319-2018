@@ -24,6 +24,7 @@ import org.usfirst.frc.team319.models.GameState.Side;
 import org.usfirst.frc.team319.models.Arc;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosedCurrentSensing;
+import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
 import org.usfirst.frc.team319.robot.commands.FollowStaticArc;
 import org.usfirst.frc.team319.robot.commands.GoToCollectPose;
@@ -45,7 +46,7 @@ public class RightSwitchTripleCube extends CommandGroup {
     	addParallel(new CubeCollectorSpit(-.75), 0.2);
     	addParallel(new GoToCollectPose(0.5));
     	addSequential(new FollowArc(new RightSwitchToFirstCubePt1Arc()));
-    	addParallel(new AutoCollectCubeClosedCurrentSensing(false));
+    	addParallel(new AutoCollectCubeClosed(false));
     	addSequential(new FollowArc(new RightSwitchToFirstCubePt2Arc()));
     	addSequential(new FollowArc(new FirstCubeToRightSwitchPt1Arc()));
     	addParallel(new GoToSwitchPose(0.0));
@@ -53,7 +54,7 @@ public class RightSwitchTripleCube extends CommandGroup {
     	addParallel(new CubeCollectorSpit(-0.75), 0.2);
     	addSequential(new FollowArc(new RightSwitchToSecondCubePt1Arc()));
     	addSequential(new GoToCollectPose(0.0));
-    	addParallel(new AutoCollectCubeClosedCurrentSensing(true));
+    	addParallel(new AutoCollectCubeOpened(true));
     	//addSequential(new FollowArc(new RightSwitchToSecondCubePt2Arc()));
 
     	if (gameState.scaleSide == Side.LEFT) {

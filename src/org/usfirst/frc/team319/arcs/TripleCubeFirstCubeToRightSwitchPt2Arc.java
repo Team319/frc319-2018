@@ -3,21 +3,21 @@ package org.usfirst.frc.team319.arcs;
 import org.usfirst.frc.team319.models.SrxMotionProfile;
 import org.usfirst.frc.team319.models.SrxTrajectory;
 
-public class CenterToRightSwitchPt5Arc extends SrxTrajectory{
+public class TripleCubeFirstCubeToRightSwitchPt2Arc extends SrxTrajectory{
 	
 	// WAYPOINTS:
 	// (X,Y,degrees)
 	// (2.23,13.08,0.00)
 	// (10.24,9.08,0.00)
 	
-    public CenterToRightSwitchPt5Arc() {
+    public TripleCubeFirstCubeToRightSwitchPt2Arc() {
 		super();
 		this.highGear = true;
 		centerProfile = new SrxMotionProfile(centerPoints.length, centerPoints);
 	}
 
 	
-    public CenterToRightSwitchPt5Arc(boolean flipped) {
+    public TripleCubeFirstCubeToRightSwitchPt2Arc(boolean flipped) {
 		super();
 		this.highGear = true;
 		this.flipped = flipped;
