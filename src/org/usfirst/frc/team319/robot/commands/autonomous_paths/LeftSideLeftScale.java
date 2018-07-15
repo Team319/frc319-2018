@@ -4,6 +4,7 @@ import org.usfirst.frc.team319.arcs.LeftScaleToSecondSwitchCubeArc;
 import org.usfirst.frc.team319.arcs.LeftWallToLeftScaleArc;
 import org.usfirst.frc.team319.arcs.OneFootArc;
 import org.usfirst.frc.team319.arcs.ScaleToSwitchCubeLeftSideArc;
+import org.usfirst.frc.team319.arcs.SecondSwitchCubeToLeftScaleArc;
 import org.usfirst.frc.team319.arcs.SwitchCubeToScaleLeftSideArc;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
@@ -12,6 +13,7 @@ import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorSpit;
 import org.usfirst.frc.team319.robot.commands.cubecollector.CubeCollectorStop;
 import org.usfirst.frc.team319.robot.commands.cubecollector.HoldCube;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToCollectPosition;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToDunkPosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToHomePosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToSwitchPosition;
 import org.usfirst.frc.team319.robot.commands.elevator.GoToCollectPose;
@@ -46,6 +48,11 @@ public class LeftSideLeftScale extends CommandGroup {
 		addSequential(new GoToCollectPose());		
 		addParallel(new AutoCollectCubeOpened(true));
 		addSequential(new FollowArc(new LeftScaleToSecondSwitchCubeArc()));
-	
+		addSequential(new CloseCollector());
+		addSequential(new HoldCube());
+		addParallel(new GoToDunkPose(0.3));
+		addSequential(new FollowArc(new SecondSwitchCubeToLeftScaleArc()));
+		addSequential(new CubeCollectorSpit(-0.5), 0.5);
+
 	}
 }

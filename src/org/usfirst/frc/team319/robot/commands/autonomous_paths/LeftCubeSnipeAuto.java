@@ -14,16 +14,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class LeftScaleNullZoneAuto extends CommandGroup {
+public class LeftCubeSnipeAuto extends CommandGroup {
 
-	public LeftScaleNullZoneAuto(GameState gamestate) {
+	public LeftCubeSnipeAuto(GameState gamestate) {
 
 		addSequential(new CloseCollector());
 		addSequential(new DrivetrainShiftUp());
 		addSequential(new ElevatorShiftUp());
 
 		if (gamestate.scaleSide == Side.LEFT) {
-			addSequential(new LeftWallToLeftScaleNullZone());
+			addSequential(new LeftWallToLeftCubeSnipe());
 		} else if (gamestate.scaleSide == Side.RIGHT && gamestate.mySwitchSide == Side.LEFT) {
 				addSequential(new LeftWallToLeftSwitchAuto());
 		} else if (gamestate.scaleSide == Side.RIGHT && gamestate.mySwitchSide == Side.RIGHT){

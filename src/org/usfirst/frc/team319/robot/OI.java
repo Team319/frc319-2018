@@ -7,13 +7,12 @@
 
 package org.usfirst.frc.team319.robot;
 
-import org.usfirst.frc.team319.arcs.BackwardsThreeFeetArc;
-import org.usfirst.frc.team319.arcs.BackwardsTwoFeetArc;
-import org.usfirst.frc.team319.arcs.LeftScaleToSecondSwitchCubeArc;
-import org.usfirst.frc.team319.arcs.LeftSwitchToFirstCubePt2Arc;
+import org.usfirst.frc.team319.arcs.CrossTheLineArc;
+import org.usfirst.frc.team319.arcs.FifteenFeetArc;
+import org.usfirst.frc.team319.arcs.OneFootArc;
+import org.usfirst.frc.team319.arcs.TwentyFiveFeetArc;
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosed;
-import org.usfirst.frc.team319.robot.commands.AutoCollectCubeClosedCurrentSensing;
 import org.usfirst.frc.team319.robot.commands.AutoCollectCubeOpened;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
 import org.usfirst.frc.team319.robot.commands.GoToClimbPose;
@@ -31,7 +30,6 @@ import org.usfirst.frc.team319.robot.commands.pneumatics.CollectorToggle;
 import org.usfirst.frc.team319.robot.commands.pneumatics.DeployForkliftThenRetract;
 import org.usfirst.frc.team319.robot.commands.pneumatics.DrivetrainShiftToggle;
 import org.usfirst.frc.team319.robot.commands.pneumatics.ElevatorShiftToggle;
-import org.usfirst.frc.team319.robot.commands.pneumatics.ForkliftDeploy;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoHome;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoToExchange;
 
@@ -40,9 +38,10 @@ import org.usfirst.frc.team319.robot.commands.wrist.WristGoToExchange;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	
 	public BobXboxController driverController;
 	public BobXboxController operatorController;
-//End of Season
+	
 	public OI() {
 
 		driverController = new BobXboxController(0, 0.10, 0.08);
@@ -83,7 +82,7 @@ public class OI {
 		// ---------------test buttons-------------------//
 
 		//this.driverController.xButton.whenPressed(new DoubleSwitchLeft());
-		//this.driverController.xButton.whenPressed(new FollowArc(new LeftScaleToSecondSwitchCubeArc()));
+		//this.driverController.xButton.whenPressed(new FollowArc(new FifteenFeetArc()));
 
 		// this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());
 		// this.operatorController.bButton.whenPressed(new ElevatorGoToHomePosition());

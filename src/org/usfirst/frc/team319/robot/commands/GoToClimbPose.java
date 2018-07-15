@@ -1,6 +1,7 @@
 package org.usfirst.frc.team319.robot.commands;
 
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToClimbPosition;
+import org.usfirst.frc.team319.robot.commands.pneumatics.CloseCollector;
 import org.usfirst.frc.team319.robot.commands.pneumatics.ElevatorShiftDown;
 import org.usfirst.frc.team319.robot.commands.wrist.WristGoHome;
 
@@ -16,6 +17,7 @@ public class GoToClimbPose extends CommandGroup {
 		addSequential(new ElevatorShiftDown());
 		addParallel(new WristGoHome());
 		addSequential(new ElevatorGoToClimbPosition());
+		addSequential(new CloseCollector());
 
 	}
 }

@@ -58,19 +58,24 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	private final SRXGains highGearUpGains = new SRXGains(ELEVATOR_HIGH_UP, 0.02, 0.001, 4.0, 0.172, 300);
 	private final SRXGains highGearDownGains = new SRXGains(ELEVATOR_HIGH_DOWN, 0.200, 0.001, 0.0, 0.172, 300);
 
+	
+	//Uses PID values to go to a position
 	private MotionParameters lowGearUpMotionParameters = new MotionParameters(2600, 2000, lowGearUpGains);
 	private MotionParameters lowGearDownMotionParameters = new MotionParameters(2600, 2000, lowGearDownGains);
 	private MotionParameters highGearUpMotionParameters = new MotionParameters(11000, 5500, highGearUpGains);// 4700
 	private MotionParameters highGearDownMotionParameters = new MotionParameters(11000, 5000, highGearDownGains);
 	
+	
 	private double highGearPeakOutputReverse = -0.6;
 
+	
 	public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(11, new BobVictorSPX(8), new BobVictorSPX(9),
 			new BobVictorSPX(10));
 
 	public Elevator() {
 
 		this.elevatorLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+	
 
 		this.elevatorLead.configForwardSoftLimitEnable(true);
 		this.elevatorLead.configForwardSoftLimitThreshold(upPositionLimit);
@@ -104,6 +109,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		setDefaultCommand(new JoystickElevator());
 	}
 
+	//sets control mode to motion magic
 	public void setElevator(ControlMode controlMode, double signal) {
 		if (controlMode == ControlMode.MotionMagic) {
 			this.manageMotion(signal);
@@ -236,6 +242,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		return this.arbitraryFeedForward;
 	}
 
+	
 	public void manageMotion(double targetPosition) {
 		double currentPosition = getCurrentPosition();
 		if (currentPosition < targetPosition) {
@@ -253,6 +260,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		}
 	}
 
+	//Makes sure the wrist is safe, if it is not dont do anything
 	public boolean isWristSafe(double targetElevatorPosition) {
 		boolean atRisk = Robot.wrist.getCurrentPosition() < Robot.wrist.getSafePosition();
 		System.out.println("is wrist at risk: " + atRisk);

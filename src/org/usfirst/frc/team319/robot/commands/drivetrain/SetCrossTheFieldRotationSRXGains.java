@@ -16,7 +16,7 @@ public class SetCrossTheFieldRotationSRXGains extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.setCrossTheFieldPValue();
+    	Robot.drivetrain.setCrossTheFieldRotatePValue();
     }
 
     // Called repeatedly when this Command is scheduled to run

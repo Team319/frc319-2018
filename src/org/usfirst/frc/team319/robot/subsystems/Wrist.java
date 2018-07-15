@@ -78,7 +78,8 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 		setDefaultCommand(new JoystickWrist());
 		//setDefaultCommand(new WristMotionMagicControl());
 	}
-
+	
+	//sets control mode to motion magic
 	public void wristMove(ControlMode controlMode, double targetPosition) {
 		this.manageMotion(targetPosition);
 		wristMotor.set(controlMode, targetPosition);
@@ -127,10 +128,13 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 				wristMotor.selectMotionParameters(downMotionParameters);
 			}
 		}
+		
 		this.wristMotor.configForwardSoftLimitThreshold(downPositionLimit);
 		this.wristMotor.configReverseSoftLimitThreshold(upPositionLimit);
 	}
 
+	//Prevents wrist from moving behind the home position whilst elevator is not above first stage
+	
 	private void manageLimits() {
 		if (Robot.elevator.getCurrentPosition() > Robot.elevator.getTopOfFirstStagePosition()) {
 			this.upPositionLimit = maxUpTravelPosition;
@@ -148,6 +152,7 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 		return this.targetPosition;
 	}
 	
+	//if valid position is inverted return false else, return true
 	public boolean setTargetPosition(int position) {
 		manageLimits();
 		if (!isValidPosition(position)) {
@@ -157,6 +162,7 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 			return true;
 		}
 	}
+	
 	
 	public void incrementTargetPosition(int increment) {
 		int currentTargetPosition = this.targetPosition;
@@ -222,6 +228,7 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 		return this.maxDownTravelPosition;
 	}
 
+	
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("Wrist Position", this.getCurrentPosition());
