@@ -281,8 +281,8 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		SmartDashboard.putBoolean("Elevator High Gear", isHighGear);
 		SmartDashboard.putNumber("Elevator Voltage", this.elevatorLead.getMotorOutputVoltage());
 		// SmartDashboard.putNumber("Elevator Max Speed", maxSpeedAchieved);
-		// SmartDashboard.putNumber("Elevator Power",
-		// this.elevatorLead.getMotorOutputPercent());
+		 SmartDashboard.putNumber("Elevator Voltage",
+		 this.elevatorLead.getMotorOutputVoltage());
 	}
 
 	@Override

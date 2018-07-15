@@ -152,5 +152,4 @@ public class LeftSwitchToFirstCubePt2Arc extends SrxTrajectory{
 				{46889.130,6.261,10.000,-60.000},
 				{46889.443,0.000,10.000,-60.000},
 				{46889.443,0.000,10.000,-60.000}		};
-
 }
