@@ -1,6 +1,7 @@
 package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
 import org.usfirst.frc.team319.arcs.CrossTheLineArc;
+import org.usfirst.frc.team319.arcs.CrossTheLineReverseArc;
 import org.usfirst.frc.team319.models.GameState;
 import org.usfirst.frc.team319.models.GameState.Side;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
@@ -15,17 +16,21 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class LeftScaleNullZoneAuto extends CommandGroup {
 
-    public LeftScaleNullZoneAuto(GameState gamestate) {
-      
-    	addSequential(new CloseCollector());
-    	addSequential(new DrivetrainShiftUp());
-    	addSequential(new ElevatorShiftUp());
-    	
-    	if (gamestate.scaleSide == Side.RIGHT) {
-			addSequential(new FollowArc(new CrossTheLineArc())); //place holder
-		}else if(gamestate.scaleSide == Side.LEFT) {
+	public LeftScaleNullZoneAuto(GameState gamestate) {
+
+		addSequential(new CloseCollector());
+		addSequential(new DrivetrainShiftUp());
+		addSequential(new ElevatorShiftUp());
+
+		if (gamestate.scaleSide == Side.LEFT) {
 			addSequential(new LeftWallToLeftScaleNullZone());
+		} else if (gamestate.scaleSide == Side.RIGHT && gamestate.mySwitchSide == Side.LEFT) {
+				addSequential(new LeftWallToLeftSwitchAuto());
+		} else if (gamestate.scaleSide == Side.RIGHT && gamestate.mySwitchSide == Side.RIGHT){
+				addSequential(new LeftWallToRightSideAuto());
+		}else {
+				addSequential(new FollowArc(new CrossTheLineReverseArc()));
 		}
-    	
-    }
+
+	}
 }

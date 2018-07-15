@@ -24,6 +24,7 @@ import org.usfirst.frc.team319.robot.commands.cubecollector.HoldCube;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToCollectPosition;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CloseCollector;
 import org.usfirst.frc.team319.robot.commands.pneumatics.OpenCollector;
+import org.usfirst.frc.team319.robot.commands.wrist.WristGoToSwitch;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -40,17 +41,18 @@ public class DoubleSwitchLeft extends CommandGroup {
 		addSequential(new CubeCollectorSpit(-0.5), 0.2);
 		addParallel(new GoToCollectPose(1.0));
 		addSequential(new FollowArc(new CenterToLeftSwitchPt2Arc()));
-		addParallel(new AutoCollectCubeOpened(true));
+		addParallel(new AutoCollectCubeOpened(false));
 		addSequential(new FollowArc(new CenterToLeftSwitchPt3Arc()));
-		addParallel(new CloseCollector());
-		addSequential(new AutoCollectCubeClosed(true));
+		addSequential(new AutoCollectCubeClosed(false));
 
 		
 		if (gamestate.scaleSide == Side.LEFT) {
 			addSequential(new FollowArc(new CenterToLeftScalePt1Arc()));
+			addParallel(new WristGoToSwitch());
 			addSequential(new FollowArc(new CenterToLeftScalePt2Arc()));
 		}else {
 			addSequential(new FollowArc(new CenterToRightScalePt1Arc()));
+			addParallel(new WristGoToSwitch());
 			addSequential(new FollowArc(new CenterToRightScalePt2Arc()));
 		}
 		/*addParallel(new HoldCube());

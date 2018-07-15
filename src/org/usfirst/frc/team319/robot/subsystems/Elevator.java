@@ -28,7 +28,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 
 	private int homePosition = 0;
 	private int collectPosition = 1000;
-	private int switchPosition = 14000;
+	private int switchPosition = 16000;
 	private int autoSwitchPostion = 20000;
 	private int topOfFirstStagePosition = 24000;
 	private int minimumDunkHeight = 26500;
@@ -50,7 +50,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	private int targetPosition = 0;
 	private double arbitraryFeedForward = 0.0;
 
-	private final static int onTargetThreshold = 500; // changed to 500 from 100 for testing on practice field
+	private final static int onTargetThreshold = 1000; // changed to 500 from 100 for testing on practice field
 	
 	private final SRXGains lowGearUpGains = new SRXGains(ELEVATOR_LOW_UP, 0.560, 0.0, 5.600, 0.620, 100);
 	private final SRXGains lowGearDownGains = new SRXGains(ELEVATOR_LOW_DOWN, 0.560, 0.0, 5.600, 0.427, 0);
@@ -58,19 +58,24 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	private final SRXGains highGearUpGains = new SRXGains(ELEVATOR_HIGH_UP, 0.02, 0.001, 4.0, 0.172, 300);
 	private final SRXGains highGearDownGains = new SRXGains(ELEVATOR_HIGH_DOWN, 0.200, 0.001, 0.0, 0.172, 300);
 
+	
+	//Uses PID values to go to a position
 	private MotionParameters lowGearUpMotionParameters = new MotionParameters(2600, 2000, lowGearUpGains);
 	private MotionParameters lowGearDownMotionParameters = new MotionParameters(2600, 2000, lowGearDownGains);
 	private MotionParameters highGearUpMotionParameters = new MotionParameters(11000, 5500, highGearUpGains);// 4700
 	private MotionParameters highGearDownMotionParameters = new MotionParameters(11000, 5000, highGearDownGains);
 	
+	
 	private double highGearPeakOutputReverse = -0.6;
 
+	
 	public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(11, new BobVictorSPX(8), new BobVictorSPX(9),
 			new BobVictorSPX(10));
 
 	public Elevator() {
 
 		this.elevatorLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+	
 
 		this.elevatorLead.configForwardSoftLimitEnable(true);
 		this.elevatorLead.configForwardSoftLimitThreshold(upPositionLimit);
@@ -104,6 +109,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		setDefaultCommand(new JoystickElevator());
 	}
 
+	//sets control mode to motion magic
 	public void setElevator(ControlMode controlMode, double signal) {
 		if (controlMode == ControlMode.MotionMagic) {
 			this.manageMotion(signal);
@@ -236,6 +242,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		return this.arbitraryFeedForward;
 	}
 
+	
 	public void manageMotion(double targetPosition) {
 		double currentPosition = getCurrentPosition();
 		if (currentPosition < targetPosition) {
@@ -253,6 +260,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		}
 	}
 
+	//Makes sure the wrist is safe, if it is not dont do anything
 	public boolean isWristSafe(double targetElevatorPosition) {
 		boolean atRisk = Robot.wrist.getCurrentPosition() < Robot.wrist.getSafePosition();
 		System.out.println("is wrist at risk: " + atRisk);
@@ -271,6 +279,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		// SmartDashboard.putNumber("Elevator Closed Loop
 		// Error",this.elevatorLead.getClosedLoopError(0));
 		SmartDashboard.putBoolean("Elevator High Gear", isHighGear);
+		SmartDashboard.putNumber("Elevator Voltage", this.elevatorLead.getMotorOutputVoltage());
 		// SmartDashboard.putNumber("Elevator Max Speed", maxSpeedAchieved);
 		 SmartDashboard.putNumber("Elevator Voltage",
 		 this.elevatorLead.getMotorOutputVoltage());

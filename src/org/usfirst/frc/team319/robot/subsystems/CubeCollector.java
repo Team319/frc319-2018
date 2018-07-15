@@ -32,6 +32,9 @@ public class CubeCollector extends Subsystem {
 
 		this.collectorLeftMotor.setInverted(true);
 		this.collectorRightMotor.setInverted(false);
+		
+		this.collectorLeftMotor.configOpenloopRamp(0.25);
+		this.collectorRightMotor.configOpenloopRamp(0.25);
 
 		this.collectorLeftMotor.setNeutralMode(NeutralMode.Coast);
 		this.collectorRightMotor.setNeutralMode(NeutralMode.Coast);
@@ -77,6 +80,7 @@ public class CubeCollector extends Subsystem {
 		irSensorValuesBuffer.addLast(this.collectorDistanceSensor.getVoltage());
 		SmartDashboard.putNumber("IR Sensor", this.getCollectorDistanceSensorValue());
 		SmartDashboard.putBoolean("Collector Open", isOpen);
+		SmartDashboard.putNumber("Cube Collector Current", this.collectorRightMotor.getOutputCurrent());
 		// SmartDashboard.putNumber("Left Collector Current", this.getLeftCurrent());
 		// SmartDashboard.putNumber("Right Collector Current", this.getRightCurrent());
 
@@ -104,6 +108,14 @@ public class CubeCollector extends Subsystem {
 
 	public void setIsOpen(boolean isOpen) {
 		this.isOpen = isOpen;
+	}
+	
+	public boolean isCubeCollectedCurrentSensing(double threshold) {
+		if (this.collectorRightMotor.getOutputCurrent() > threshold) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 }

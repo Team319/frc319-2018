@@ -7,13 +7,21 @@
 
 package org.usfirst.frc.team319.robot;
 
+import org.usfirst.frc.team319.arcs.CenterToRightSwitchArc;
 import org.usfirst.frc.team319.arcs.CrossTheLineArc;
+import org.usfirst.frc.team319.arcs.FifteenFeetArc;
+import org.usfirst.frc.team319.arcs.LeftWallToRightScaleArc;
+import org.usfirst.frc.team319.arcs.LeftWallToRightSideArc;
+import org.usfirst.frc.team319.arcs.RightWallToRightScaleArc;
+import org.usfirst.frc.team319.models.Arc;
 import org.usfirst.frc.team319.models.GameState;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.CenterAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.CenterThreeCubeAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.DefaultAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftAuto;
+import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftCubeSnipeAuto;
+import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftOnlyAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.LeftScaleNullZoneAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightAuto;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.RightScaleNullZoneAuto;
@@ -72,11 +80,15 @@ public class Robot extends TimedRobot {
 		autoChooser.addDefault("Center Auto", "CenterAuto");
 		autoChooser.addObject("Center 2.5 Cube", "CenterThreeCubeAuto");
 		autoChooser.addObject("Left Auto", "LeftAuto");
+		autoChooser.addObject("Left Only Auto", "LeftOnlyAuto");
 		autoChooser.addObject("Right Auto", "RightAuto");
 		autoChooser.addObject("Cross The Line", "CrossTheLine");
 		autoChooser.addObject("Do Nothing", "DoNothing");
 		autoChooser.addObject("Right Null Zone", "RightScaleNullZoneAuto");
 		autoChooser.addObject("Left Null Zone", "LeftScaleNullZoneAuto");
+		autoChooser.addObject("Left Scale Snipe", "LeftScaleSnipe");
+		autoChooser.addObject("Right Scale Snipe", "RightScaleSnipe");
+		
 		// autoChooser.addDefault("Default", new DefaultAuto());
 		// autoChooser.addObject("Center", new CenterToSwitchAuto());
 		// autoChooser.addObject("Left", new LeftAutoTest());
@@ -98,6 +110,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
+		
+		drivetrain.setNeutralMode(NeutralMode.Coast);
 
 	}
 
@@ -110,7 +124,8 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Driver Left Trigger", this.oi.driverController.triggers.getLeft());
 		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.leftStick.getY());
-
+		
+		
 	}
 
 	/**
@@ -138,6 +153,7 @@ public class Robot extends TimedRobot {
 		// SmartDashboard.putData("Auto mode", m_chooser);
 		
 		drivetrain.setNeutralMode(NeutralMode.Brake);
+		drivetrain.resetPigeon();
 		
 		String selectedAuto = (String) autoChooser.getSelected();
 		System.out.println(selectedAuto);
@@ -150,6 +166,9 @@ public class Robot extends TimedRobot {
 			break;
 		case "LeftAuto":
 			autonomousCommand = new LeftAuto(gameState);
+			break;
+		case "LeftOnlyAuto":
+			autonomousCommand = new LeftOnlyAuto(gameState);
 			break;
 		case "RightAuto":
 			autonomousCommand = new RightAuto(gameState);
@@ -165,6 +184,9 @@ public class Robot extends TimedRobot {
 			break;
 		case "LeftScaleNullZoneAuto":
 			autonomousCommand = new LeftScaleNullZoneAuto(gameState);
+			break;
+		case "LeftScaleSnipe":
+			autonomousCommand = new LeftCubeSnipeAuto(gameState);
 			break;
 		default:
 			autonomousCommand = new FollowArc(new CrossTheLineArc());

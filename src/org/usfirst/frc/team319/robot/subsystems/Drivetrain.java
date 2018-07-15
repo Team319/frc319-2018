@@ -29,7 +29,13 @@ public class Drivetrain extends Subsystem {
 	public static int LOW_GEAR_PROFILE = 2;
 	public static int HIGH_GEAR_PROFILE = 0;
 	public static int ROTATION_PROFILE = 1;
-
+	
+	public double rotationP = 1.8; //1.8
+	public double rotationI = 0.001; // .001 
+	public double rotationD = 50.0; // 50.0
+	public double rotationF = 0.0;
+	public int rotationIZone = 30; // 20
+	
 	// greyhill gains
 	// private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 2.400, 0.0,
 	// 48.00, 0.400, 0);
@@ -40,10 +46,15 @@ public class Drivetrain extends Subsystem {
 
 	// Mag Encoder Gains
 	private SRXGains lowGearGains = new SRXGains(LOW_GEAR_PROFILE, 0.600, 0.0, 12.00, 0.0763, 0); //
-	private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.60, 0.0, 2.50, 0.05115, 0); // d was 2.5
-	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 2.5, 0.00, 25.0, 0.0, 0); // i was 0.005, izone was 20
+	//private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.6, 0.0, 2.5, 0.05115, 0); 
+	private SRXGains highGearGains = new SRXGains(HIGH_GEAR_PROFILE, 0.25, 0.00005, 0.8, 0.05115, 50); // p was 0.6, i was 0, d was 2.50, f was 0.05115
+	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, rotationP, rotationI, rotationD, rotationF, rotationIZone); // Switch and near scale
+																								// rotation gains
+																														// switch
+																														// rotation
+																														// gains
 
-	private BobTalonSRX leftFollower = new BobTalonSRX(7);
+	private BobTalonSRX leftFollower = new BobTalonSRX(7);//assigns the talon id(7) to a name (leftFollower) 
 	private BobTalonSRX rightFollower = new BobTalonSRX(2);
 	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(6, leftFollower); // 8
 	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(1, rightFollower); // 1
@@ -53,37 +64,46 @@ public class Drivetrain extends Subsystem {
 	public Drivetrain() {
 
 		leftLead.setInverted(true);// false
-		leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
+		leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);//sets encoder type
 		leftLead.setSensorPhase(false);
 
 		rightLead.setInverted(false);// true
-		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
+		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);//sets encoder type
 		rightLead.setSensorPhase(false);
+		
+		//rightLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+		//leftLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
 		leftLead.enableCurrentLimit(false);
 		leftLead.configContinuousCurrentLimit(60);
 		rightLead.enableCurrentLimit(false);
 		rightLead.configContinuousCurrentLimit(60);
 
+		//time required to ramp up to speed 
 		leftLead.configOpenloopRamp(0.25);
 		rightLead.configOpenloopRamp(0.25);
 
 		setNeutralMode(NeutralMode.Coast);
 
+		//configs PID Gains 
 		configGains(highGearGains);
 		configGains(lowGearGains);
 		configGains(rotationGains);
 
 		// configure distance sensor
 		// Remote 0 will be the other side's Talon
+		
 		rightLead.configRemoteSensor0(leftLead.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor);
 		rightLead.configSensorSum(FeedbackDevice.RemoteSensor0, FeedbackDevice.CTRE_MagEncoder_Relative);
 		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5); // distances from left and right are
 																				// summed, so average them
+		
+		//I is limited to a certain amount
 		rightLead.configMaxIntegralAccumulator(ROTATION_PROFILE, 3000);
 
 		// configure angle sensor
 		// Remote 1 will be a pigeon
+		
 		rightLead.configRemoteSensor1(leftFollower.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
 		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (3600.0 / 8192.0)); // Coefficient for
 																									// Pigeon to
@@ -91,6 +111,7 @@ public class Drivetrain extends Subsystem {
 		// convert to 360
 		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
 		rightLead.configAuxPIDPolarity(false, 0);
+		
 	}
 
 	public void initDefaultCommand() {
@@ -102,13 +123,23 @@ public class Drivetrain extends Subsystem {
 		this.rightLead.setGains(gains);
 	}
 
+	
+	//left and right are the move values passed into the method from the driver sticks
 	public void drive(ControlMode controlMode, double left, double right) {
 		this.leftLead.set(controlMode, left);
 		this.rightLead.set(controlMode, right);
-	} 
+	}
 
 	public void drive(ControlMode controlMode, DriveSignal driveSignal) {
 		this.drive(controlMode, driveSignal.getLeft(), driveSignal.getRight());
+	}
+
+	public void setCrossTheFieldRotatePValue() {
+		rotationP = 1.6;
+	}
+
+	public void setDefaultRotationSRXGains() {
+		rotationP = 1.8;
 	}
 
 	public double getLeftDriveLeadDistance() {
@@ -167,6 +198,7 @@ public class Drivetrain extends Subsystem {
 
 	public void setIsHighGear(boolean isHighGear) {
 		this.isHighGear = isHighGear;
+		//setting class variable equal to method variable
 	}
 
 	public double getAngle() {
@@ -183,23 +215,29 @@ public class Drivetrain extends Subsystem {
 		return rightLead.getPrimarySensorVelocity();
 	}
 
+	public void resetPigeon() {
+		this.pigeon.setYaw(0.0, 0);
+		//Yaw is rotation of robot during autos 
+	}
+
 	@Override
 	public void periodic() {
 		SmartDashboard.putBoolean("Drivetrain High Gear", isHighGear);
-		// SmartDashboard.putNumber("Left Drive Position", getLeftDriveLeadDistance());
-		// SmartDashboard.putNumber("Right Drive Position",
-		// getRightDriveLeadDistance());
+		SmartDashboard.putNumber("Left Drive Position", getLeftDriveLeadDistance());
+		SmartDashboard.putNumber("Right Drive POsition", getRightDriveLeadDistance());
 		// SmartDashboard.putNumber("Left Drive Velocity", getLeftDriveLeadVelocity());
 		// SmartDashboard.putNumber("Right Drive Velocity",
-		// getRightDriveLeadVelocity());]
+		// getRightDriveLeadVelocity());
 		SmartDashboard.putNumber("Drivetrain Angle", getAngle());
 		SmartDashboard.putNumber("Angle Error", rightLead.getClosedLoopError(1));
 		SmartDashboard.putNumber("Drivetrain Velocity", getVelocity());
 		SmartDashboard.putNumber("Drivetrain Distance", getDistance());
 		SmartDashboard.putNumber("Left Lead Current", leftLead.getOutputCurrent());
 		SmartDashboard.putNumber("Left Follower Current", leftFollower.getOutputCurrent());
-		//SmartDashboard.putNumber("Right Lead Current", rightLead.getOutputCurrent());
-		//SmartDashboard.putNumber("Right Follower Current", rightFollower.getOutputCurrent());
-		//SmartDashboard.putNumber("Integral Accumulator", rightLead.getIntegralAccumulator(1));
+		 SmartDashboard.putNumber("Right Lead Current", rightLead.getOutputCurrent());
+		 SmartDashboard.putNumber("Right Follower Current",
+		 rightFollower.getOutputCurrent());
+		// SmartDashboard.putNumber("Integral Accumulator",
+		// rightLead.getIntegralAccumulator(1));
 	}
 }

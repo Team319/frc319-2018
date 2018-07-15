@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class JoystickElevator extends Command {
 
-	private int positionIncrement = 200;
+	private int positionIncrement = 300;
 
 	public JoystickElevator() {
 		requires(Robot.elevator);
