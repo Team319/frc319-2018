@@ -7,8 +7,8 @@ public class RightNullZoneDriveAwayFromScaleArc extends SrxTrajectory{
 	
 	// WAYPOINTS:
 	// (X,Y,degrees)
-	// (25.13,6.79,89.99)
-	// (25.13,3.79,89.99)
+	// (25.13,7.29,89.99)
+	// (25.13,4.29,89.99)
 	
     public RightNullZoneDriveAwayFromScaleArc() {
 		super();

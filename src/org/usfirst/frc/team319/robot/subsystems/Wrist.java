@@ -172,6 +172,11 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 		}
 	}
 	
+	public void stopWristInPlace() {
+		int currentPosition = this.getCurrentPosition();
+		this.wristMotor.set(ControlMode.MotionMagic, currentPosition);
+	}
+	
 	public boolean isValidPosition(int position) {
 		return (position >= upPositionLimit && position <= downPositionLimit);
 	}
