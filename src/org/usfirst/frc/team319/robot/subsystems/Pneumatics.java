@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Pneumatics extends Subsystem {
-
-	// public boolean isCollectorSolenoidExtended;
 	public boolean isForkliftDeployed = false;
 	
 	Compressor compressor = new Compressor(0);
@@ -22,9 +20,6 @@ public class Pneumatics extends Subsystem {
 	DoubleSolenoid drivetrainShifter = new DoubleSolenoid(2, 3);
 	DoubleSolenoid collectorSolenoid = new DoubleSolenoid(5, 4);
 	DoubleSolenoid forkliftsolenoid = new DoubleSolenoid(6, 7);
-
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.

@@ -104,8 +104,6 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	}
 
 	public void initDefaultCommand() {
-		// setDefaultCommand(new ElevatorStop());
-		// setDefaultCommand(new ElevatorMotionMagicControl());
 		setDefaultCommand(new JoystickElevator());
 	}
 
@@ -276,13 +274,10 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
 		SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
 		SmartDashboard.putNumber("Elevator Current", this.getCurrentDraw());
-		// SmartDashboard.putNumber("Elevator Closed Loop
-		// Error",this.elevatorLead.getClosedLoopError(0));
 		SmartDashboard.putBoolean("Elevator High Gear", isHighGear);
 		SmartDashboard.putNumber("Elevator Voltage", this.elevatorLead.getMotorOutputVoltage());
-		// SmartDashboard.putNumber("Elevator Max Speed", maxSpeedAchieved);
-		 SmartDashboard.putNumber("Elevator Voltage",
-		 this.elevatorLead.getMotorOutputVoltage());
+		SmartDashboard.putNumber("Elevator Voltage",
+		this.elevatorLead.getMotorOutputVoltage());
 	}
 
 	@Override

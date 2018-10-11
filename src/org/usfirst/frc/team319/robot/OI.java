@@ -74,21 +74,19 @@ public class OI {
 		
 		
 		operatorController.Dpad.Down.whenPressed(new DeployForkliftThenRetract());
-		operatorController.Dpad.Up.whenPressed(new GoToClimbPose());
-		//operatorController.Dpad.Left.whenPressed(new ElevatorGoToSwitchPosition());
-		//operatorController.Dpad.Down.whenPressed(new GoToCollectPose());
-
-		
+		operatorController.Dpad.Up.whenPressed(new GoToClimbPose());		
 		
 		// ---------------test buttons-------------------//
+		// operatorController.Dpad.Left.whenPressed(new ElevatorGoToSwitchPosition());
+		// operatorController.Dpad.Down.whenPressed(new GoToCollectPose());
 
-		//this.driverController.xButton.whenPressed(new DoubleSwitchLeft());
-		//this.driverController.xButton.whenPressed(new FollowArc(new FifteenFeetArc()));
+		// this.driverController.xButton.whenPressed(new DoubleSwitchLeft());
+		// this.driverController.xButton.whenPressed(new FollowArc(new FifteenFeetArc()));
 
 		// this.operatorController.xButton.whenPressed(new ElevatorMotionMagicTest());
 		// this.operatorController.bButton.whenPressed(new ElevatorGoToHomePosition());
-		//this.operatorController.Dpad.Up.whenPressed(new ElevatorGoToDunkPosition());
-		//this.operatorController.Dpad.Down.whenPressed(new ElevatorGoToSwitchPosition());
+		// this.operatorController.Dpad.Up.whenPressed(new ElevatorGoToDunkPosition());
+		// this.operatorController.Dpad.Down.whenPressed(new ElevatorGoToSwitchPosition());
 
 	}
 }

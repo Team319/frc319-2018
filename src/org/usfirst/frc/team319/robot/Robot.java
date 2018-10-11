@@ -61,10 +61,7 @@ public class Robot extends TimedRobot {
 	public static final Pneumatics pneumatics = new Pneumatics();
 	public static final Elevator elevator = new Elevator();
 	public static final Wrist wrist = new Wrist();
-	// public static final Climber climber = new Climber();
 	public static OI oi;
-
-	// SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -121,11 +118,7 @@ public class Robot extends TimedRobot {
 		this.elevator.forceSetTargetPosition(elevator.getCurrentPosition());
 		this.wrist.setTargetPosition(wrist.getCurrentPosition());
 		this.gameState = new GameState(DriverStation.getInstance().getGameSpecificMessage());
-		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Driver Left Trigger", this.oi.driverController.triggers.getLeft());
-		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.leftStick.getY());
-		
-		
+		Scheduler.getInstance().run();	
 	}
 
 	/**
@@ -141,17 +134,7 @@ public class Robot extends TimedRobot {
 	 * the switch structure below with additional strings & commands.
 	 */
 	@Override
-	public void autonomousInit() {
-		// m_autonomousCommand = m_chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		 * switch(autoSelected) { case "My Auto": autonomousCommand = new
-		 * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
-		 * ExampleCommand(); break; }
-		 */
-		// SmartDashboard.putData("Auto mode", m_chooser);
-		
+	public void autonomousInit() {		
 		drivetrain.setNeutralMode(NeutralMode.Brake);
 		drivetrain.resetPigeon();
 		
@@ -228,15 +211,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-
-		// System.out.println("Wrist Error " +
-		// this.wrist.wristMotor.getClosedLoopError(0));
-		/*SmartDashboard.putNumber("Dpad value: ", this.oi.driverController.getPOV());
-		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.leftStick.getY());
-		SmartDashboard.putNumber("Operator Right Stick Y", this.oi.operatorController.rightStick.getY());
-		SmartDashboard.putNumber("Driver Left Stick Y", this.oi.driverController.leftStick.getY());
-		*/
-
 	}
 
 	/**

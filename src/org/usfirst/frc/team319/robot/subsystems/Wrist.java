@@ -73,10 +73,7 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		// setDefaultCommand(new WristMotionMagicTest()); //WristStop
-		// setDefaultCommand(new WristMaintainPosition());
 		setDefaultCommand(new JoystickWrist());
-		//setDefaultCommand(new WristMotionMagicControl());
 	}
 	
 	//sets control mode to motion magic
@@ -102,8 +99,6 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 		} else {
 			encoderPosition = -positionScalar * downPositionLimit;
 		}
-
-		// manageGainProfile(encoderPosition);
 		wristMotor.set(ControlMode.MotionMagic, encoderPosition);
 	}
 
@@ -138,10 +133,8 @@ public class Wrist extends Subsystem implements IPositionControlledSubsystem {
 	private void manageLimits() {
 		if (Robot.elevator.getCurrentPosition() > Robot.elevator.getTopOfFirstStagePosition()) {
 			this.upPositionLimit = maxUpTravelPosition;
-			// System.out.println("Setting up position limit to " + upPositionLimit);
 		} else {
 			this.upPositionLimit = homePosition;
-			// System.out.println("Setting up position limit to " + upPositionLimit);
 			if (this.targetPosition < homePosition) {
 				this.targetPosition = homePosition;
 			}
