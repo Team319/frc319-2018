@@ -1,6 +1,7 @@
 package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
 import org.usfirst.frc.team319.arcs.CrossTheLineArc;
+import org.usfirst.frc.team319.arcs.CrossTheLineReverseArc;
 import org.usfirst.frc.team319.models.GameState;
 import org.usfirst.frc.team319.models.GameState.Side;
 import org.usfirst.frc.team319.robot.commands.FollowArc;
@@ -26,7 +27,7 @@ public class LeftAuto extends CommandGroup {
 		} else if (gameState.scaleSide == Side.RIGHT) {
 			addSequential(new LeftSideRightScale());
 		} else {
-			addSequential(new FollowArc(new CrossTheLineArc()));
+			addSequential(new FollowArc(new CrossTheLineReverseArc()));
 		}
 	}
 }

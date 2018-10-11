@@ -7,8 +7,8 @@ public class RightNullZoneBackUpToScaleArc extends SrxTrajectory{
 	
 	// WAYPOINTS:
 	// (X,Y,degrees)
-	// (25.13,5.29,89.99)
-	// (25.13,6.79,89.99)
+	// (25.13,5.79,89.99)
+	// (25.13,7.29,89.99)
 	
     public RightNullZoneBackUpToScaleArc() {
 		super();
