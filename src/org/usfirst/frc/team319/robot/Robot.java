@@ -235,7 +235,9 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Operator Left Stick Y", this.oi.operatorController.leftStick.getY());
 		SmartDashboard.putNumber("Operator Right Stick Y", this.oi.operatorController.rightStick.getY());
 		SmartDashboard.putNumber("Driver Left Stick Y", this.oi.driverController.leftStick.getY());
+		
 		*/
+		//SmartDashboard.putNumber("Driver Left Stick Y", Robot.
 
 	}
 

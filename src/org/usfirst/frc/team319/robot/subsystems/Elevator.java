@@ -1,5 +1,7 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
+import java.util.ArrayList;
+
 import org.usfirst.frc.team319.models.BobVictorSPX;
 import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
@@ -50,7 +52,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	private int targetPosition = 0;
 	private double arbitraryFeedForward = 0.0;
 
-	private final static int onTargetThreshold = 1000; // changed to 500 from 100 for testing on practice field
+	private final static int onTargetThreshold = 2000;//1000 // changed to 500 from 100 for testing on practice field
 	
 	private final SRXGains lowGearUpGains = new SRXGains(ELEVATOR_LOW_UP, 0.560, 0.0, 5.600, 0.620, 100);
 	private final SRXGains lowGearDownGains = new SRXGains(ELEVATOR_LOW_DOWN, 0.560, 0.0, 5.600, 0.427, 0);
@@ -68,10 +70,17 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 	
 	private double highGearPeakOutputReverse = -0.6;
 
-	
+	/*
 	public final LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(11, new BobVictorSPX(8), new BobVictorSPX(9),
 			new BobVictorSPX(10));
+*/
 
+	private BobVictorSPX elevatorFollow1 = new BobVictorSPX(8);
+	private BobVictorSPX elevatorFollow2 = new BobVictorSPX(9);
+	private BobVictorSPX elevatorFollow3 = new BobVictorSPX(10);
+	private LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(11, elevatorFollow1, elevatorFollow2, elevatorFollow3);
+	
+	
 	public Elevator() {
 
 		this.elevatorLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -133,8 +142,18 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		return this.elevatorLead.getSelectedSensorPosition();
 	}
 
-	public double getCurrentDraw() {
+	public double getCurrentDrawLead() {
 		return this.elevatorLead.getOutputCurrent();
+	}
+	
+	public double getCurrentDrawFollow1() {
+		return this.elevatorFollow1.getOutputCurrent();
+	}
+	public double getCurrentDrawFollow2() {
+		return this.elevatorFollow2.getOutputCurrent();
+	}
+	public double getCurrentDrawFollow3() {
+		return this.elevatorFollow3.getOutputCurrent();
 	}
 
 	public boolean isHighGear() {
@@ -273,9 +292,15 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 
 	@Override
 	public void periodic() {
+		//Get current of elevator motors//
+		SmartDashboard.putNumber("Elevator Current Lead", this.getCurrentDrawLead());
+		SmartDashboard.putNumber("Elevator Voltage Follow 1", this.getCurrentDrawFollow1());
+		SmartDashboard.putNumber("Elevator Current Follow 2", this.getCurrentDrawFollow2());
+		SmartDashboard.putNumber("Elevator Current Follow 3", this.getCurrentDrawFollow3());
+
+		//----Other----//
 		SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
 		SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
-		SmartDashboard.putNumber("Elevator Current", this.getCurrentDraw());
 		// SmartDashboard.putNumber("Elevator Closed Loop
 		// Error",this.elevatorLead.getClosedLoopError(0));
 		SmartDashboard.putBoolean("Elevator High Gear", isHighGear);
@@ -300,5 +325,6 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 		} else {
 			return false;
 		}
+		
 	}
 }

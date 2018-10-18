@@ -1,5 +1,7 @@
 package org.usfirst.frc.team319.models;
 
+import java.util.ArrayList;
+
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -101,6 +103,11 @@ public class BobVictorSPX extends VictorSPX {
 
 	public double configGetParameter(ParamEnum param, int ordinal) {
 		return super.configGetParameter(param, ordinal, DEFAULT_TIMEOUT_MS);
+	}
+	public ArrayList<Double> getVictorOutputCurrents() {
+		ArrayList<Double> outputVictorCurrents = new ArrayList<Double>();
+		outputVictorCurrents.add(super.getOutputCurrent());
+		return outputVictorCurrents;
 	}
 
 }
